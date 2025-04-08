@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset=utf-8>
+  <meta http-equiv=X-UA-Compatible content="IE=edge">
+  <meta http-equiv=Content-Language content=cs>
+  <title>DEV - RD Pitkovice</title>
+  <!-- ! Jquery - Outdated version from 2013 -->
+  <script src=https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js></script>
+  <!-- ! Fancybox - Outdated version from 2019, deprecated and replaced by Fancyapps UI -->
+  <link rel=stylesheet href=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css>
+  <script src=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js async defer></script>
+  <!-- ! Styles linked and loaded twice (scripts as well) -->
+  <link as=style href=https://www.central-group.cz//wms3/css/app.2e912a36.css rel=preload>
+  <link as=style href=https://www.central-group.cz//wms3/css/chunk-vendors.9afe8511.css rel=preload>
+  <link href=https://www.central-group.cz//wms3/css/chunk-vendors.9afe8511.css rel=stylesheet>
+  <link href=https://www.central-group.cz//wms3/css/app.2e912a36.css rel=stylesheet>
+</head>
+
+<body>
+  <div>
+    <div data-v-63f98856></div>
+    <div data-v-63f98856>
+      <a href="#main" class="sr-only">skip to main content</a>
+      <header class="head">
+        <!-- header -->
+      </header>
+      <main id="main" class="main">
+        <div>
+          <div>
+            <div data-v-0dccd748="" id="" class="">
+              <div data-v-0dccd748 id="dev-cms-page-styles">
+                <!-- page-styles -->
+              </div>
+            </div>
+            <div data-v-0dccd748="" id="dev-cms-content">
+              <!-- content -->
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer>
+        <!-- footer -->
+      </footer>
+    </div>
+  </div>
+  <!-- ! Tippy - Web uses Tippy.js v2.6.0 from 2017 and vue-tippy v2.1.0 from 2019  -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <div id="dev-font-awesome">
+    <!-- Font Awesome styles -->
+  </div>
+  <!-- * Loading external files - for local dev only -->
+  <script>
+    // Load content from external files
+    // (Target element, then source)
+    $(".head").load("/load/template/header.html");
+    $("#dev-cms-page-styles").load("/load/cms/page-styles.html");
+    $("#dev-cms-content").load("/load/cms/content.html");      // CZ
+    // $("#dev-cms-content").load("/load/cms/content-en.html");         // EN
+    $("footer").load("/load/template/footer.html");
+    $("#dev-font-awesome").load("/load/template/font-awesome.html");
+  </script>
+</body>
+
+</html>
