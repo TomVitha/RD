@@ -25,7 +25,7 @@
   --header-height: calc(var(--header-height-top) + var(--header-height-bottom));
 
   /** Layout **/
-  --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end];
+  /* --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end]; */
 
   /** Other */
   scroll-behavior: smooth;
@@ -76,12 +76,19 @@ html[data-darkreader-scheme="dark"] .btn-yellow {
   display: none !important;
 }
 
+/* ! temp */
+/* @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap'); */
+
 body {
   color: var(--color-text, #4D4D4D);
   overflow-x: clip;
   /* ? maybe */
   /* line-height: 1.5; */
+
+  /** Testing fonts **/
+  /* font-family: 'Plus Jakarta Sans', 'Roboto', sans-serif !important; */
 }
+
 
 /* Content always fills screen height */
 div[data-v-5782d946] {
@@ -89,9 +96,7 @@ div[data-v-5782d946] {
   flex-direction: column;
   min-height: 100dvh;
 }
-main#main {
-  flex: 1;
-}
+main#main { flex: 1; }
 
 .head {
   position: static !important;
@@ -124,14 +129,14 @@ dl, dd, dt {
   padding: 0;
 }
 
-picture, img {
+picture, img, svg, video, canvas {
   display: block;
   max-width: 100%;
   user-select: none;
   /* -webkit-user-drag: none; */
 }
 
-/* Prevent <sub> and <sup> elements from affecting the line height */
+/* Note: Prevents <sub> and <sup> elements from affecting the line height */
 sub,sup {
   font-size: 75%;
   line-height: 0;
@@ -232,13 +237,10 @@ label {
   content: "";
   flex: 1 1;
   height: 1px;
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.175);
   opacity: 0.5;
 }
-
-
-/* # RESET (end) */
-
+/* RESET (end) */
 
 
 /* # BTN */
@@ -246,17 +248,14 @@ label {
   --btn-theme: transparent;
   --btn-theme-support: var(--color-blue, #20234c);
   --btn-border-radius: 0.45em;
-
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
   align-items: center;
   appearance: none;
   background: var(--btn-theme, transparent);
   border-radius: var(--btn-border-radius, 6px);
-  /* border: 1px solid transparent; */
   border: none;
   color: var(--btn-theme-support, var(--color-blue, #20234c));
   display: flex;
-  font-size: 1.0rem;
   font-size: 0.875rem;
   font-weight: 600;
   gap: 0 0.5em;
@@ -264,12 +263,12 @@ label {
   justify-content: center;
   line-height: 1.1;
   overflow: hidden;
+  overflow: clip;
   padding: 0.8em 1.25em;
   position: relative;
   text-align: center;
   text-decoration: none;
   transition: box-shadow 150ms;
-  -webkit-user-select: none;
   user-select: none;
   vertical-align: middle;
   white-space: initial;
@@ -391,16 +390,50 @@ label {
   font-size: 1.0rem;
 } */
 
-/* # BTN (end) */
+/* BTN (end) */
 
 /* # TYPOGRAPHY */
+:where(main) :is(h1,h2,h3,h4,h5,h6){
+  position: relative;
+  color: var(--color-primary, var(--color-blue, #20234c));
+
+}
 :where(main) :is(h1,h2,h3,h4,h5,h6):first-child {
   margin-top: 0;
 }
 h2 {
   font-weight: 700;
   margin-bottom: 1rem;
+  letter-spacing: -0.015em;
   margin-top: 2rem;
+}
+
+/** Styling of '#' (hidden by default) **/
+h2::before {
+  /* ! wip */
+  content: '#';
+  font-size: 0.85em;
+  width: 0px;
+  display: inline-block;
+  translate: -0.5em 0;
+  color: #ddd;
+  font-weight: 550;
+  user-select: none;
+  /** Default hidden styling **/
+  visibility: hidden;
+  opacity: 0;
+  position: relative;
+  z-index: -1;
+  /** Visibility delayed to let opacity finish fading **/
+  transition: translate 200ms, opacity 200ms, visibility 0ms 200ms;
+}
+
+/** The '#' is visible **/
+:is(:target h2, h2:target, h2:has(a):hover)::before{
+  visibility: visible;
+  opacity: 1;
+  translate: -0.85em 0;
+  transition: translate 200ms, opacity 200ms, visibility 0ms 0ms;
 }
 
 /** Container element for Btns **/
@@ -448,19 +481,14 @@ h2 {
 
 .hero__inside {
   position: relative;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center; */
-
 }
 
 .hero__content {
   display: flex;
   flex-direction: column;
   gap: 30px;
-
   position: absolute;
-  /* left: 0; */
+  left: 0;
   bottom: 60%;
   translate: 0 50%;
   padding-inline: 15px;
@@ -592,7 +620,7 @@ section:where([class*="bg-"]) {
   background-color: var(--color-blue, #20234c);
   color: white;
 }
-/* # SECTION (end) */
+/* SECTION (end) */
 
 .two-col {
   display: grid;
@@ -636,11 +664,13 @@ section:where([class*="bg-"]) {
 .highlight > [class*="fa-"]{
   margin-bottom: 10px;
   font-size: 32px;
-  color: var(--color-blue)
+  color: var(--color-primary);
+  user-select: none;
 }
 
 .highlight > strong {
   font-size: 1.125rem;
+  color: black;
 }
 
 .strip {
@@ -658,12 +688,13 @@ section:where([class*="bg-"]) {
   display: flex;
   flex-direction: column;
   isolation: isolate;
-  padding-block: 8px;
+  padding-block: 12px;
   max-width: 100%;
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
-.timelime__point {
+.timeline__point {
   position: relative;
   padding-left: calc(var(--tl-dot-size) * 2 + 0.5rem);
   padding-block: 0.75rem;
@@ -674,6 +705,7 @@ section:where([class*="bg-"]) {
   font-weight: 700;
   margin-bottom: 0.75rem;
   line-height: 1.0;
+  color: black;
   order: 1;
 }
 
@@ -682,7 +714,7 @@ section:where([class*="bg-"]) {
 }
 
 /* Line */
-.timelime__point::before {
+.timeline__point::before {
   content: '';
   display: block;
   background-color: rgba(0, 0, 0, 0.75);
@@ -697,7 +729,7 @@ section:where([class*="bg-"]) {
 }
 
 /* Dot */
-.timelime__point::after {
+.timeline__point::after {
   content: '';
   display: block;
   width:  var(--tl-dot-size);
@@ -727,7 +759,7 @@ section:where([class*="bg-"]) {
     margin-inline: auto;
   }
 
-  .timelime__point {
+  .timeline__point {
     display: grid;
     grid-template-rows: subgrid;
     grid-row: 1 / -1;
@@ -748,7 +780,7 @@ section:where([class*="bg-"]) {
   }
 
   /* Line */
-  .timelime__point::before {
+  .timeline__point::before {
     width: 100%;
     height: 1px;
     position: static;
@@ -756,17 +788,155 @@ section:where([class*="bg-"]) {
     order: 2;
   }
   /* Dot */
-  .timelime__point::after {
+  .timeline__point::after {
     position: static;
     translate: none;
     order: 3;
   }
+
+  /* Fallback for browsers that do not support subgrid - Timeline above heading and content */
+  @supports not (grid-template-rows: subgrid) {
+    .timeline__point{ grid-template-rows: 0px var(--tl-dot-size) auto 1fr; }
+    .timeline__point::before{ order: 1; }
+    .timeline__point::after{ order: 2; }
+    .timeline__heading{ order: 3; margin: 0.75rem 0 0; }
+    .timeline__content { order: 4; }
+  }
+}
+/* TIMELINE (end) */
+
+/* # PHASES */
+.phases {
+  --phase-icon-size: 80px;
+  display: flex;
+  align-items: start;
+  /* justify-content: center; */
+  width: fit-content;
+  margin-inline: auto;
+  gap: 8px;
+  padding-block: 16px 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  isolation: isolate;
+  scroll-snap-type: x mandatory;
 }
 
-/* WIP / TEMP */
+.phase {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+  line-height: 1.15;
+  /* ? idk ? */
+  /* max-width: 300px; */
+  /* flex: 0 0 150px; */
+  min-width: 120px;
+  width: 150px;
+  max-width: 150px;
+  flex: 0 1;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.phase__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.phase__content strong {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.0;
+  margin-bottom: 0.5rem;
+  color: black;
+}
+
+.phase__icon {
+  width:  var(--phase-icon-size);
+  height: var(--phase-icon-size);
+  aspect-ratio: 1;
+  padding: 20px;
+  border-radius: 999px;
+  background-color: var(--color-gray, #e8e8e8);
+}
+
+/** Common styling for Phase icon & Arrow icon between phases **/
+/* Note: This is the actual icon which can be just about anything - <img>, <picture>, <svg>, font awesome <i>, etc */
+.phase__icon > *, 
+.phase__arrow 
+{
+  display: flex;
+  --fa-display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  background-size: contain;
+  background-position: center center;
+  background-color: transparent;
+  color: #999;
+  fill:  #999;
+  /* ? maybe ? */
+  stroke: transparent;
+  font-size: 30px;
+  user-select: none;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.phase__arrow {
+  align-self: start;
+  text-align: center;
+  flex: 0 0 auto;
+  width: auto;
+  height: var(--phase-icon-size);
+  font-size: 24px;
+}
+
+/** Done State (class .done OR preceding .current) **/
+:where(.done, .phase:has(~.current)) .phase__icon {
+  background-color: var(--color-primary);
+}
+:where(.done, .phase:has(~.current)) .phase__icon > * {
+  color: white;
+  fill:  white;
+}
+:where(.done, .phase:has(~.current)) + .phase__arrow {
+  color: var(--color-primary);
+  fill:  var(--color-primary);
+}
+
+/** Current State **/
+.current .phase__icon {
+  background-color: white;
+  box-shadow: inset 0px 0px 0px 1.5px var(--color-primary);
+}
+.current .phase__icon > * {
+  color: var(--color-primary);
+  fill:  var(--color-primary);
+}
+/* PHASES (end) */
+
+/* # LAYOUT VIEWER */
+/* ! WIP */
 .layout-viewer {
   position: relative;
 }
+.layout-viewer.expanded {
+  height: 90vh;
+}
+.layout-viewer > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
 .expand {
   appearance: none;
   display: flex;
@@ -791,6 +961,12 @@ section:where([class*="bg-"]) {
 }
 .expand:active {
   scale: 0.9;
+}
+
+@media (min-width: 992px) {
+  .expand {
+    display: none;
+  }
 }
 
 /* ! TEMP - preview only - already part of map box styling */
