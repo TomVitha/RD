@@ -19,10 +19,11 @@
   /** Accessibility **/
   --color-focus-outline: #72c2ff;
 
-  /** Header **/
+  /** Header and nav **/
   --header-height-top: 55px;
   --header-height-bottom: 39px;
   --header-height: calc(var(--header-height-top) + var(--header-height-bottom));
+  --page-nav-height: 48px;
 
   /** Layout **/
   /* --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end]; */
@@ -41,7 +42,7 @@
 
 html {
   /* ! temp value -> sticky nav height */
-  scroll-padding-top: 3rem;
+  scroll-padding-top: calc(var(--page-nav-height) + 0px);
 }
 
 @media (prefers-reduced-motion) {
@@ -82,7 +83,7 @@ html[data-darkreader-scheme="dark"] .btn-yellow {
 body {
   color: var(--color-text, #4D4D4D);
   overflow-x: clip;
-  /* ? maybe */
+  /* ? maybe change ? */
   /* line-height: 1.5; */
 
   /** Testing fonts **/
@@ -177,7 +178,7 @@ label {
 }
 
 :where(main) p {
-  margin-block: 1rem;
+  margin-block: 15px;
   text-wrap: pretty;
 }
 
@@ -246,7 +247,7 @@ label {
 /* # BTN */
 .btn {
   --btn-theme: transparent;
-  --btn-theme-support: var(--color-blue, #20234c);
+  --btn-theme-complementary: var(--color-blue, #20234c);
   --btn-border-radius: 0.45em;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
   align-items: center;
@@ -254,11 +255,11 @@ label {
   background: var(--btn-theme, transparent);
   border-radius: var(--btn-border-radius, 6px);
   border: none;
-  color: var(--btn-theme-support, var(--color-blue, #20234c));
+  color: var(--btn-theme-complementary, var(--color-blue, #20234c));
   display: flex;
   font-size: 0.875rem;
   font-weight: 600;
-  gap: 0 0.5em;
+  gap: 0 0.6em;
   isolation: isolate;
   justify-content: center;
   line-height: 1.1;
@@ -308,37 +309,42 @@ label {
 /** Colors **/
 .btn[class*="--yellow"] {
   --btn-theme: var(--color-yellow, #ffed00);
-  --btn-theme-support: var(--color-blue, #20234c);
+  --btn-theme-complementary: var(--color-blue, #20234c);
 }
 
 .btn[class*="--blue"] {
   --btn-theme: var(--color-blue, #20234c);
-  --btn-theme-support: #fff;
+  --btn-theme-complementary: #fff;
 }
 
 .btn[class*="--white"] {
   --btn-theme: white;
-  --btn-theme-support: var(--color-primary, var(--color-blue, #20234c));
+  --btn-theme-complementary: var(--color-primary, var(--color-blue, #20234c));
 }
 
 .btn[class*="--black"] {
   --btn-theme: black;
-  --btn-theme-support: white;
+  --btn-theme-complementary: white;
+}
+
+.btn[class*="--gray-dark"] {
+  --btn-theme: var(--color-gray-dark, #4D4D4D);
+  --btn-theme-complementary: white;
 }
 
 .btn[class*="--primary"] {
   --btn-theme: var(--color-primary);
-  --btn-theme-support: #fff;
+  --btn-theme-complementary: #fff;
 }
 
 .btn[class*="--secondary"] {
   --btn-theme: var(--color-secondary);
-  --btn-theme-support: var(--color-primary);
+  --btn-theme-complementary: var(--color-primary);
 }
 
 .btn[class*="--tertiary"] {
   --btn-theme: var(--color-tertiary);
-  --btn-theme-support: var(--color-primary);
+  --btn-theme-complementary: var(--color-primary);
 }
 
 /** Inline **/
@@ -429,7 +435,7 @@ h2::before {
 }
 
 /** The '#' is visible **/
-:is(:target h2, h2:target, h2:has(a):hover)::before{
+:is(:target h2, h2:target, h2:has(a:hover))::before{
   visibility: visible;
   opacity: 1;
   translate: -0.85em 0;
@@ -453,6 +459,7 @@ h2::before {
   isolation: isolate;
   min-height: 350px;
   height: calc(100svh - var(--header-height));
+  /* height: calc(100svh - var(--header-height) - var(--page-nav-height)); */
   background: rgb(172, 172, 172);
   color: white;
   /* ! temp */
@@ -519,12 +526,7 @@ h2::before {
   line-height: 1;
   text-wrap: balance;
   color: white;
-
-  /* WIP */
-  /* font-size: clamp(0px, 5vw, 6rem); */
   font-size: 90px;
-  /* font-size: 144px; */
-
 
   /** Testing fonts **/
   /* font-family: 'Rubik'; */
@@ -539,15 +541,17 @@ h2::before {
 
 }
 
+
 /* ! temp name */
 .subtitle {
   text-wrap: pretty;
-  font-size: 24px;
   line-height: 1.25;
+  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
 
 .hero__jump {
-  /* !temp */
+  /* ! temp off */
   display: none;
 
   bottom: 16px;
@@ -579,6 +583,72 @@ h2::before {
   }
 }
 
+/* ! WIP - REWRITE */
+/* # Page Nav */
+.page-nav{
+  height: var(--page-nav-height, 48px);
+  background: #f2f2f2;
+  position: sticky;
+  top: 0px;
+  padding: 0;
+  z-index: 100;
+}
+
+
+.page-nav__desktop{
+  /** Proportional columns **/
+  display: grid;
+  align-items: stretch;
+  grid-auto-flow: column;
+  width: 100%;
+}
+
+
+.page-nav__mobile{
+  /** Equal columns **/
+  align-items: stretch;
+  display: grid;
+  display: none;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  width: 100%;
+  padding: 0;
+}
+
+.page-nav .btn{
+  --btn-border-radius: 0px;
+  color: var(--gray-dark);
+  /* font-weight: 500; */
+  padding: 1.15em 1.0em;
+  font-size: 0.875rem;
+  width: 100%;
+}
+
+.page-nav .btn[class*="--yellow"] {
+  color: var(--color-blue);
+  font-weight: 700;
+}
+
+/** Switch do mobile nav **/
+@media screen and (max-width: 991px){
+  .page-nav__desktop{
+    display: none;
+  }
+  /* ? maybe off ? */
+  .page-nav { 
+    /* display: none;  */
+  }
+  .page-nav__mobile{ 
+    display: grid;
+  }
+}
+
+.page-nav__desktop>a.active{
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+/* ? Page Nav (end) */
+
 /* # SECTION */
 section {
   position: relative;
@@ -587,12 +657,12 @@ section {
   /* scroll-margin-top: 3.0rem; */
 }
 
-/* Section with no bg, following a section with no bg */
+/** Section with no bg, following a section with no bg **/
 :where(section:not([class*="bg-"]))+section:not([class*="bg-"]) {
   padding-top: 0;
 }
 
-/* Section with bg */
+/** Section with bg **/
 section:where([class*="bg-"]) {
   padding-block: 3.0rem;
 }
@@ -619,6 +689,17 @@ section:where([class*="bg-"]) {
 .bg-blue{
   background-color: var(--color-blue, #20234c);
   color: white;
+}
+
+@supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)){
+  /* ? Frosted glass effect */
+  .bg-frost{
+      background: hsla(0deg, 0%, 100%, 87%);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      box-shadow: inset 0px -1px 0px 0px rgb(246 246 246 / 75%);
+      transform: translate3d(0, 0, 0); /* Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
+  }
 }
 /* SECTION (end) */
 
@@ -655,9 +736,6 @@ section:where([class*="bg-"]) {
   flex: 1 1 180px;
   line-height: 1.25;
   text-align: center;
-  /* text-wrap: pretty; */
-  /* min-width: 150px; */
-  /* max-width: 250px; */
   width: 250px;
 }
 
@@ -794,12 +872,12 @@ section:where([class*="bg-"]) {
     order: 3;
   }
 
-  /* Fallback for browsers that do not support subgrid - Timeline above heading and content */
+  /* Fallback for browsers that do not support subgrid. Line with dots will go above heading and content */
   @supports not (grid-template-rows: subgrid) {
-    .timeline__point{ grid-template-rows: 0px var(--tl-dot-size) auto 1fr; }
-    .timeline__point::before{ order: 1; }
-    .timeline__point::after{ order: 2; }
-    .timeline__heading{ order: 3; margin: 0.75rem 0 0; }
+    .timeline__point { grid-template-rows: 0px var(--tl-dot-size) auto 1fr; }
+    .timeline__point::before { order: 1; }
+    .timeline__point::after { order: 2; }
+    .timeline__heading { order: 3; margin: 0.75rem 0 0; }
     .timeline__content { order: 4; }
   }
 }
@@ -832,7 +910,8 @@ section:where([class*="bg-"]) {
   /* ? idk ? */
   /* max-width: 300px; */
   /* flex: 0 0 150px; */
-  min-width: 120px;
+  /* Note: Yes, we really do need to specify all of the widths. And no, we can't just clamp() the width */
+  min-width: 150px;
   width: 150px;
   max-width: 150px;
   flex: 0 1;
@@ -879,8 +958,8 @@ section:where([class*="bg-"]) {
   background-size: contain;
   background-position: center center;
   background-color: transparent;
-  color: #999;
-  fill:  #999;
+  color: #bbb;
+  fill:  #bbb;
   /* ? maybe ? */
   stroke: transparent;
   font-size: 30px;
