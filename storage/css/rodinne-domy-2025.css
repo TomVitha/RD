@@ -85,9 +85,17 @@ body {
   overflow-x: clip;
   /* ? maybe change ? */
   /* line-height: 1.5; */
+}
 
-  /** Testing fonts **/
-  /* font-family: 'Plus Jakarta Sans', 'Roboto', sans-serif !important; */
+/* ! TEMP - Testing fonts */
+main {
+  /* font-family: 'Rubik' */
+  /* font-family: 'Inter' */
+  /* font-family: 'Geist' */
+  /* font-family: 'Plus Jakarta Sans' */
+  /* font-family: 'Raleway' */
+  /* font-family: 'Poppins' */
+  /* font-family: 'Archivo' */
 }
 
 
@@ -210,7 +218,7 @@ label {
   position: relative;
 
   /* ? consider ? */
-  max-width: 1500px !important;
+  max-width: 1400px !important;
 }
 
 .container-m {
@@ -374,6 +382,12 @@ label {
   border: 1px solid var(--btn-theme);
 }
 
+/** Outline Fill on hover  **/
+.btn[class*="--outline-fill"]:hover{
+  background: var(--btn-theme);
+  color: var(--btn-theme-complementary);
+}
+
 /** Ghost **/
 .btn[class*="--ghost"] {
   background: transparent;
@@ -526,19 +540,7 @@ h2::before {
   line-height: 1;
   text-wrap: balance;
   color: white;
-  font-size: 90px;
-
-  /** Testing fonts **/
-  /* font-family: 'Rubik'; */
-  /* font-family: 'Inter'; */
-  /* font-family: 'Geist'; */
-  /* font-family: 'Plus Jakarta Sans'; */
-  /* font-family: 'Raleway'; */
-  /* font-family: 'Poppins'; */
-
-  /* font-weight: 600; */
-  /* text-align: center; */
-
+  font-size: 80px;
 }
 
 
@@ -547,7 +549,7 @@ h2::before {
   text-wrap: pretty;
   line-height: 1.25;
   font-size: 1.5rem;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 
 .hero__jump {
@@ -706,7 +708,7 @@ section:where([class*="bg-"]) {
 .two-col {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px 48px; /* ! temp - possible 30, 32, 48 */
+  gap: 32px 48px;
   /* ? maybe ? */
   align-items: center;
 }
