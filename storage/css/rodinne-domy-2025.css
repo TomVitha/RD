@@ -1152,6 +1152,10 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   color: #c93;
 }
 
+.property-status.sold {
+  color: #933;
+}
+
 .price-table .price {
   font-weight: bold;
 }

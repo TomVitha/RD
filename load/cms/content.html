@@ -270,7 +270,7 @@
         <!-- Table will be filled by fetched data from Sheet -->
       </div>
     </div>
-    <!-- <p>UKÁZKA PDF LIGHTBOXU - <a href="/temp/B1.pdf" data-fancybox="rd-pdf" data-type="iframe"><strong>PDF Karta domu</strong></a></p> -->
+    <p>UKÁZKA PDF LIGHTBOXU - <a href="/temp/B1.pdf" data-fancybox="rd-pdf" data-type="iframe"><strong>PDF Karta domu</strong></a></p>
   </div>
 </section>
 
@@ -393,27 +393,31 @@
 -->
 
 <template id="price-table__detail-btn">
-  <a href="" class="btn btn--yellow--sm">
+  <a 
+  href="" 
+  class="btn btn--yellow--sm--full" 
+  data-fancybox="rd-pdf" 
+  data-type="iframe">
     Karta domu
   </a>
 </template>
 
-<template>
-  <table class="price-table" id="template-price-table">
+<template id="template-price-table">
+  <table class="price-table">
     <thead>
       <tr>
-        <td>Název</td>
-        <td>Cena</td>
-        <td>Stav</td>
-        <td>Dispozice</td>
-        <td>Pater</td>
-        <td>Příslušenství</td>
-        <td>Plocha</td>
-        <td>Termín dokončení</td>
+        <th>Označení</th>
+        <th>Pater</th>
+        <th>Dispozice</th>
+        <th>Příslušenství</th>
+        <th>Plocha</th>
+        <th>Datum dokončení</th>
+        <th>Cena</th>
+        <th>Karta domu</th>
       </tr>
     </thead>
     <tbody>
-      <!-- Data loaded from Google Sheets -->
+      
     </tbody>
   </table>
 </template>

@@ -86,8 +86,8 @@ async function fetchSheetData() {
             return obj;
         });
         
-        console.debug("Headers:", headers);
-        console.debug("Data sample:", tableData.slice(0, 2));
+        // console.debug("Headers:", headers);
+        // console.debug("Data sample:", tableData.slice(0, 2));
         
         return { headers, tableData };
     } catch (error) {
@@ -111,10 +111,10 @@ function generateTableWithData(headers, tableData, locale = 'cs-CZ', displaySold
             th.textContent = header;
             headerRow.appendChild(th);
         });
-        // Add an empty header for the action button column
+
         const detailTh = document.createElement('th');
-        // detailTh.textContent = 'Karta domu';
-        headerRow.appendChild(detailTh); // Append it at the end
+        headerRow.appendChild(detailTh);
+
         table.appendChild(thead);
         thead.appendChild(headerRow);
     }
@@ -194,11 +194,54 @@ function generateTableWithData(headers, tableData, locale = 'cs-CZ', displaySold
 
 }
 
+function populateTemplateTableWithData(data, locale = 'cs-CZ') {
+    const table = document.querySelector('#template-price-table').content.cloneNode(true).querySelector('table');
+    const tableBody = table.querySelector('tbody');
+    const tableContainer = document.querySelector('#price-table-container')
+
+    data.forEach(property => {
+          const row = tableBody.insertRow();
+
+          row.insertCell().innerHTML = property['name']
+          
+          row.insertCell().innerHTML = property['floors']
+
+          const layoutCell = row.insertCell();
+          layoutCell.innerHTML = property['layout'] + (locale.startsWith('en-') ? '+kt' : '+kk');
+
+          row.insertCell().innerHTML = property['accessories']
+
+          row.insertCell().innerHTML = property['area'] + ' m²'
+
+          row.insertCell().innerHTML = new Intl.DateTimeFormat(locale, {
+                                          month: 'long',
+                                          year: 'numeric',
+                                      }).format(property['date_completion']);
+
+          row.insertCell().innerHTML = new Intl.NumberFormat(locale, {
+                                          style: 'currency',
+                                          currency: 'CZK',
+                                          minimumFractionDigits: 0,
+                                          maximumFractionDigits: 0,
+                                      }).format(property['price']);
+
+          const detailsBtn = document.getElementById('price-table__detail-btn').content.cloneNode(true).querySelector('a');
+          detailsBtn.setAttribute('href', `/temp/B${property['id']}.pdf`);
+          row.insertCell().appendChild(detailsBtn);
+    });
+
+    tableContainer.innerHTML = '';      // Clear existing content
+    tableContainer.appendChild(table);
+    console.debug(table);
+
+}
+
 // Example usage
 async function initializeData() {
     const propertiesData = await fetchSheetData();
     if (propertiesData) {
-        generateTableWithData(propertiesData.headers, propertiesData.tableData);
+        //// generateTableWithData(propertiesData.headers, propertiesData.tableData);
+        populateTemplateTableWithData(propertiesData.tableData);
     }
 }
 
