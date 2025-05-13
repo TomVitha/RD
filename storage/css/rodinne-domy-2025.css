@@ -46,7 +46,7 @@
 
 @media screen and (max-width: 991px) {
   :root {
-    --header-height: var(--header-height-top);
+  --header-height: var(--header-height-top);
   }
 }
 
@@ -57,7 +57,7 @@ html {
 
 @media (prefers-reduced-motion) {
   html {
-    scroll-behavior: auto;
+  scroll-behavior: auto;
   }
 }
 
@@ -295,166 +295,166 @@ label {
 
 /* # BTN */
 .btn {
-    --btn-theme: transparent;
-    --btn-theme-complementary: var(--color-primary);
-    --btn-border-radius: 0.375rem;
-    --btn-background: var(--btn-theme, transparent);
-    --btn-background-hover: var(--btn-background);
-    
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
-    align-items: center;
-    appearance: none;
-    background: var(--btn-background);
-    border-radius: var(--btn-border-radius, 6px);
-    border: none;
-    color: var(--btn-theme-complementary);
-    display: flex;
-    font-size: 0.875rem;
-    font-weight: 550;
-    gap: 0 0.6em;
-    isolation: isolate;
-    justify-content: center;
-    line-height: 1.0;
-    min-height: 2.7em;
-    overflow: clip;
-    overflow: hidden;
-    padding: 0.5em 1.25em;
-    position: relative;
-    text-align: initial;
-    text-decoration: none;
-    transition: none;
-    user-select: none;
-    vertical-align: middle;
-    white-space: initial;
-    width: fit-content;
-    z-index: 0;
+  --btn-theme: transparent;
+  --btn-theme-complementary: var(--color-primary);
+  --btn-border-radius: 0.375rem;
+  --btn-background: var(--btn-theme, transparent);
+  --btn-background-hover: var(--btn-background);
+  
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
+  align-items: center;
+  appearance: none;
+  background: var(--btn-background);
+  border-radius: var(--btn-border-radius, 6px);
+  border: none;
+  color: var(--btn-theme-complementary);
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: 550;
+  gap: 0 0.6em;
+  isolation: isolate;
+  justify-content: center;
+  line-height: 1.0;
+  min-height: 2.7em;
+  overflow: clip;
+  overflow: hidden;
+  padding: 0.5em 1.25em;
+  position: relative;
+  text-align: initial;
+  text-decoration: none;
+  transition: none;
+  user-select: none;
+  vertical-align: middle;
+  white-space: initial;
+  width: fit-content;
+  z-index: 0;
 }
 
 @supports (background: color-mix(in oklab, red, currentColor 10%)) {
-    .btn {
-        --btn-background-hover: color-mix(in srgb-linear, var(--btn-background), currentColor 8%);
-    }
+  .btn {
+    --btn-background-hover: color-mix(in srgb-linear, var(--btn-background), currentColor 8%);
+  }
 }
 
 .btn:not(.disabled, :disabled, .outline):hover {
-    background: var(--btn-background-hover);
+  background: var(--btn-background-hover);
 }
 
 /* Note: Required to override app-wide styling */
 a.btn:hover {
-    transition: none;
+  transition: none;
 }
 
 /** Inline **/
 .btn[class*="--inline"] {
-    display: inline-flex;
+  display: inline-flex;
 }
   
 /** Full width **/
 .btn[class*="--full"] {
-    width: 100%;
+  width: 100%;
 }
 
 /** Small **/
 .btn[class*="--sm"] {
-    font-size: 0.75rem;
+  font-size: 0.75rem;
 }
 
 /** Large **/
 .btn[class*="--lg"] {
-    font-size: 1.125rem;
+  font-size: 1.125rem;
 }
 
 /** Sharp corners  **/
 .btn[class*="--sharp"] {
-    --btn-border-radius: 0px;
+  --btn-border-radius: 0px;
 }
 
 /** Rounded corners (pill)  **/
 .btn[class*="--rounded"] {
-    --btn-border-radius: 999px;
+  --btn-border-radius: 999px;
 }
   
 /** COLORS **/
 .btn[class*="--yellow"] {
-    --btn-theme: var(--color-yellow, #ffed00);
-    --btn-theme-complementary: var(--color-blue, #20234c);
+  --btn-theme: var(--color-yellow, #ffed00);
+  --btn-theme-complementary: var(--color-blue, #20234c);
 }
   
 .btn[class*="--blue"] {
-    --btn-theme: var(--color-blue, #20234c);
-    --btn-theme-complementary: #fff;
+  --btn-theme: var(--color-blue, #20234c);
+  --btn-theme-complementary: #fff;
 }
   
 .btn[class*="--white"] {
-    --btn-theme: white;
-    --btn-theme-complementary: var(--color-primary, var(--color-blue, #20234c));
+  --btn-theme: white;
+  --btn-theme-complementary: var(--color-primary, var(--color-blue, #20234c));
 }
   
 .btn[class*="--black"] {
-    --btn-theme: black;
-    --btn-theme-complementary: white;
+  --btn-theme: black;
+  --btn-theme-complementary: white;
 }
   
 .btn[class*="--gray-dark"] {
-    --btn-theme: var(--color-gray-dark, #4D4D4D);
-    --btn-theme-complementary: white;
+  --btn-theme: var(--color-gray-dark, #4D4D4D);
+  --btn-theme-complementary: white;
 }
   
 .btn[class*="--primary"] {
-    --btn-theme: var(--color-primary);
-    --btn-theme-complementary: #fff;
+  --btn-theme: var(--color-primary);
+  --btn-theme-complementary: #fff;
 }
   
 .btn[class*="--secondary"] {
-    --btn-theme: var(--color-secondary);
-    --btn-theme-complementary: var(--color-primary);
+  --btn-theme: var(--color-secondary);
+  --btn-theme-complementary: var(--color-primary);
 }
   
 .btn[class*="--tertiary"] {
-    --btn-theme: var(--color-tertiary);
-    --btn-theme-complementary: var(--color-primary);
+  --btn-theme: var(--color-tertiary);
+  --btn-theme-complementary: var(--color-primary);
 }
   
 /** Outline **/
 .btn[class*="--outline"] {
-    --btn-background: transparent;
-    color: var(--btn-theme);
-    border: 1px solid var(--btn-theme);
+  --btn-background: transparent;
+  color: var(--btn-theme);
+  border: 1px solid var(--btn-theme);
 }
   
 /** Outline with fill on hover  **/
 .btn[class*="--outline-fill"]:hover {
-    --btn-background-hover: var(--btn-theme);
-    color: var(--btn-theme-complementary);
+  --btn-background-hover: var(--btn-theme);
+  color: var(--btn-theme-complementary);
 }
   
 /** Ghost **/
 .btn[class*="--ghost"] {
-    --btn-background: transparent;
-    color: var(--btn-theme);
+  --btn-background: transparent;
+  color: var(--btn-theme);
 }
 
 /** Transparent **/
 .btn[class*="--transparent"] {
-    --btn-background: transparent;
-    --btn-background-hover: transparent;
-    color: var(--btn-theme);
+  --btn-background: transparent;
+  --btn-background-hover: transparent;
+  color: var(--btn-theme);
 }
 
 /** Link **/
 .btn[class*="--link"] {
-    --btn-background: transparent;
-    --btn-background-hover: transparent;
-    color: var(--btn-theme);
-    overflow: visible;
-    padding: 0;
+  --btn-background: transparent;
+  --btn-background-hover: transparent;
+  color: var(--btn-theme);
+  overflow: visible;
+  padding: 0;
 }
 
 .btn[class*="--link"]:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.15em;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.15em;
 }
 
 /** Container element for Btns **/
@@ -627,14 +627,14 @@ h2::before {
 
 @media (max-width: 991px), (max-height: 768px) {
   .hero__logo{
-    width:  90px;
-    height: 90px;
+  width:  90px;
+  height: 90px;
   }
   .hero h1 {
-    font-size: 3rem;
+  font-size: 3rem;
   }
   .subtitle{
-    font-size: 18px;
+  font-size: 18px;
   }
 }
 
@@ -687,14 +687,14 @@ h2::before {
 /** Switch to mobile nav **/
 @media screen and (max-width: 991px){
   .page-nav__desktop{
-    display: none;
+  display: none;
   }
   /* ? maybe off ? */
   .page-nav { 
-    /* display: none;  */
+  /* display: none;  */
   }
   .page-nav__mobile{ 
-    display: grid;
+  display: grid;
   }
 }
 
@@ -706,32 +706,32 @@ h2::before {
 
 /* # SECTIONS */
 section {
-    position: relative;
-    overflow-x: hidden;
-    overflow-x: clip;
-    scroll-margin-top: 5.0rem;
-    margin-block: 5.0rem;
+  position: relative;
+  overflow-x: hidden;
+  overflow-x: clip;
+  scroll-margin-top: 5.0rem;
+  margin-block: 5.0rem;
 }
 
 /* Section with bg */
 section:where([class*="bg-"]) {
-    margin-block: 0;
-    padding-block: 3rem;
+  margin-block: 0;
+  padding-block: 3rem;
 }
 
 /** Sub-sections **/
 section section {
-    overflow: visible;
-    margin-block: 3.0rem;
+  overflow: visible;
+  margin-block: 3.0rem;
 }
 
 @media (max-width: 991px) {
-    section {
-        margin-block: 3.5rem;
-    }
-    section section {
-        margin-block: 2.5rem;
-    }
+  section {
+    margin-block: 3.5rem;
+  }
+  section section {
+    margin-block: 2.5rem;
+  }
 }
 
 /** Section with bg **/
@@ -741,7 +741,7 @@ section:where([class*="bg-"]) {
 
 @media (max-width: 991px){
   section{
-      padding-block: 2.5rem;
+    padding-block: 2.5rem;
   }
 }
 
@@ -764,20 +764,20 @@ section:where([class*="bg-"]) {
 @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)){
   /* ? Frosted glass effect */
   .bg-frost{
-      background: hsla(0deg, 0%, 100%, 87%);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      box-shadow: inset 0px -1px 0px 0px rgb(246 246 246 / 75%);
-      transform: translate3d(0, 0, 0); /* Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
+    background: hsla(0deg, 0%, 100%, 87%);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: inset 0px -1px 0px 0px rgb(246 246 246 / 75%);
+    transform: translate3d(0, 0, 0); /* Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
   }
 }
 
 [class*="bg-"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
-    margin-top: 0;
+  margin-top: 0;
 }
 
 section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
-    color: inherit;
+  color: inherit;
 }
 /* SECTION (end) */
 
@@ -803,12 +803,12 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 @media (max-width: 991px) {
   .two-col {
-    display: flex;
-    flex-direction: column;
-    align-items: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: normal;
   }
   .two-col.alt {
-    flex-direction: column-reverse;
+  flex-direction: column-reverse;
   }
 }
 
@@ -915,57 +915,57 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 @media screen and (min-width: 991px) {
   .timeline {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
-    /** heading, line, dot, content **/
-    grid-template-rows: auto 0px var(--tl-dot-size) auto;
-    width: fit-content;
-    margin-inline: auto;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  /** heading, line, dot, content **/
+  grid-template-rows: auto 0px var(--tl-dot-size) auto;
+  width: fit-content;
+  margin-inline: auto;
   }
 
   .timeline__point {
-    display: grid;
-    grid-template-rows: subgrid;
-    grid-row: 1 / -1;
-    max-width: 300px;
-    justify-items: center;
-    text-align: center;
-    line-height: 1.25;
-    padding: 0;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: 1 / -1;
+  max-width: 300px;
+  justify-items: center;
+  text-align: center;
+  line-height: 1.25;
+  padding: 0;
   }
 
   .timeline__heading {
-    align-content: end;
-    order: 1;
+  align-content: end;
+  order: 1;
   }
   
   .timeline__content {
-    order: 4;
+  order: 4;
   }
 
   /* Line */
   .timeline__point::before {
-    width: 100%;
-    height: 1px;
-    position: static;
-    translate: 0 calc(var(--tl-dot-size) / 2);
-    order: 2;
+  width: 100%;
+  height: 1px;
+  position: static;
+  translate: 0 calc(var(--tl-dot-size) / 2);
+  order: 2;
   }
   /* Dot */
   .timeline__point::after {
-    position: static;
-    translate: none;
-    order: 3;
+  position: static;
+  translate: none;
+  order: 3;
   }
 
   /* Fallback for browsers that do not support subgrid. Line with dots will go above heading and content */
   @supports not (grid-template-rows: subgrid) {
-    .timeline__point { grid-template-rows: 0px var(--tl-dot-size) auto 1fr; }
-    .timeline__point::before { order: 1; }
-    .timeline__point::after { order: 2; }
-    .timeline__heading { order: 3; margin: 0.75rem 0 0; }
-    .timeline__content { order: 4; }
+  .timeline__point { grid-template-rows: 0px var(--tl-dot-size) auto 1fr; }
+  .timeline__point::before { order: 1; }
+  .timeline__point::after { order: 2; }
+  .timeline__heading { order: 3; margin: 0.75rem 0 0; }
+  .timeline__content { order: 4; }
   }
 }
 /* TIMELINE (end) */
@@ -1087,13 +1087,13 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 /* # CENÍK TABULKA */
 .price-table-wrapper {
-    border: 1px solid #ededed;
-    border-radius: 10px;
-    overflow-y: hidden;
-    overflow-x: auto;
-    scrollbar-color: #c5c5c5 transparent;
-    scrollbar-width: thin;
-    margin-block: 24px;
+  border: 1px solid #ededed;
+  border-radius: 10px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-color: #c5c5c5 transparent;
+  scrollbar-width: thin;
+  margin-block: 24px;
 }
 
 .price-table {
@@ -1107,11 +1107,11 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 }
 
 .price-table tr:not(:last-child) {
-    border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid #f5f5f5;
 }
 
 .price-table tbody tr:nth-child(odd) {
-    background-color: #fbfbfb;
+  background-color: #fbfbfb;
 }
 
 .price-table :is(th, td) {
@@ -1138,18 +1138,18 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   white-space: nowrap;
 }
 
-.apartment-status {
+.property-status {
   font-size: 0.7em;
   vertical-align: middle;
   margin-right: 0.55em;
 }
 
-.apartment-status.available {
-      color: #6c6;
+.property-status.available {
+  color: #6c6;
 }
 
-.apartment-status.under-offer {
-      color: #c93;
+.property-status.under-offer {
+  color: #c93;
 }
 
 .price-table .price {
@@ -1172,12 +1172,12 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 }
 
 .price-table .sortable.sort-active {
-    color: #0576DE;
-    box-shadow: inset 0px -1px 0px 0px currentColor;
+  color: #0576DE;
+  box-shadow: inset 0px -1px 0px 0px currentColor;
 }
 
 .price-table .sortable.sort-active::after {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* # LAYOUT VIEWER */
@@ -1223,7 +1223,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 @media (min-width: 992px) {
   .expand {
-    display: none;
+  display: none;
   }
 }
 

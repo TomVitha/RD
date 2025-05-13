@@ -48,4 +48,159 @@ $(document).ready(function () {
     
 })
 
-console.log('sdgsfg');
+
+// fetch Google Sheets data, parse and display it in table
+const url = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
+
+// Fetch data from Google Sheets and parse it as JSON
+async function fetchSheetData() {
+    try {
+        const response = await fetch(url);
+        const responseText = await response.text();
+        // Extract the JSON part from the response (Google's response has a prefix we need to remove)
+        const jsonString = responseText.substring(responseText.indexOf('{'), responseText.lastIndexOf('}') + 1);
+        const data = JSON.parse(jsonString);
+
+        // console.debug("Raw data:", data);
+        
+        // Extract headers from column labels
+        const headers = data.table.cols.map(col => col.label);
+        
+        // Extract and format rows
+        const tableData = data.table.rows.map(row => {
+            const obj = {};
+            row.c.forEach((cell, index) => {
+                let cellValue = cell ? cell.v : '';
+                // Check if the cell value is a date string
+                if (typeof cellValue === 'string' && cellValue.startsWith('Date(') && cellValue.endsWith(')')) {
+                    const parts = cellValue.substring(5, cellValue.length - 1).split(',');
+                    if (parts.length === 3) {
+                        const year = parseInt(parts[0], 10);
+                        const month = parseInt(parts[1], 10);           // Month from Sheets (1-12)
+                        const day = parseInt(parts[2], 10);
+                        cellValue = new Date(year, month - 1, day);     // JavaScript months are 0-indexed (0-11), so subtract 1 from the month
+                    }
+                }
+                obj[headers[index]] = cellValue;
+            });
+            return obj;
+        });
+        
+        console.debug("Headers:", headers);
+        console.debug("Data sample:", tableData.slice(0, 2));
+        
+        return { headers, tableData };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return null;
+    }
+}
+
+// Display data in a table format
+function generateTableWithData(headers, tableData, locale = 'cs-CZ', displaySold = false, displayHeader = true) {
+    const table = document.createElement('table');
+    const container = document.querySelector('#price-table-container');
+    table.className = 'price-table';
+
+    // Create table head
+    if (displayHeader) {
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        headers.forEach(header => {
+            const th = document.createElement('th');
+            th.textContent = header;
+            headerRow.appendChild(th);
+        });
+        // Add an empty header for the action button column
+        const detailTh = document.createElement('th');
+        // detailTh.textContent = 'Karta domu';
+        headerRow.appendChild(detailTh); // Append it at the end
+        table.appendChild(thead);
+        thead.appendChild(headerRow);
+    }
+
+    // Create table body
+    const tbody = document.createElement('tbody');
+    tableData.forEach(row => {
+        // If status is sold, skip this row
+        if (!displaySold && row.status.toString() === 'sold') {
+            return;
+        }
+
+        const tr = document.createElement('tr');
+        headers.forEach(header => {
+
+            const td = document.createElement('td');
+            let cellData = row[header];
+
+            // Convert date cells to locale-formatted strings
+            if (cellData instanceof Date) {
+                cellData = new Intl.DateTimeFormat(locale, {
+                    month: 'long',
+                    year: 'numeric',
+                }).format(cellData);
+            }
+
+            // Format 'price' cell as currency
+            if (header.startsWith('price') && typeof cellData === 'number') {
+                cellData = new Intl.NumberFormat(locale, {
+                    style: 'currency',
+                    currency: 'CZK',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                }).format(cellData);
+            }
+
+            // Prepend 'name' with fa status icon
+            if (header === 'name') {
+                cellData = `<i class="fa-solid fa-circle property-status ${row.status}"></i> ${cellData}`;
+                td.innerHTML = cellData; // Set innerHTML to allow HTML content
+            }
+
+            // Suffix area units
+            if (header.startsWith('area')) {
+                cellData += ' m²';
+            }
+
+            // Suffix layout
+            if (header === 'layout') {
+                if (locale === 'cs-CZ') 
+                    cellData += '+kk';   
+                else
+                    cellData += '+kt';
+            }
+
+            td.innerHTML = cellData;
+
+            tr.appendChild(td);
+        });
+
+        // Add the action button cell at the end of the row
+        const detailTd = document.createElement('td');
+
+        const btnDetail = document.getElementById('price-table__detail-btn').content.cloneNode(true).querySelector('a');
+        btnDetail.setAttribute('href', row.id);
+
+        detailTd.appendChild(btnDetail);
+        tr.appendChild(detailTd);
+        
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    
+    // Append the table to the container
+    container.innerHTML = '';               // Clear existing content
+    container.appendChild(table);
+
+}
+
+// Example usage
+async function initializeData() {
+    const propertiesData = await fetchSheetData();
+    if (propertiesData) {
+        generateTableWithData(propertiesData.headers, propertiesData.tableData);
+    }
+}
+
+// Call the function
+initializeData();

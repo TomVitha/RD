@@ -266,59 +266,8 @@
           <i class="fa-regular fa-expand"></i>
         </button>
       </div>
-      <div class="price-table-wrapper">
-        <table class="price-table">
-          <colgroup>
-            <col></col>
-            <col></col>
-            <col></col>
-            <col></col>
-            <col></col>
-            <col></col>
-            <col></col>
-            <col></col>
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col">Dům</th>
-              <th scope="col">Pater</th>
-              <th scope="col">Dispozice</th>
-              <th scope="col">Příslušenství</th>
-              <th scope="col" class="sortable">Interní plocha</th>
-              <th scope="col" class="sortable">Externí plocha</th>
-              <th scope="col" class="sortable sort-active">Cena</th>
-              <th scope="col">Karta domu</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <i data-v-207a1df3="" class="fa-solid fa-circle apartment-status available" aria-hidden="true"></i>
-                A 01
-              </td>
-              <td>2</td>
-              <td>7+kk</td>
-              <td>Nic</td>
-              <td>36,6&nbsp;m²</td>
-              <td>6,9&nbsp;m²</td>
-              <td class="price">5.619.600&nbsp;Kč</td>
-              <td><a href="/temp/B1.pdf" class="btn btn--yellow--sm--inline" data-fancybox="rd-pdf" data-type="iframe"><strong>Detail</strong></a></td>
-            </tr>
-            <tr>
-              <td>
-                <i data-v-207a1df3="" class="fa-solid fa-circle apartment-status under-offer" aria-hidden="true"></i>
-                A 01
-              </td>
-              <td>2</td>
-              <td>7+kk</td>
-              <td>Nic</td>
-              <td>36,6&nbsp;m²</td>
-              <td>6,9&nbsp;m²</td>
-              <td class="price">5.619.600&nbsp;Kč</td>
-              <td><a href="/temp/B1.pdf" class="btn btn--yellow--sm--inline" data-fancybox="rd-pdf" data-type="iframe"><strong>Detail</strong></a></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="price-table-wrapper" id="price-table-container">
+        <!-- Table will be filled by fetched data from Sheet -->
       </div>
     </div>
     <!-- <p>UKÁZKA PDF LIGHTBOXU - <a href="/temp/B1.pdf" data-fancybox="rd-pdf" data-type="iframe"><strong>PDF Karta domu</strong></a></p> -->
@@ -438,6 +387,37 @@
   </div>
 </section>
 
+<!-- 
+  UKÁZKA PDF LIGHTBOXU:
+  <a href="/temp/B1.pdf" class="btn btn--yellow--sm" data-fancybox="rd-pdf" data-type="iframe">PDF Karta domu</a>
+-->
+
+<template id="price-table__detail-btn">
+  <a href="" class="btn btn--yellow--sm">
+    Karta domu
+  </a>
+</template>
+
+<template>
+  <table class="price-table" id="template-price-table">
+    <thead>
+      <tr>
+        <td>Název</td>
+        <td>Cena</td>
+        <td>Stav</td>
+        <td>Dispozice</td>
+        <td>Pater</td>
+        <td>Příslušenství</td>
+        <td>Plocha</td>
+        <td>Termín dokončení</td>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data loaded from Google Sheets -->
+    </tbody>
+  </table>
+</template>
+
 
 <!-- ! temp here - should be in scripts -->
-<script src="/storage/js/rodinne-domy-2025.js"></script>
+<script src="/storage/js/rodinne-domy-2025.js" defer></script>
