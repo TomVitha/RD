@@ -1,3 +1,12 @@
+<div class="dev">
+  <h1>Heading</h1>
+  <h2>Heading</h2>
+  <h3>Heading</h3>
+  <h4>Heading</h4>
+  <h5>Heading</h5>
+  <h6>Heading</h6>
+</div>
+
 <div class="hero">
   <video playsinline muted autoplay loop poster>
     <!-- <source src="https://www.corwin.sk/files/videos/OUR-PROJECTS-FULL-HD-1.mp4" type="video/mp4"> -->
@@ -99,22 +108,22 @@
     <div class="highlights">
       <div class="highlight">
         <i class="fal fa-train"></i>
-        <strong>Doprava</strong>
+        <em>Doprava</em>
         <span>Je dostupná řada spojení do Prahy i z Prahy</span>
       </div>
       <div class="highlight">
         <i class="fal fa-house-medical"></i>
-        <strong>Občanská vybavenost</strong>
+        <em>Občanská vybavenost</em>
         <span>V okolí je vše co můžete potřebovat</span>
       </div>
       <div class="highlight">
         <i class="fal fa-leaf"></i>
-        <strong>Příroda</strong>
+        <em>Příroda</em>
         <span>Kolem sebe máte spoustu zeleně pro cvičení nebo relax</span>
       </div>
       <div class="highlight">
         <i class="fal fa-teddy-bear"></i>
-        <strong>Vhodné pro děti</strong>
+        <em>Vhodné pro děti</em>
         <span>Okolí je bezpěčné se školou, školkou a hřišťmi</span>
       </div>
     </div>
@@ -225,22 +234,22 @@
     <div class="highlights">
       <div class="highlight">
         <i class="fal fa-house"></i>
-        <strong>Dům</strong>
-        <span>Užívejte výhod rodinného domu jako je velký prostor a zahrada</span>
+        <em>Dům</em>
+        <span>Užívejte výhod rodinného domu jako je velký prostor a vlastní zahrada</span>
       </div>
       <div class="highlight">
         <i class="fal fa-layer-group"></i>
-        <strong>Provedení</strong>
+        <em>Provedení</em>
         <span>Několik typů provedení za použití těch nejkvalitnějších materiálů</span>
       </div>
       <div class="highlight">
         <i class="fal fa-couch"></i>
-        <strong>Vybavení</strong>
+        <em>Vybavení</em>
         <span>Domy jsou plně zařízené nábytkem a všemi spotřebičemi</span>
       </div>
       <div class="highlight">
         <i class="fal fa-shield"></i>
-        <strong>Zabezpečení</strong>
+        <em>Zabezpečení</em>
         <span>Integrována ta nejmodernější bezpečnostní technologie</span>
       </div>
     </div>
@@ -250,14 +259,69 @@
 <section id="cenik">
   <div class="container">
     <h2><a href="#cenik">Ceník</a></h2>
-    <div class="layout-viewer">
-      <img src="https://fakeimg.pl/1920x1000/?text=Layout%20viewer&retina=1" alt="">
-      <button class="expand" data-lv-expand>
-        <i class="fa-regular fa-expand"></i>
-      </button>
+    <div class="properties">
+      <div class="layout-viewer">
+        <img src="https://fakeimg.pl/1920x1000/?text=Layout%20viewer&retina=1" alt="">
+        <button class="expand" data-lv-expand>
+          <i class="fa-regular fa-expand"></i>
+        </button>
+      </div>
+      <div class="price-table-wrapper">
+        <table class="price-table">
+          <colgroup>
+            <col></col>
+            <col></col>
+            <col></col>
+            <col></col>
+            <col></col>
+            <col></col>
+            <col></col>
+            <col></col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Dům</th>
+              <th scope="col">Pater</th>
+              <th scope="col">Dispozice</th>
+              <th scope="col">Příslušenství</th>
+              <th scope="col" class="sortable">Interní plocha</th>
+              <th scope="col" class="sortable">Externí plocha</th>
+              <th scope="col" class="sortable sort-active">Cena</th>
+              <th scope="col">Karta domu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <i data-v-207a1df3="" class="fa-solid fa-circle apartment-status available" aria-hidden="true"></i>
+                A 01
+              </td>
+              <td>2</td>
+              <td>7+kk</td>
+              <td>Nic</td>
+              <td>36,6&nbsp;m²</td>
+              <td>6,9&nbsp;m²</td>
+              <td class="price">5.619.600&nbsp;Kč</td>
+              <td><a href="/temp/B1.pdf" class="btn btn--yellow--sm--inline" data-fancybox="rd-pdf" data-type="iframe"><strong>Detail</strong></a></td>
+            </tr>
+            <tr>
+              <td>
+                <i data-v-207a1df3="" class="fa-solid fa-circle apartment-status under-offer" aria-hidden="true"></i>
+                A 01
+              </td>
+              <td>2</td>
+              <td>7+kk</td>
+              <td>Nic</td>
+              <td>36,6&nbsp;m²</td>
+              <td>6,9&nbsp;m²</td>
+              <td class="price">5.619.600&nbsp;Kč</td>
+              <td><a href="/temp/B1.pdf" class="btn btn--yellow--sm--inline" data-fancybox="rd-pdf" data-type="iframe"><strong>Detail</strong></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <h2>[SEM PŘIJDE TABULKA VÝPISU DOMŮ]</h2>
-    <p>Dům 1</p><p>Dům 2</p><p>Dům 3</p><p>Dům 4</p><p>Dům 5</p><p>Dům 6</p><p>Dům 7</p><p>Dům 8</p><p>Dům 9</p>
+    <!-- <p>UKÁZKA PDF LIGHTBOXU - <a href="/temp/B1.pdf" data-fancybox="rd-pdf" data-type="iframe"><strong>PDF Karta domu</strong></a></p> -->
   </div>
 </section>
 
@@ -266,7 +330,7 @@
     <h2><a href="#galerie">Galerie</a></h2>
     <img src="https://fakeimg.pl/1920x1000/?text=Galerie&retina=1" alt="">
     <div class="buttons-holder mt-4">
-      <a href="#" class="btn btn--gray-dark--outline--rounded">Kompletní galerie</a>
+      <a href="#" class="btn btn--gray-dark--outline-fill--rounded">Kompletní galerie</a>
     </div>
   </div>
 </section>
@@ -283,7 +347,7 @@
           <i class="fal fa-signature"></i>
         </div>
         <div class="phase__content">
-          <strong>Stavební povolení</strong>
+          <em>Stavební povolení</em>
           <span>Q1 2027</span>
         </div>
       </div>
@@ -295,7 +359,7 @@
           <i class="fal fa-excavator"></i>
         </div>
         <div class="phase__content">
-          <strong>Zahájení stavby</strong>
+          <em>Zahájení stavby</em>
           <span>Q2 2027</span>
         </div>
       </div>
@@ -307,7 +371,7 @@
           <i class="fal fa-trowel-bricks"></i>
         </div>
         <div class="phase__content">
-          <strong>Hrubá stavby</strong>
+          <em>Hrubá stavby</em>
           <span>Q3 2027</span>
         </div>
       </div>
@@ -319,7 +383,7 @@
           <i class="fal fa-clipboard-check"></i>
         </div>
         <div class="phase__content">
-          <strong>Kolaudace</strong>
+          <em>Kolaudace</em>
           <span>Q4 2027</span>
         </div>
       </div>
@@ -331,7 +395,7 @@
           <i class="fal fa-key"></i>
         </div>
         <div class="phase__content">
-          <strong>Nastěhování</strong>
+          <em>Nastěhování</em>
           <span>Q1 2028</span>
         </div>
       </div>

@@ -1,3 +1,13 @@
+/* ! TEMP - Testing fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
   /** Brand **/
   --color-blue: #20234c;
@@ -53,7 +63,7 @@ html {
 
 /** Dark Reader optimization **/
 html[data-darkreader-scheme="dark"] {
-  --darkreader-bg--color-yellow: #dbb722;
+  --darkreader-bg-color-yellow: #dbb722;
 }
 html[data-darkreader-scheme="dark"] .btn-yellow {
   --darkreader-text--color-blue: #141617;
@@ -77,8 +87,6 @@ html[data-darkreader-scheme="dark"] .btn-yellow {
   display: none !important;
 }
 
-/* ! temp */
-/* @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap'); */
 
 body {
   color: var(--color-text, #4D4D4D);
@@ -89,17 +97,28 @@ body {
 
 /* ! TEMP - Testing fonts */
 main {
-  /* font-family: 'Rubik' */
-  /* font-family: 'Inter' */
-  /* font-family: 'Geist' */
-  /* font-family: 'Plus Jakarta Sans' */
-  /* font-family: 'Raleway' */
-  /* font-family: 'Poppins' */
-  /* font-family: 'Archivo' */
+  /* font-family: 'Roboto', sans-serif; */
+  /* font-family: 'Rubik'; */
+  /* font-family: 'Inter'; */
+  /* font-family: 'Geist'; */
+
+  /* font-family: 'Geist', 'Roboto', sans-serif; */
+}
+
+/* ! TEMP - Testing fonts */
+:where(main) :is(h1, h2, h3, h4, h5, h6) {
+  /* font-family: 'Rubik'; */
+  /* font-family: 'Inter'; */
+  /* font-family: 'Geist'; */
+  /* font-family: 'Plus Jakarta Sans'; */
+  /* font-family: 'Raleway'; */
+  /* font-family: 'Poppins'; */
+  /* font-family: 'Archivo'; */
+  letter-spacing: -0.01em !important;
 }
 
 
-/* Content always fills screen height */
+/* Page will always fill screen height */
 div[data-v-5782d946] {
   display: flex;
   flex-direction: column;
@@ -115,6 +134,11 @@ main#main { flex: 1; }
 table {
   border-collapse: collapse;
   border: none;
+  caption-side: bottom;
+}
+
+th, td {
+  padding: 0;
 }
 
 :where(main) a {
@@ -179,6 +203,13 @@ small {
 
 strong {
   font-weight: 700;
+}
+
+em {
+  font-style: normal;
+  font-weight: 700;
+
+  color: black;
 }
 
 label {
@@ -251,165 +282,192 @@ label {
 }
 /* RESET (end) */
 
+/** Common Font awesome styling **/
+.price-table .sortable::after{
+  -webkit-font-smoothing: antialiased;
+  display: var(--fa-display, inline-block);
+  font-style: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-rendering: auto;
+  font-family: "Font Awesome 6 Pro";
+}
 
 /* # BTN */
 .btn {
-  --btn-theme: transparent;
-  --btn-theme-complementary: var(--color-blue, #20234c);
-  --btn-border-radius: 0.45em;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
-  align-items: center;
-  appearance: none;
-  background: var(--btn-theme, transparent);
-  border-radius: var(--btn-border-radius, 6px);
-  border: none;
-  color: var(--btn-theme-complementary, var(--color-blue, #20234c));
-  display: flex;
-  font-size: 0.875rem;
-  font-weight: 600;
-  gap: 0 0.6em;
-  isolation: isolate;
-  justify-content: center;
-  line-height: 1.1;
-  overflow: hidden;
-  overflow: clip;
-  padding: 0.8em 1.25em;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transition: box-shadow 150ms;
-  user-select: none;
-  vertical-align: middle;
-  white-space: initial;
-  width: fit-content;
-  z-index: 0;
+    --btn-theme: transparent;
+    --btn-theme-complementary: var(--color-primary);
+    --btn-border-radius: 0.375rem;
+    --btn-background: var(--btn-theme, transparent);
+    --btn-background-hover: var(--btn-background);
+    
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
+    align-items: center;
+    appearance: none;
+    background: var(--btn-background);
+    border-radius: var(--btn-border-radius, 6px);
+    border: none;
+    color: var(--btn-theme-complementary);
+    display: flex;
+    font-size: 0.875rem;
+    font-weight: 550;
+    gap: 0 0.6em;
+    isolation: isolate;
+    justify-content: center;
+    line-height: 1.0;
+    min-height: 2.7em;
+    overflow: clip;
+    overflow: hidden;
+    padding: 0.5em 1.25em;
+    position: relative;
+    text-align: initial;
+    text-decoration: none;
+    transition: none;
+    user-select: none;
+    vertical-align: middle;
+    white-space: initial;
+    width: fit-content;
+    z-index: 0;
 }
 
-/** Btn Hover styling **/
-/* Note: :is() does not select pseudo-elements -> :is(::before, ::after) won't work */
-.btn::before,
-.btn::after{
-  background: currentColor;
-  bottom: 0;
-  content: '';
-  height: 100%;
-  left: 0;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform-origin: center center 0px;
-  transition-duration: 200ms;
-  transition-property: transform, opacity, height, color;
-  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1);
-  width: 100%;
+@supports (background: color-mix(in oklab, red, currentColor 10%)) {
+    .btn {
+        --btn-background-hover: color-mix(in srgb-linear, var(--btn-background), currentColor 8%);
+    }
 }
 
-.btn::before{
-  z-index: -1;
+.btn:not(.disabled, :disabled, .outline):hover {
+    background: var(--btn-background-hover);
 }
 
-.btn:not(.disabled, :disabled, .outline):hover::after{
-  opacity: 0.075;
-}
-
-/** Colors **/
-.btn[class*="--yellow"] {
-  --btn-theme: var(--color-yellow, #ffed00);
-  --btn-theme-complementary: var(--color-blue, #20234c);
-}
-
-.btn[class*="--blue"] {
-  --btn-theme: var(--color-blue, #20234c);
-  --btn-theme-complementary: #fff;
-}
-
-.btn[class*="--white"] {
-  --btn-theme: white;
-  --btn-theme-complementary: var(--color-primary, var(--color-blue, #20234c));
-}
-
-.btn[class*="--black"] {
-  --btn-theme: black;
-  --btn-theme-complementary: white;
-}
-
-.btn[class*="--gray-dark"] {
-  --btn-theme: var(--color-gray-dark, #4D4D4D);
-  --btn-theme-complementary: white;
-}
-
-.btn[class*="--primary"] {
-  --btn-theme: var(--color-primary);
-  --btn-theme-complementary: #fff;
-}
-
-.btn[class*="--secondary"] {
-  --btn-theme: var(--color-secondary);
-  --btn-theme-complementary: var(--color-primary);
-}
-
-.btn[class*="--tertiary"] {
-  --btn-theme: var(--color-tertiary);
-  --btn-theme-complementary: var(--color-primary);
+/* Note: Required to override app-wide styling */
+a.btn:hover {
+    transition: none;
 }
 
 /** Inline **/
-.btn[class*="--inline"]{
-  display: inline-flex;
+.btn[class*="--inline"] {
+    display: inline-flex;
 }
-
+  
 /** Full width **/
-.btn[class*="--fill"]{
-  width: 100%;
+.btn[class*="--full"] {
+    width: 100%;
 }
 
-/** Rounded  **/
-.btn[class*="--rounded"]{
-  --btn-border-radius: 999px;
+/** Small **/
+.btn[class*="--sm"] {
+    font-size: 0.75rem;
 }
 
-/** Rounded  **/
-.btn[class*="--sharp"]{
-  --btn-border-radius: 0px;
+/** Large **/
+.btn[class*="--lg"] {
+    font-size: 1.125rem;
 }
 
-/** Outline  **/
-.btn[class*="--outline"]{
-  background: transparent;
-  color: var(--btn-theme);
-  border: 1px solid var(--btn-theme);
+/** Sharp corners  **/
+.btn[class*="--sharp"] {
+    --btn-border-radius: 0px;
 }
 
-/** Outline Fill on hover  **/
-.btn[class*="--outline-fill"]:hover{
-  background: var(--btn-theme);
-  color: var(--btn-theme-complementary);
+/** Rounded corners (pill)  **/
+.btn[class*="--rounded"] {
+    --btn-border-radius: 999px;
 }
-
+  
+/** COLORS **/
+.btn[class*="--yellow"] {
+    --btn-theme: var(--color-yellow, #ffed00);
+    --btn-theme-complementary: var(--color-blue, #20234c);
+}
+  
+.btn[class*="--blue"] {
+    --btn-theme: var(--color-blue, #20234c);
+    --btn-theme-complementary: #fff;
+}
+  
+.btn[class*="--white"] {
+    --btn-theme: white;
+    --btn-theme-complementary: var(--color-primary, var(--color-blue, #20234c));
+}
+  
+.btn[class*="--black"] {
+    --btn-theme: black;
+    --btn-theme-complementary: white;
+}
+  
+.btn[class*="--gray-dark"] {
+    --btn-theme: var(--color-gray-dark, #4D4D4D);
+    --btn-theme-complementary: white;
+}
+  
+.btn[class*="--primary"] {
+    --btn-theme: var(--color-primary);
+    --btn-theme-complementary: #fff;
+}
+  
+.btn[class*="--secondary"] {
+    --btn-theme: var(--color-secondary);
+    --btn-theme-complementary: var(--color-primary);
+}
+  
+.btn[class*="--tertiary"] {
+    --btn-theme: var(--color-tertiary);
+    --btn-theme-complementary: var(--color-primary);
+}
+  
+/** Outline **/
+.btn[class*="--outline"] {
+    --btn-background: transparent;
+    color: var(--btn-theme);
+    border: 1px solid var(--btn-theme);
+}
+  
+/** Outline with fill on hover  **/
+.btn[class*="--outline-fill"]:hover {
+    --btn-background-hover: var(--btn-theme);
+    color: var(--btn-theme-complementary);
+}
+  
 /** Ghost **/
 .btn[class*="--ghost"] {
-  background: transparent;
-  color: var(--btn-theme);
+    --btn-background: transparent;
+    color: var(--btn-theme);
 }
 
 /** Transparent **/
-.btn[class*="--transparent"]{
-  background: transparent;
-  color: var(--btn-theme);
+.btn[class*="--transparent"] {
+    --btn-background: transparent;
+    --btn-background-hover: transparent;
+    color: var(--btn-theme);
 }
 
-.btn[class*="--transparent"]::before,
-.btn[class*="--transparent"]::after{
-  background: transparent;
+/** Link **/
+.btn[class*="--link"] {
+    --btn-background: transparent;
+    --btn-background-hover: transparent;
+    color: var(--btn-theme);
+    overflow: visible;
+    padding: 0;
 }
 
-/** Sizes **/
-/* .btn[class*="--large"] {
-  font-size: 1.0rem;
-} */
+.btn[class*="--link"]:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.15em;
+}
 
+/** Container element for Btns **/
+.buttons-holder{
+  margin: -0.2rem;
+}
+
+/** Adds separating margins around Btns **/
+.buttons-holder .btn{
+  margin: 0.2rem;
+  max-width: calc(100% - 0.4rem);
+  max-height: calc(100% - 0.4rem);
+}
 /* BTN (end) */
 
 /* # TYPOGRAPHY */
@@ -417,18 +475,25 @@ label {
   position: relative;
   color: var(--color-primary, var(--color-blue, #20234c));
 
+  /* ! TEMP */
+  margin-bottom: 0.5em;
+  margin-top: 1.2em;
 }
 :where(main) :is(h1,h2,h3,h4,h5,h6):first-child {
   margin-top: 0;
 }
 h2 {
   font-weight: 700;
-  margin-bottom: 1rem;
+  /* margin-top: 2rem; */
+  /* margin-bottom: 1rem; */
+  /* ! temp */
+  font-size: 1.875rem;
+  /* ? maybe ? */
   letter-spacing: -0.015em;
-  margin-top: 2rem;
 }
 
-/** Styling of '#' (hidden by default) **/
+
+/** Styling of '#' **/
 h2::before {
   /* ! wip */
   content: '#';
@@ -448,24 +513,11 @@ h2::before {
   transition: translate 200ms, opacity 200ms, visibility 0ms 200ms;
 }
 
-/** The '#' is visible **/
-:is(:target h2, h2:target, h2:has(a:hover))::before{
+:is(:target h2:first-of-type, h2:target, h2:has(a:hover))::before{
   visibility: visible;
   opacity: 1;
   translate: -0.85em 0;
   transition: translate 200ms, opacity 200ms, visibility 0ms 0ms;
-}
-
-/** Container element for Btns **/
-.buttons-holder{
-  margin: -0.2rem;
-}
-
-/** Adds separating margins around Btns **/
-.buttons-holder .btn{
-  margin: 0.2rem;
-  max-width: calc(100% - 0.4rem);
-  max-height: calc(100% - 0.4rem);
 }
 
 .hero {
@@ -541,6 +593,7 @@ h2::before {
   text-wrap: balance;
   color: white;
   font-size: 80px;
+  margin-bottom: 0.5rem;
 }
 
 
@@ -631,7 +684,7 @@ h2::before {
   font-weight: 700;
 }
 
-/** Switch do mobile nav **/
+/** Switch to mobile nav **/
 @media screen and (max-width: 991px){
   .page-nav__desktop{
     display: none;
@@ -651,17 +704,34 @@ h2::before {
 }
 /* ? Page Nav (end) */
 
-/* # SECTION */
+/* # SECTIONS */
 section {
-  position: relative;
-  overflow-x: clip;
-  padding-block: 3.0rem;
-  /* scroll-margin-top: 3.0rem; */
+    position: relative;
+    overflow-x: hidden;
+    overflow-x: clip;
+    scroll-margin-top: 5.0rem;
+    margin-block: 5.0rem;
 }
 
-/** Section with no bg, following a section with no bg **/
-:where(section:not([class*="bg-"]))+section:not([class*="bg-"]) {
-  padding-top: 0;
+/* Section with bg */
+section:where([class*="bg-"]) {
+    margin-block: 0;
+    padding-block: 3rem;
+}
+
+/** Sub-sections **/
+section section {
+    overflow: visible;
+    margin-block: 3.0rem;
+}
+
+@media (max-width: 991px) {
+    section {
+        margin-block: 3.5rem;
+    }
+    section section {
+        margin-block: 2.5rem;
+    }
 }
 
 /** Section with bg **/
@@ -676,20 +746,18 @@ section:where([class*="bg-"]) {
 }
 
 /** Section colors **/
-.bg-primary{
-  background-color: var(--color-primary, var(--color-blue, #20234c));
+.bg-primary {
+  background-color: var(--color-primary);
   color: white;
-  --color-text-behind: #20234c;
 }
 
-.bg-gray{
+.bg-gray {
   --color-text-behind: #f3f3f3;
-  background-color: var(--color-gray, #e8e8e8);
-
+  background-color: var(--color-gray);
 }
 
-.bg-blue{
-  background-color: var(--color-blue, #20234c);
+.bg-blue {
+  background-color: var(--color-blue);
   color: white;
 }
 
@@ -703,20 +771,41 @@ section:where([class*="bg-"]) {
       transform: translate3d(0, 0, 0); /* Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
   }
 }
+
+[class*="bg-"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
+    margin-top: 0;
+}
+
+section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
+    color: inherit;
+}
 /* SECTION (end) */
 
 .two-col {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px 48px;
+  /* gap: 32px 48px; */
   /* ? maybe ? */
+  gap: 32px 7%;
+}
+
+.two-col:where(.top, .start) {
+  align-items: start;
+}
+
+.two-col.center {
   align-items: center;
+}
+
+.two-col:where(.bottom, .end) {
+  align-items: end;
 }
 
 @media (max-width: 991px) {
   .two-col {
     display: flex;
     flex-direction: column;
+    align-items: normal;
   }
   .two-col.alt {
     flex-direction: column-reverse;
@@ -748,10 +837,6 @@ section:where([class*="bg-"]) {
   user-select: none;
 }
 
-.highlight > strong {
-  font-size: 1.125rem;
-  color: black;
-}
 
 .strip {
   width: 100%;
@@ -926,12 +1011,9 @@ section:where([class*="bg-"]) {
   flex-direction: column;
 }
 
-.phase__content strong {
-  font-size: 1.125rem;
-  font-weight: 700;
+.phase__content :is(strong, em) {
   line-height: 1.0;
   margin-bottom: 0.5rem;
-  color: black;
 }
 
 .phase__icon {
@@ -1002,6 +1084,101 @@ section:where([class*="bg-"]) {
   fill:  var(--color-primary);
 }
 /* PHASES (end) */
+
+/* # CENÍK TABULKA */
+.price-table-wrapper {
+    border: 1px solid #ededed;
+    border-radius: 10px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    scrollbar-color: #c5c5c5 transparent;
+    scrollbar-width: thin;
+    margin-block: 24px;
+}
+
+.price-table {
+  width: 100%;
+  font-size: 0.875rem;
+  margin: 0;
+  background-color: white;
+  text-align: center;
+  line-height: 1.2;
+  cursor: default;
+}
+
+.price-table tr:not(:last-child) {
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.price-table tbody tr:nth-child(odd) {
+    background-color: #fbfbfb;
+}
+
+.price-table :is(th, td) {
+  height: 3.5rem;
+  padding: 0.5em 0.75em;
+  vertical-align: middle;
+  text-align: inherit;
+  position: relative;
+}
+
+.price-table :is(th, td):first-child  {
+  padding-left: 1.5em;
+}
+
+.price-table :is(th, td):last-child {
+  padding-right: 1.5em;
+}
+
+.price-table thead th {
+  box-shadow: inset 0px -1px 0px 0px #ededed;
+}
+
+.price-table tbody td {
+  white-space: nowrap;
+}
+
+.apartment-status {
+  font-size: 0.7em;
+  vertical-align: middle;
+  margin-right: 0.55em;
+}
+
+.apartment-status.available {
+      color: #6c6;
+}
+
+.apartment-status.under-offer {
+      color: #c93;
+}
+
+.price-table .price {
+  font-weight: bold;
+}
+
+.price-table .sortable {
+  cursor: pointer;
+}
+
+.price-table .sortable::after{
+  content: "\e60d";
+  opacity: 0.25;
+  margin-left: 0.55em;
+  font-size: 85%;
+}
+
+.price-table .sortable:hover::after {
+  opacity: 0.5;
+}
+
+.price-table .sortable.sort-active {
+    color: #0576DE;
+    box-shadow: inset 0px -1px 0px 0px currentColor;
+}
+
+.price-table .sortable.sort-active::after {
+    opacity: 1;
+}
 
 /* # LAYOUT VIEWER */
 /* ! WIP */
