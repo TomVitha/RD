@@ -1,5 +1,5 @@
-// fetch Google Sheets data, parse and display it in table
-// const url = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
+// fetch Google Sheets data
+const url = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
 
 // Fetch data from Google Sheets and parse it as JSON
 export async function fetchSheetData() {
@@ -55,12 +55,12 @@ export function populateTemplateTableWithData(data, locale = 'cs-CZ', displaySol
         if (!displaySold && property['status'] === 'sold')
             return;
 
-        translateDataToHumanReadable(locale);
-
         const row = tableBody.insertRow();
+        // Set attribute data-status
+        row.setAttribute('data-status', property['status']);
 
         // Name
-        row.insertCell().innerHTML = property['name']
+        row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status ${property['status']}" aria-hidden="true"></i>` + property['name']
         // Floors (number of floors)
         row.insertCell().innerHTML = property['floors']
         // Layout (number of rooms)
@@ -90,8 +90,4 @@ export function populateTemplateTableWithData(data, locale = 'cs-CZ', displaySol
     // Append table to container (while replacing any existing content)
     tableContainer.replaceChildren(table);
     console.debug(table);
-}
-
-function translateDataToHumanReadable(locale = 'cs-CZ') {
-
 }

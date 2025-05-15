@@ -528,6 +528,8 @@ h2::before {
   /* height: calc(100svh - var(--header-height) - var(--page-nav-height)); */
   background: rgb(172, 172, 172);
   color: white;
+  /* ? maybe ? */
+  max-height: calc(1080px - var(--header-height));
   /* ! temp */
   background: url('https://rezidencekolovraty.cz/app/uploads/2023/02/Kolovraty_II_002_220617-min-scaled.jpg') no-repeat 30% center/cover;
 }
@@ -1114,6 +1116,10 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   background-color: #fbfbfb;
 }
 
+th {
+  user-select: none;
+}
+
 .price-table :is(th, td) {
   height: 3.5rem;
   padding: 0.5em 0.75em;
@@ -1130,7 +1136,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   padding-right: 1.5em;
 }
 
-.price-table thead th {
+.price-table thead {
   box-shadow: inset 0px -1px 0px 0px #ededed;
 }
 
@@ -1141,7 +1147,8 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 .property-status {
   font-size: 0.7em;
   vertical-align: middle;
-  margin-right: 0.55em;
+  margin-right: 0.6em;
+  margin-top: -3%;
 }
 
 .property-status.available {
@@ -1156,7 +1163,11 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   color: #933;
 }
 
-.price-table .price {
+/* .price-table .price {
+  font-weight: bold;
+} */
+
+.price-table tbody td.active {
   font-weight: bold;
 }
 
@@ -1167,20 +1178,28 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 .price-table .sortable::after{
   content: "\e60d";
   opacity: 0.25;
-  margin-left: 0.55em;
+  margin-left: 0.6em;
   font-size: 85%;
+}
+
+.price-table .sortable.asc::after {
+      content: "\f106";
+}
+
+.price-table .sortable.desc::after {
+      content: "\f107";
 }
 
 .price-table .sortable:hover::after {
   opacity: 0.5;
 }
 
-.price-table .sortable.sort-active {
+.price-table .sortable.active {
   color: #0576DE;
   box-shadow: inset 0px -1px 0px 0px currentColor;
 }
 
-.price-table .sortable.sort-active::after {
+.price-table .sortable.active::after {
   opacity: 1;
 }
 
