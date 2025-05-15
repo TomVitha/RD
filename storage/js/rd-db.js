@@ -9,8 +9,6 @@ export async function fetchSheetData() {
         // Extract the JSON part from the response (Google's response has a prefix we need to remove)
         const jsonString = responseText.substring(responseText.indexOf('{'), responseText.lastIndexOf('}') + 1);
         const data = JSON.parse(jsonString);
-
-        // console.debug("Raw data:", data);
         
         // Extract headers from column labels
         const headers = data.table.cols.map(col => col.label);

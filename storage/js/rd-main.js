@@ -1,112 +1,117 @@
-console.info('TEST - Loading main script...');
+import { fetchSheetData, populateTemplateTableWithData } from './rd-db.js';
 
-import { fetchSheetData, populateTemplateTableWithData } from './rd-db.js'; // Adjust the path as necessary
+// ! NOTE: This will change depending on the CZ or EN version of the script
+// const locale = 'cs-CZ';
+const locale = 'en-US';
 
-async function initialize(locale) {
+async function init(locale) {
     const propertiesData = await fetchSheetData();
-
     if (!propertiesData) {
         console.error('Failed to fetch or parse data.');
         return 
     }
-
     populateTemplateTableWithData(propertiesData.tableData, locale, true);
-
-    const table = document.querySelector('.price-table');
-
-    if (!table) {
+    const priceTable = document.querySelector('.price-table');
+    if (!priceTable) {
         console.error("Table .price-table not found after populating data.");
         return
     }
     
-    // Now it's safe to call clickableTh
-    cellsFunctionality(table); 
+    // Add functionality to headers to sort the table
+    document.querySelectorAll('.price-table th.sortable').forEach(sortableTh => {
+        sortableTh.addEventListener('click', function() {
+            console.debug('This sortable table head clicked: ', this)
+            sortTable(priceTable, sortableTh.cellIndex, "asc", locale)
+        });
+    });
+
+    // !!! TODO: TH on click always sorts by ascending
+    // !!! TODO: Cell class switching temp disabled
+
+    // On page load, sort the table by the 7th column (price)
+    sortTable(priceTable, 6, "asc", locale);
 }
 
-// Example usage with a specific locale
-initialize(); 
-
-
-function sortTable(n, table, dir = "asc") {
-  // Get all rows except the header row
-  const rows = Array.from(table.rows).slice(1);
+// Natural sorting
+function naturalSortTable(table, index, dir = "asc", locale = 'cz-CZ') {
+    // Get all rows from tbody only
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
   
-  // Sort the rows
-  rows.sort((rowA, rowB) => {
-    // Get cell contents
-    const cellA = rowA.cells[n].textContent.trim();
-    const cellB = rowB.cells[n].textContent.trim();
-    
-    // Use natural sort comparison
-    const result = naturalCompare(cellA, cellB);
-    
-    // Apply sorting direction
-    return dir === "asc" ? result : -result;
-  });
+    // Sort options for localeCompare
+    const sortOptions = {
+        numeric: true,        // Enable natural sorting for numbers
+        sensitivity: 'accent',
+    };
+
+    // Sort the rows
+    rows.sort((rowA, rowB) => {
+        // Get cell contents
+        const cellA = rowA.cells[index].textContent.trim();
+        const cellB = rowB.cells[index].textContent.trim();
+
+        // Use localeCompare with natural sorting
+        const result = cellA.localeCompare(cellB, locale, sortOptions);
+
+        // Apply sorting direction
+        return dir === "asc" ? result : -result;
+    });
   
-  // Remove rows from DOM and re-append in sorted order
-  const parent = rows[0].parentNode;
-  const fragment = document.createDocumentFragment();
-  rows.forEach(row => fragment.appendChild(row));
-  parent.appendChild(fragment);
+    // Remove rows from DOM and re-append in sorted order
+    const parent = rows[0].parentNode;
+    const fragment = document.createDocumentFragment();
+    rows.forEach(row => fragment.appendChild(row));
+    parent.appendChild(fragment);
 }
 
-// Natural sort comparison function
-function naturalCompare(a, b) {
-  // Split strings into chunks of text and numbers
-  const chunker = /(\d+|\D+)/g;
-  
-  const aChunks = String(a).match(chunker) || [];
-  const bChunks = String(b).match(chunker) || [];
-  
-  // Compare each chunk until we find a difference
-  for (let i = 0; i < Math.min(aChunks.length, bChunks.length); i++) {
-    // Check if chunks are numeric
-    const aIsNum = !isNaN(aChunks[i]);
-    const bIsNum = !isNaN(bChunks[i]);
+function sortTable(table, columnIndex, dir, locale = 'cs-CZ') {
+    naturalSortTable(table, columnIndex, dir, locale);
+
+    // ! Cell Formatting/Highlighting - temp off for now
+    //* COPIED
+    /*
+    if (!thToBeSortedBy.hasClass("active")) {
+        // New column selected - reset siblings and set ascending
+        dir = "asc";
+        thToBeSortedBy.siblings().removeClass("active asc desc");
+        thToBeSortedBy.addClass("active asc");
+    } else {
+        // Toggle between ascending and descending
+        dir = thToBeSortedBy.hasClass("asc") ? "desc" : "asc";
+        thToBeSortedBy.toggleClass("asc desc");
+    }
+
+    // Remove existing cell highlighting
+    table.querySelectorAll('tbody td').forEach(cell => cell.classList.remove('active'));
     
-    // If both are numbers, compare numerically
-    if (aIsNum && bIsNum) {
-      const numA = parseInt(aChunks[i], 10);
-      const numB = parseInt(bChunks[i], 10);
-      if (numA !== numB) {
-        return numA - numB;
-      }
-    }
-    // If types differ, numbers come before strings
-    else if (aIsNum !== bIsNum) {
-      return aIsNum ? -1 : 1;
-    }
-    // Both are strings, compare case-insensitively
-    else if (aChunks[i].toLowerCase() !== bChunks[i].toLowerCase()) {
-      return aChunks[i].toLowerCase() < bChunks[i].toLowerCase() ? -1 : 1;
-    }
-  }
-  
-  // If we get here, the common parts are equal, so compare lengths
-  return aChunks.length - bChunks.length;
+    // Highlight cells in sorted column
+    table.querySelectorAll("tbody tr").forEach(row => {
+        row.querySelectorAll('td')[columnIndex].classList.add('active');
+    });
+    */
+    //* COPIED (end)
 }
+
 
 function cellsFunctionality(table) {
     $(".price-table th.sortable").on("click", function() {
-        // Handle column header status and sort direction
         let dir;
-        
-        if (!$(this).hasClass("active")) {
-            // New column selected - reset siblings and set ascending
-            dir = "asc";
-            $(this).siblings().removeClass("active asc desc");
-            $(this).addClass("active asc");
-        } else {
-            // Toggle between ascending and descending
-            dir = $(this).hasClass("asc") ? "desc" : "asc";
-            $(this).toggleClass("asc desc");
-        }
-        
+        const th = $(this)
+
         // Get column index and sort the table
         const index = $(".price-table th").index(this);
-        sortTable(index, table, dir);
+        naturalSortTable(table, index, dir);
 
+        if (!th.hasClass("active")) {
+            // New column selected - reset siblings and set ascending
+            dir = "asc";
+            th.siblings().removeClass("active asc desc");
+            th.addClass("active asc");
+        } else {
+            // Toggle between ascending and descending
+            dir = th.hasClass("asc") ? "desc" : "asc";
+            th.toggleClass("asc desc");
+        }
+        
         // Remove existing cell highlighting
         const activeCells = table.querySelectorAll('tbody td');
         activeCells.forEach(cell => cell.classList.remove('active'));
@@ -117,6 +122,10 @@ function cellsFunctionality(table) {
         });
     });
 }
+
+// ! Initialize the table
+init(locale); 
+
 
 // # FANCYBOX # //
 try {
@@ -152,8 +161,6 @@ try {
 }
 
 $(document).ready(function () {
-
-
     //* Expand button for layout viewer
     $('[data-lv-expand]').on('click', function (event) {
         console.debug($(this))
