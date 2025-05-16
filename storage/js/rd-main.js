@@ -1,8 +1,11 @@
 import { fetchSheetData, populateTemplateTableWithData } from './rd-db.js';
 
+
 // ! NOTE: This will change depending on the CZ or EN version of the script
-// const locale = 'cs-CZ';
-const locale = 'en-US';
+const locale = 'cs-CZ';
+// const locale = 'en-US';
+
+
 
 async function init(locale) {
     const propertiesData = await fetchSheetData();
@@ -10,117 +13,57 @@ async function init(locale) {
         console.error('Failed to fetch or parse data.');
         return 
     }
+    console.debug('Fetched data: ', propertiesData.tableData);
     populateTemplateTableWithData(propertiesData.tableData, locale, true);
     const priceTable = document.querySelector('.price-table');
     if (!priceTable) {
         console.error("Table .price-table not found after populating data.");
         return
     }
-    
-    // Add functionality to headers to sort the table
-    document.querySelectorAll('.price-table th.sortable').forEach(sortableTh => {
-        sortableTh.addEventListener('click', function() {
-            console.debug('This sortable table head clicked: ', this)
-            sortTable(priceTable, sortableTh.cellIndex, "asc", locale)
-        });
-    });
 
-    // !!! TODO: TH on click always sorts by ascending
-    // !!! TODO: Cell class switching temp disabled
+    $(document).ready( function () {
 
-    // On page load, sort the table by the 7th column (price)
-    sortTable(priceTable, 6, "asc", locale);
-}
-
-// Natural sorting
-function naturalSortTable(table, index, dir = "asc", locale = 'cz-CZ') {
-    // Get all rows from tbody only
-    const rows = Array.from(table.querySelectorAll('tbody tr'));
-  
-    // Sort options for localeCompare
-    const sortOptions = {
-        numeric: true,        // Enable natural sorting for numbers
-        sensitivity: 'accent',
-    };
-
-    // Sort the rows
-    rows.sort((rowA, rowB) => {
-        // Get cell contents
-        const cellA = rowA.cells[index].textContent.trim();
-        const cellB = rowB.cells[index].textContent.trim();
-
-        // Use localeCompare with natural sorting
-        const result = cellA.localeCompare(cellB, locale, sortOptions);
-
-        // Apply sorting direction
-        return dir === "asc" ? result : -result;
-    });
-  
-    // Remove rows from DOM and re-append in sorted order
-    const parent = rows[0].parentNode;
-    const fragment = document.createDocumentFragment();
-    rows.forEach(row => fragment.appendChild(row));
-    parent.appendChild(fragment);
-}
-
-function sortTable(table, columnIndex, dir, locale = 'cs-CZ') {
-    naturalSortTable(table, columnIndex, dir, locale);
-
-    // ! Cell Formatting/Highlighting - temp off for now
-    //* COPIED
-    /*
-    if (!thToBeSortedBy.hasClass("active")) {
-        // New column selected - reset siblings and set ascending
-        dir = "asc";
-        thToBeSortedBy.siblings().removeClass("active asc desc");
-        thToBeSortedBy.addClass("active asc");
-    } else {
-        // Toggle between ascending and descending
-        dir = thToBeSortedBy.hasClass("asc") ? "desc" : "asc";
-        thToBeSortedBy.toggleClass("asc desc");
-    }
-
-    // Remove existing cell highlighting
-    table.querySelectorAll('tbody td').forEach(cell => cell.classList.remove('active'));
-    
-    // Highlight cells in sorted column
-    table.querySelectorAll("tbody tr").forEach(row => {
-        row.querySelectorAll('td')[columnIndex].classList.add('active');
-    });
-    */
-    //* COPIED (end)
-}
-
-
-function cellsFunctionality(table) {
-    $(".price-table th.sortable").on("click", function() {
-        let dir;
-        const th = $(this)
-
-        // Get column index and sort the table
-        const index = $(".price-table th").index(this);
-        naturalSortTable(table, index, dir);
-
-        if (!th.hasClass("active")) {
-            // New column selected - reset siblings and set ascending
-            dir = "asc";
-            th.siblings().removeClass("active asc desc");
-            th.addClass("active asc");
-        } else {
-            // Toggle between ascending and descending
-            dir = th.hasClass("asc") ? "desc" : "asc";
-            th.toggleClass("asc desc");
+        function naturalSort(a, b, multiplier = 1) {
+            let alpha = a.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' '); // Remove HTML tags, replace non-breaking spaces
+            let beta  = b.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' '); // Remove HTML tags, replace non-breaking spaces
+            console.debug('Natural sort: ', alpha, beta);
+            const out = alpha.localeCompare(beta, locale, {numeric: true, ignorePunctuation: true});
+            return out * multiplier;
         }
+
+        $.extend( DataTable.ext.type.order, {
+            "natural-asc": function ( a, b ) {
+            return naturalSort(a, b);
+            },
         
-        // Remove existing cell highlighting
-        const activeCells = table.querySelectorAll('tbody td');
-        activeCells.forEach(cell => cell.classList.remove('active'));
-        
-        // Highlight cells in sorted column
-        table.querySelectorAll("tbody tr").forEach(row => {
-            row.querySelectorAll('td')[index].classList.add('active');
+            "natural-desc": function ( a, b ) {
+            return naturalSort(a, b, -1);
+            }
         });
-    });
+
+        DataTable.defaults.column.orderSequence = ['asc', 'desc'];
+
+        $('.price-table').DataTable( {
+            order: [[6, 'asc']],       // Sort by Price by default sort on initialization
+            paging: false,
+            searching: false,
+            info: false,
+            language: {
+                url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
+            },
+            columnDefs: [
+                { orderable: false, targets: [3, 7] },
+                // { type: 'natural-nohtml', target: '_all' },
+                { type: 'natural', target: '_all' },
+                { className: "dt-center", targets: [0, 7] },
+                { className: "dt-right", targets: [6] },
+                // { width: '100%', targets: 3 },
+                // { width: '0%', targets: 6 },
+            ],
+            responsive: false,
+        });
+    } );
+    
 }
 
 // ! Initialize the table

@@ -59,6 +59,8 @@ export function populateTemplateTableWithData(data, locale = 'cs-CZ', displaySol
 
         // Name
         row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status ${property['status']}" aria-hidden="true"></i>` + property['name']
+        // row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status" aria-hidden="true"></i>` + property['name']
+        
         // Floors (number of floors)
         row.insertCell().innerHTML = property['floors']
         // Layout (number of rooms)
