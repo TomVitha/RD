@@ -43,12 +43,12 @@ export async function fetchSheetData() {
     }
 }
 
-export function populateTemplateTableWithData(data, locale = 'cs-CZ', displaySold = false) {
+export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', displaySold = false) {
     const table = document.querySelector('#template-price-table').content.cloneNode(true).querySelector('table');
     const tableBody = table.querySelector('tbody');
     const tableContainer = document.querySelector('#price-table-container')
 
-    data.forEach(property => {
+    propertiesData.forEach(property => {
         // Sold properties are not displayed
         if (!displaySold && property['status'] === 'sold')
             return;
@@ -90,4 +90,67 @@ export function populateTemplateTableWithData(data, locale = 'cs-CZ', displaySol
     // Append table to container (while replacing any existing content)
     tableContainer.replaceChildren(table);
     console.debug(table);
+}
+
+export async function init(locale) {
+    const propertiesData = await fetchSheetData();
+    if (!propertiesData) {
+        console.error('Failed to fetch or parse data.');
+        return 
+    }
+    console.debug('Fetched data: ', propertiesData.tableData);
+    populateTemplateTableWithData(propertiesData.tableData, locale, true);
+    const priceTable = document.querySelector('.price-table');
+    if (!priceTable) {
+        console.error("Table .price-table not found after populating data.");
+        return
+    }
+
+    $(document).ready( function () {
+
+        function naturalSort(a, b, multiplier = 1) {
+            a = stripHTMLTags(a)
+            b  = stripHTMLTags(b)
+            // console.debug('Natural sort: ', a, b);
+            const out = a.localeCompare(b, locale, {numeric: true, ignorePunctuation: true});
+            return out * multiplier;
+        }
+
+        $.extend( DataTable.ext.type.order, {
+            "natural-asc": function ( a, b ) {
+                return naturalSort(a, b);
+            },
+        
+            "natural-desc": function ( a, b ) {
+                return naturalSort(a, b, -1);
+            }
+        });
+
+        DataTable.defaults.column.orderSequence = ['asc', 'desc'];
+
+        $('.price-table').DataTable( {
+            order: [[6, 'asc']],       // Sort by Price by default sort on initialization
+            paging: false,
+            searching: false,
+            info: false,
+            language: {
+                url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
+            },
+            columnDefs: [
+                { orderable: false, targets: [3, 7] },
+                // { type: 'natural-nohtml', target: '_all' },
+                { type: 'natural', target: '_all' },
+                { className: "dt-center", targets: [0, 7] },
+                { className: "dt-right", targets: [6] },
+                // { width: '100%', targets: 3 },
+                // { width: '0%', targets: 6 },
+            ],
+            responsive: false,
+        });
+    } );
+    
+}
+
+function stripHTMLTags(str) {
+    return str.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' ');
 }

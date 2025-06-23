@@ -1088,7 +1088,8 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 /* PHASES (end) */
 
 /* # CENÍK TABULKA */
-.price-table-wrapper {
+/* .price-table-wrapper */
+.dt-layout-table {
   border: 1px solid #ededed;
   border-radius: 10px;
   overflow-y: hidden;
@@ -1110,6 +1111,10 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 .price-table tr:not(:last-child) {
   border-bottom: 1px solid #f5f5f5;
+}
+
+div.dt-container.dt-empty-footer tbody > tr:last-child > * {
+  border-bottom: none;
 }
 
 .price-table tbody tr:nth-child(odd) {
@@ -1212,6 +1217,12 @@ table.price-table > thead > tr > :is(th, td) {
 
 .price-table .sortable.active::after {
   opacity: 1;
+}
+
+/* Hover on orderable cells */
+table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-desc):hover {
+  outline: none;
+  background-color: rgba(0, 0, 0, 0.020);
 }
 
 
