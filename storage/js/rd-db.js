@@ -59,7 +59,7 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
 
         // Name
         row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status ${property['status']}" aria-hidden="true"></i>` + property['name']
-        // row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status" aria-hidden="true"></i>` + property['name']
+        //// row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status" aria-hidden="true"></i>` + property['name']
         
         // Floors (number of floors)
         row.insertCell().innerHTML = property['floors']
@@ -82,9 +82,10 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
                                         maximumFractionDigits: 0,
                                     }).format(property['price']);
         // Detail PDF Card
+        // TEMP File URL
         row.insertCell().appendChild(
             document.querySelector('#price-table__detail-btn').content.cloneNode(true).querySelector('a')
-        ).setAttribute('href', `/temp/B${property['id']}.pdf`);
+        ).setAttribute('href', `https://www.be-nice.lexxusnorton.cz/upload/flats/${property['name']}.pdf`);
     });
 
     // Append table to container (while replacing any existing content)
@@ -129,13 +130,14 @@ export async function init(locale) {
         DataTable.defaults.column.orderSequence = ['asc', 'desc'];
 
         $('.price-table').DataTable( {
-            order: [[6, 'asc']],       // Sort by Price by default sort on initialization
+            order: [[6, 'asc']],       // Sort by Price on init
             paging: false,
             searching: false,
             info: false,
-            language: {
-                url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
-            },
+            // FIXME: Throws error on iOS; TEMP OFF
+            // language: {
+            //     url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
+            // },
             columnDefs: [
                 { orderable: false, targets: [3, 7] },
                 // { type: 'natural-nohtml', target: '_all' },

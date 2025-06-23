@@ -1,11 +1,10 @@
 import { fetchSheetData, populateTemplateTableWithData, init } from './rd-db.js';
 
-
-// ! NOTE: This will change depending on the CZ or EN version of the script
+// NOTE: This will change depending on the CZ or EN version of the script
 const locale = 'cs-CZ';
 // const locale = 'en-US';
 
-// ! Initialize the table
+// * Initialize the table
 init(locale); 
 
 
