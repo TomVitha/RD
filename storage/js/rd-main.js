@@ -8,6 +8,7 @@ const locale = 'cs-CZ';
 init(locale); 
 
 
+// TODO: Move all following code code elsewhere
 // # FANCYBOX # //
 try {
     // Initialization

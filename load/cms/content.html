@@ -245,7 +245,7 @@
       <div class="price-table-wrapper" id="price-table-container">
         <!-- Here will be inserted price table, created from template, and filled by fetched data from Sheet -->
         <!-- Fallback content, if table fails to load: -->
-        <span>Ceník se nepodařilo načíst. <a href="." style="text-decoration: underline;">Načtěte stránku znovu</a>, nebo to zkuste později.</span>
+        <span>Ceník se nepodařilo načíst. <a href="https://central-group.cz/page/rd-dev" style="text-decoration: underline;">Načtěte stránku znovu</a>, nebo to zkuste později.</span>
       </div>
     </div>
     <a href="#" class="btn btn--gray-dark--outline--rounded">Mám zájem</a>
@@ -366,17 +366,7 @@
   </div>
 </section>
 
-
-<template id="price-table__detail-btn">
-  <a 
-  href="" 
-  class="btn btn--yellow--sm--full" 
-  data-fancybox="detail" 
-  data-type="iframe">
-    Detail
-  </a>
-</template>
-
+<!-- PRICE TABLE -->
 <template id="template-price-table">
   <table class="price-table">
     <thead>
@@ -392,8 +382,18 @@
       </tr>
     </thead>
     <tbody>
-      
+      <!-- Table content -->
     </tbody>
   </table>
 </template>
 
+<!-- DETAIL BUTTON -->
+<template id="price-table__detail-btn">
+  <a 
+  href="" 
+  class="btn btn--yellow--sm--full" 
+  data-fancybox="detail" 
+  data-type="iframe">
+    Detail
+  </a>
+</template>

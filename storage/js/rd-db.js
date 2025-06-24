@@ -32,10 +32,9 @@ export async function fetchSheetData() {
             });
             return obj;
         });
-        
-        // console.debug("Headers:", headers);
-        // console.debug("Data sample:", tableData.slice(0, 2));
-        
+
+        // console.debug("Headers:", headers)
+        // console.debug("Data sample:", tableData.slice(0, 2))
         return { headers, tableData };
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -53,14 +52,16 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
         if (!displaySold && property['status'] === 'sold')
             return;
 
+        // Create and insert row
         const row = tableBody.insertRow();
-        // Set attribute data-status
-        row.setAttribute('data-status', property['status']);
 
+        // Set attribute data-status to row
+        row.setAttribute('data-status', property['status']);
+        
+        /// CELLS
         // Name
         row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status ${property['status']}" aria-hidden="true"></i>` + property['name']
         //// row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status" aria-hidden="true"></i>` + property['name']
-        
         // Floors (number of floors)
         row.insertCell().innerHTML = property['floors']
         // Layout (number of rooms)
@@ -90,16 +91,21 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
 
     // Append table to container (while replacing any existing content)
     tableContainer.replaceChildren(table);
-    console.debug(table);
+    // console.debug(table);
 }
 
+function stripHTMLTags(string) {
+    return string.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' ');
+}
+
+/// INITIALIZATION
 export async function init(locale) {
     const propertiesData = await fetchSheetData();
     if (!propertiesData) {
         console.error('Failed to fetch or parse data.');
         return 
     }
-    console.debug('Fetched data: ', propertiesData.tableData);
+    // console.debug('Fetched data: ', propertiesData.tableData);
     populateTemplateTableWithData(propertiesData.tableData, locale, true);
     const priceTable = document.querySelector('.price-table');
     if (!priceTable) {
@@ -135,24 +141,24 @@ export async function init(locale) {
             searching: false,
             info: false,
             // FIXME: Throws error on iOS; TEMP OFF
-            // language: {
-            //     url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
-            // },
+            // Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301
+            language: {
+                url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
+            },
             columnDefs: [
                 { orderable: false, targets: [3, 7] },
                 // { type: 'natural-nohtml', target: '_all' },
                 { type: 'natural', target: '_all' },
                 { className: "dt-center", targets: [0, 7] },
                 { className: "dt-right", targets: [6] },
-                // { width: '100%', targets: 3 },
+                // { width: '40%', targets: 3 },
                 // { width: '0%', targets: 6 },
             ],
             responsive: false,
+            // ! TESTING
+            autoWidth: false,    // Fixes wonky column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
+            
         });
     } );
     
-}
-
-function stripHTMLTags(str) {
-    return str.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' ');
 }
