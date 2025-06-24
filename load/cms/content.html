@@ -14,19 +14,21 @@
         <h1>Rodinné domy Pitkovice</h1>
         <p>Krátký slogan vystihující charakter lokality, kterým zájemce okouzlíme</p>
       </hgroup>
-      <div class="hero__cta-buttons">
-        <a href="#cenik" class="btn btn--yellow--inline">
-          <i class="fas fa-house" aria-hidden="true"></i>
-          Ceník
-        </a>
-        <button class="btn btn--white--inline">
-          <!-- <i class="far fa-calendar-check" aria-hidden="true"></i> -->
+      <!-- <div class="hero__cta-buttons">
+        <button class="btn btn--yellow--inline">
           Mám zájem
         </button>
-      </div>
+        <a href="#cenik" class="btn btn--white--inline">
+          Ceník
+          <i class="far fa-arrow-down" aria-hidden="true"></i>
+        </a>
+      </div> -->
     </div>
     <div class="hero__jump">
-      <a href="#uvod"><i class="fal fa-arrow-down"></i></a>
+      <a href="#uvod" onclick="event.preventDefault(); document.querySelector('#uvod')?.scrollIntoView({behavior: 'smooth'})">
+        <!-- <img src="https://assets-v2.lottiefiles.com/a/ff109c6a-1151-11ee-be78-2f08adb66b54/vqaHpkb2tj.gif" alt="" srcset=""> -->
+        <div class="scroll-icon"></div>
+      </a>
     </div>
   </div>
 </div>
@@ -60,10 +62,10 @@
 </section>
 
 <section id="o-projektu">
-  <div class="container">
-    <div class="two-col">
+  <div class="">
+    <div class="two-col text-img">
       <div>
-        <h2><a href="#o-projektu">O projektu</a></h2>
+        <h3><a href="#o-projektu">Rodinné domy Pitkovice</a></h3>
         <p>
           Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
           morbi et fames eget aliquam augue aliquam. Purus lectus ac id viverra. Sapien diam adipiscing nam porttitor
@@ -85,13 +87,13 @@
 </section>
 
 <section id="lokalita">
-  <div class="container">
-    <div class="two-col alt">
+  <div class="">
+    <div class="two-col img-text">
       <div>
         <img src="https://hostivice.ms-invest.cz/data/images/th3/h_cam_06_2_j.jpg">
       </div>
       <div>
-        <h2><a href="#lokalita">Lokalita a okolí</a></h2>
+        <h3><a href="#lokalita">Lokalita a okolí</a></h3>
         <p>
           Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
           morbi et fames eget aliquam augue aliquam. Purus lectus ac id viverra. Sapien diam adipiscing nam porttitor
@@ -153,28 +155,23 @@
 
 <section id="typy">
   <div class="container-m ta-c">
-    <h2><a href="#typy">Typy domů</a></h2>
+    <h2><a href="#typy">Vyberte si ze tří provedení</a></h2>
     <p>Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
       morbi et fames eget aliquam augue aliquam.</p>
   </div>
 </section>
 
 <section id="typ-domu-1">
-  <div class="container">
-    <div class="two-col">
+  <div class="">
+    <div class="two-col text-img">
       <div>
-        <h2><a href="#typ-domu-1">Typ domu #1</a></h2>
+        <h3><a href="#typ-domu-1">Typ domu #1</a></h3>
         <p>
           Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
           morbi et fames eget aliquam augue aliquam. Purus lectus ac id viverra. Sapien diam adipiscing nam porttitor
           facilisi morbi ullamcorper tincidunt turpis. Ut blandit ut condimentum diam. Faucibus ipsum tristique sed
           vitae elementum ut enim. Quam nullam malesuada ornare arcu. Mauris viverra purus vitae lorem mauris aliquam.
           Amet at aenean dictumst nam consectetur ut.
-        </p>
-        <p>
-          Mauris hendrerit mauris nec justo congue porta ac vitae dolor. In id condimentum enim. Donec aliquet molestie
-          nisi. Proin rutrum sem mauris, in malesuada mi pellentesque at. Sed at ex odio. Nulla lorem tortor, fringilla
-          at ornare eu, suscipit ac lacus. Integer eleifend vehicula nibh, eget lacinia metus scelerisque sit amet.
         </p>
       </div>
       <div>
@@ -187,10 +184,14 @@
 
 
 <section id="typ-domu-2">
-  <div class="container">
-    <div class="two-col">
+  <div class="">
+    <div class="two-col img-text">
       <div>
-        <h2><a href="#typ-domu-2">Typ domu #2</a></h2>
+        <img
+          src="https://cdn.cpdevelopment.cz/containers/assets/studiobarak-14.jpg/d2928e8c05bac47e73157fa6ee70f037.webp">
+      </div>
+      <div>
+        <h3><a href="#typ-domu-2">Typ domu #2</a></h3>
         <p>
           Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
           morbi et fames eget aliquam augue aliquam. Purus lectus ac id viverra. Sapien diam adipiscing nam porttitor
@@ -198,36 +199,22 @@
           vitae elementum ut enim. Quam nullam malesuada ornare arcu. Mauris viverra purus vitae lorem mauris aliquam.
           Amet at aenean dictumst nam consectetur ut.
         </p>
-        <p>
-          Mauris hendrerit mauris nec justo congue porta ac vitae dolor. In id condimentum enim. Donec aliquet molestie
-          nisi. Proin rutrum sem mauris, in malesuada mi pellentesque at. Sed at ex odio. Nulla lorem tortor, fringilla
-          at ornare eu, suscipit ac lacus. Integer eleifend vehicula nibh, eget lacinia metus scelerisque sit amet.
-        </p>
-      </div>
-      <div>
-        <img
-          src="https://cdn.cpdevelopment.cz/containers/assets/studiobarak-14.jpg/d2928e8c05bac47e73157fa6ee70f037.webp">
       </div>
     </div>
   </div>
 </section>
 
 <section id="typ-domu-3">
-  <div class="container">
-    <div class="two-col">
+  <div class="">
+    <div class="two-col text-img">
       <div>
-        <h2><a href="#typ-domu-3">Typ domu #3</a></h2>
+        <h3><a href="#typ-domu-3">Typ domu #3</a></h3>
         <p>
           Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
           morbi et fames eget aliquam augue aliquam. Purus lectus ac id viverra. Sapien diam adipiscing nam porttitor
           facilisi morbi ullamcorper tincidunt turpis. Ut blandit ut condimentum diam. Faucibus ipsum tristique sed
           vitae elementum ut enim. Quam nullam malesuada ornare arcu. Mauris viverra purus vitae lorem mauris aliquam.
           Amet at aenean dictumst nam consectetur ut.
-        </p>
-        <p>
-          Mauris hendrerit mauris nec justo congue porta ac vitae dolor. In id condimentum enim. Donec aliquet molestie
-          nisi. Proin rutrum sem mauris, in malesuada mi pellentesque at. Sed at ex odio. Nulla lorem tortor, fringilla
-          at ornare eu, suscipit ac lacus. Integer eleifend vehicula nibh, eget lacinia metus scelerisque sit amet.
         </p>
       </div>
       <div>
@@ -266,9 +253,10 @@
 </section>
 
 <section>
-  <div
-    style="background-image: url('https://greenland-brezineves.cz/wp-content/uploads/2022/03/Brezineves_EXT_Cam_05_2000.jpg')"
-    class="strip">
+  <div style="background-image: url('https://greenland-brezineves.cz/wp-content/uploads/2022/03/Brezineves_EXT_Cam_05_2000.jpg')" class="strip">
+      <!-- <h2>Vítejte ve svém novém domově</h2>
+      <p>Kupte si prosím nějaký z těch baráků, byly fakt drahý a my potřebujeme na nový bazén.</p> -->
+  </div>
 </section>
 
 <section id="cenik">
@@ -481,7 +469,7 @@
 
 <!-- DETAIL BUTTON -->
 <template id="price-table__detail-btn">
-  <a href="" class="btn btn--yellow--sm--full" data-fancybox="detail" data-type="iframe">
-    Detail
+  <a href="" class="btn btn--black----transparent--sm--full--link" data-fancybox="detail" data-type="iframe">
+    Otevřít
   </a>
 </template>
