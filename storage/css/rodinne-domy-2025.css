@@ -33,7 +33,7 @@
   --header-height-top: 55px;
   --header-height-bottom: 39px;
   --header-height: calc(var(--header-height-top) + var(--header-height-bottom));
-  --page-nav-height: 48px;
+  --page-nav-height: 52px;
 
   /** Layout **/
   /* --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end]; */
@@ -50,26 +50,6 @@
   }
 }
 
-html {
-  /* TEMP value -> sticky nav height */
-  scroll-padding-top: calc(var(--page-nav-height) + 0px);
-}
-
-@media (prefers-reduced-motion) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/** Dark Reader optimization **/
-html[data-darkreader-scheme="dark"] {
-  --darkreader-bg-color-yellow: #dbb722;
-}
-
-html[data-darkreader-scheme="dark"] .btn-yellow {
-  --darkreader-text--color-blue: #141617;
-}
-
 *,
 *::before,
 *::after {
@@ -84,42 +64,34 @@ html[data-darkreader-scheme="dark"] .btn-yellow {
   outline-offset: 0px !important;
 }
 
-[hidden] {
-  display: none !important;
+html {
+  /* TEMP value -> sticky nav height */
+  scroll-padding-top: calc(var(--page-nav-height) + 0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/** Dark Reader optimization **/
+html[data-darkreader-scheme="dark"] {
+  --darkreader-bg-color-yellow: #dbb722;
+}
+
+html[data-darkreader-scheme="dark"] .btn-yellow {
+  --darkreader-text--color-blue: #141617;
 }
 
 
 body {
   color: var(--color-text, #4D4D4D);
   overflow-x: clip;
-  /* ? maybe change */
-  /* line-height: 1.5; */
-}
-
-/* TEMP: Testing fonts */
-main {
-  /* font-family: 'Roboto', sans-serif; */
-  /* font-family: 'Rubik'; */
-  /* font-family: 'Inter'; */
-  /* font-family: 'Geist'; */
-
-  /* font-family: 'Geist', 'Roboto', sans-serif; */
-}
-
-/* TEMP: Testing fonts */
-:where(main) :is(h1, h2, h3, h4, h5, h6) {
-  /* font-family: 'Rubik'; */
-  /* font-family: 'Inter'; */
-  /* font-family: 'Geist'; */
-  /* font-family: 'Plus Jakarta Sans'; */
-  /* font-family: 'Raleway'; */
-  /* font-family: 'Poppins'; */
-  /* font-family: 'Archivo'; */
-  letter-spacing: -0.01em !important;
 }
 
 
-/* Page will always fill screen height */
+/** Page will always fill screen height **/
 div[data-v-5782d946] {
   display: flex;
   flex-direction: column;
@@ -130,7 +102,11 @@ main#main {
   flex: 1;
 }
 
-/* Disables sticky header */
+[hidden] {
+  display: none !important;
+}
+
+/** Disables sticky header **/
 .head {
   position: static !important;
 }
@@ -157,7 +133,8 @@ dialog {
 }
 
 ul,
-ol {
+ol,
+menu {
   list-style-type: none;
   /* ? maybe */
   /* padding-left: 1.25rem; */
@@ -178,7 +155,6 @@ canvas {
   display: block;
   max-width: 100%;
   user-select: none;
-  /* -webkit-user-drag: none; */
 }
 
 /* Note: Prevents <sub> and <sup> elements from affecting the line height */
@@ -200,6 +176,7 @@ sup {
 
 input,
 button {
+  font-size: 100%;
   font-family: inherit;
 }
 
@@ -230,6 +207,10 @@ em {
 
 label {
   user-select: none;
+}
+
+address {
+  font-style: normal;
 }
 
 :where(main) p {
@@ -281,20 +262,32 @@ label {
   width: calc(100vw - 0px);
 }
 
-.hr-line {
+hr,
+.hr-text {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1rem;
+  gap: 10px;
+  /* font-family: 'Exo 2 Condensed', 'Exo 2', 'Roboto', sans-serif; */
+  margin: 2.5rem 0 1.5rem 0;
+  text-align: center;
+  line-height: 1;
 }
 
-.hr-line:before,
-.hr-line:after {
-  content: "";
+hr[data-text]::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 50%;
+  translate: -50% 0%;
+  background-color: white;
+  padding-inline: 10px;
+}
+
+.hr-text:before,
+.hr-text:after {
+  content: '';
   flex: 1 1;
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.175);
-  opacity: 0.5;
+  border-bottom: 1px solid;
 }
 
 /* RESET (end) */
@@ -314,7 +307,7 @@ label {
 .btn {
   --btn-theme: transparent;
   --btn-theme-complementary: var(--color-primary);
-  --btn-border-radius: 0.375rem;
+  --btn-border-radius: 0.35em;
   --btn-background: var(--btn-theme, transparent);
   --btn-background-hover: var(--btn-background);
 
@@ -489,27 +482,83 @@ a.btn:hover {
 /* BTN (end) */
 
 /* # TYPOGRAPHY */
+
 :where(main) :is(h1, h2, h3, h4, h5, h6) {
   position: relative;
   color: var(--color-primary, var(--color-blue, #20234c));
+  font-weight: 700;
 
-  /* TEMP */
+  /* ? TEMP or MAYBE */
   margin-bottom: 0.5em;
   margin-top: 1.2em;
+  letter-spacing: -0.01em !important;
+
+  /* ! super experimantal */
+  scale: 98.0% 100%;
+  transform-origin: left center;
+  letter-spacing: -0.015em !important;
+}
+
+h2 {
+  font-size: 2.25rem;
+}
+
+h3 {
+  
+}
+
+h4 {
+
+}
+
+h5 {
+
+}
+
+h6 {
+
+}
+
+@media (max-width: 991px) {
+  h2 {
+    font-size: 26px
+  }
+
+  h3 {
+    font-size: 22px
+  }
+
+  h4 {
+
+  }
+
+
+  h5 {
+
+  }
+
+
+  h6 {
+
+  }
+
 }
 
 :where(main) :is(h1, h2, h3, h4, h5, h6):first-child {
   margin-top: 0;
 }
 
-h2 {
-  font-weight: 700;
-  /* margin-top: 2rem; */
-  /* margin-bottom: 1rem; */
-  /* TEMP */
-  font-size: 1.875rem;
-  /* ? maybe */
-  letter-spacing: -0.015em;
+:where(main) :is(h1, h2, h3, h4, h5, h6):last-child {
+  margin-bottom: 0;
+}
+
+/* ? maybe */
+:is(h1, h2) strong {
+  /* font-weight: 800; */
+}
+
+:is(h1, h2, h3, h4, h5, h6) a {
+  text-decoration: none;
 }
 
 
@@ -524,15 +573,16 @@ h2::before {
   color: #ddd;
   font-weight: 550;
   user-select: none;
-  /** Default hidden styling **/
+  /* Default hidden styling */
   visibility: hidden;
   opacity: 0;
   position: relative;
   z-index: -1;
-  /** Visibility delayed to let opacity finish fading **/
+  /* Visibility delayed to let opacity finish fading */
   transition: translate 200ms, opacity 200ms, visibility 0ms 200ms;
 }
 
+/* States when anchor "#" is visible */
 :is(:target h2:first-of-type, h2:target, h2:has(a:hover))::before {
   visibility: visible;
   opacity: 1;
@@ -540,6 +590,7 @@ h2::before {
   transition: translate 200ms, opacity 200ms, visibility 0ms 0ms;
 }
 
+/* # HERO */
 .hero {
   position: relative;
   isolation: isolate;
@@ -550,7 +601,7 @@ h2::before {
   color: white;
   /* ? maybe */
   max-height: calc(1080px - var(--header-height));
-  /* TEMP */
+  /* TEMP !!! */
   background: url('https://rezidencekolovraty.cz/app/uploads/2023/02/Kolovraty_II_002_220617-min-scaled.jpg') no-repeat 30% center/cover;
 }
 
@@ -583,8 +634,10 @@ h2::before {
   flex-direction: column;
   gap: 30px;
   position: absolute;
-  bottom: 60%;
+  bottom: 55%;
   translate: 0 50%;
+  max-width: calc(100% - 30px);
+  
 }
 
 .hero__logo {
@@ -611,7 +664,6 @@ h2::before {
   line-height: 1;
   text-wrap: balance;
   color: white;
-  font-size: 80px;
   margin-bottom: 0.5rem;
 }
 
@@ -620,6 +672,12 @@ hgroup p {
   line-height: 1.25;
   font-size: 1.5rem;
   font-size: 1.5rem;
+}
+
+.hero__cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 /* Jump to content Arrow */
@@ -643,20 +701,20 @@ hgroup p {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
 }
 
-@media (max-width: 991px),
-(max-height: 768px) {
+@media (max-width: 991px), (max-height: 768px) {
   .hero__logo {
     width: 90px;
     height: 90px;
   }
 
   .hero h1 {
-    font-size: 3rem;
+    font-size: 2.75rem;
   }
 
-  .subtitle {
-    font-size: 18px;
+  hgroup p {
+    font-size: 1.125rem;
   }
+
 }
 
 /* WIP: REWRITE */
@@ -692,7 +750,6 @@ hgroup p {
 }
 
 .page-nav .btn {
-  --btn-border-radius: 0px;
   color: var(--gray-dark);
   /* font-weight: 500; */
   padding: 1.15em 1.0em;
@@ -711,9 +768,10 @@ hgroup p {
     display: none;
   }
 
-  /* ? maybe off */
   .page-nav {
-    /* display: none;  */
+    --page-nav-height: 42px;
+    /* ? maybe hide */
+    display: none; 
   }
 
   .page-nav__mobile {
@@ -726,18 +784,18 @@ hgroup p {
   letter-spacing: -0.02em;
 }
 
-/* ? Page Nav (end) */
+/* Page Nav (end) */
 
 /* # SECTIONS */
 section {
   position: relative;
   overflow-x: hidden;
   overflow-x: clip;
-  scroll-margin-top: 5.0rem;
-  margin-block: 5.0rem;
+  scroll-margin-top: 5.5rem;
+  margin-block: 5.5rem;
 }
 
-/* Section with bg */
+/** Section with bg **/
 section:where([class*="bg-"]) {
   margin-block: 0;
   padding-block: 3rem;
@@ -751,7 +809,7 @@ section section {
 
 @media (max-width: 991px) {
   section {
-    margin-block: 3.5rem;
+    margin-block: 2.5rem;
   }
 
   section section {
@@ -759,16 +817,6 @@ section section {
   }
 }
 
-/** Section with bg **/
-section:where([class*="bg-"]) {
-  padding-block: 3.0rem;
-}
-
-@media (max-width: 991px) {
-  section {
-    margin-block: 2.5rem;
-  }
-}
 
 /** Section colors **/
 .bg-primary {
@@ -794,8 +842,8 @@ section:where([class*="bg-"]) {
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     box-shadow: inset 0px -1px 0px 0px rgb(246 246 246 / 75%);
+    /* NOTE: Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
     transform: translate3d(0, 0, 0);
-    /* Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
   }
 }
 
@@ -812,9 +860,9 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 .two-col {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* gap: 32px 48px; */
+  gap: 32px 52px;
   /* ? maybe */
-  gap: 32px 7%;
+  /* gap: 32px 6%; */
 }
 
 .two-col:where(.top, .start) {
@@ -870,10 +918,18 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 .strip {
   width: 100%;
   height: 600px;
+  max-height: 100svh;
   object-fit: cover;
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;
+}
+
+/* iOS Fix */
+@supports (-webkit-touch-callout: none) {
+  .strip {
+    background-attachment: initial;
+  }
 }
 
 /* # TIMELINE */
@@ -1018,7 +1074,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 /* # PHASES */
 .phases {
-  --phase-icon-size: 80px;
+  --phase-icon-size: 76px;
   display: flex;
   align-items: start;
   /* justify-content: center; */
@@ -1066,7 +1122,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   width: var(--phase-icon-size);
   height: var(--phase-icon-size);
   aspect-ratio: 1;
-  padding: 20px;
+  padding: calc(var(--phase-icon-size) / 4);
   border-radius: 999px;
   background-color: var(--color-gray, #e8e8e8);
 }
@@ -1091,7 +1147,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   fill: #bbb;
   /* ? maybe */
   stroke: transparent;
-  font-size: 30px;
+  font-size: calc(var(--phase-icon-size) / 2.666);
   user-select: none;
   isolation: isolate;
   overflow: clip;
@@ -1106,7 +1162,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   font-size: 24px;
 }
 
-/** Done State (class .done OR preceding .current) **/
+/** Done State (if has class .done OR precedes .current) **/
 :where(.done, .phase:has(~.current)) .phase__icon {
   background-color: var(--color-primary);
 }
@@ -1224,6 +1280,10 @@ table.price-table>thead>tr> :is(th, td) {
   color: #933;
 }
 
+/* ? Sold properties may be hidden */
+.price-table [data-status="sold"] {
+  /* display: none; */
+}
 
 .price-table tbody td.active,
 .price-table td[class*="sorting"] {
@@ -1270,9 +1330,9 @@ table.dataTable thead>tr> :is(th, td):is(.dt-orderable-asc, .dt-orderable-desc):
 }
 
 
-
-/* # LAYOUT VIEWER */
 /* WIP */
+/* # LAYOUT VIEWER */
+
 .layout-viewer {
   position: relative;
 }
@@ -1327,7 +1387,7 @@ article.map {
   min-height: 450px;
   height: 60vh;
   max-width: 100%;
-  margin-bottom: 3.5rem;
+  /* margin-bottom: 3.5rem; */
   overflow: clip;
 }
 
@@ -1337,12 +1397,6 @@ article.map {
   margin-top: -100px;
 }
 
-/* WIP */
-/* TODO */
-/* NOTE */
-/* TEMP */
-/* FIXME */
-/* HACK */
-/* BUG */
-/* ADDED */
-/* DONE */
+/* TODO: Price table cards view */
+/* TODO: Improve gallery layout (grid, tabs/sections) */
+/* ? Refactor using SCSS? */
