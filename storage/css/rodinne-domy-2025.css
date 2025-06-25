@@ -27,7 +27,7 @@
 
   /** Layout **/
   --sections-spacing: 5.5rem;
-  --container-m: 1250px;
+  --container-m: 1300px;
   --container-l: 1600px;
   --content-half: calc(var(--container-m) / 2);
   --breakout-half: calc((var(--container-l) - var(--container-m)) / 2);
@@ -419,6 +419,7 @@ a.btn:hover {
 
 .btn[class*="--secondary"] {
   --btn-theme: var(--color-secondary);
+  /* TEMP */
   --btn-theme-complementary: var(--color-primary);
 }
 
@@ -488,11 +489,12 @@ a.btn:hover {
   position: relative;
   color: var(--color-headings, var(--color-primary, var(--color-blue, #20234c)));
   font-weight: 700;
+  transform-origin: left center;
 
   /* ? TEMP or MAYBE */
   margin-bottom: 0.5em;
   margin-top: 1.2em;
-  letter-spacing: -0.01em !important;
+  letter-spacing: -0.01em;
 
   /* ! super experimantal */
   /* scale: 98.0% 100%;
@@ -504,6 +506,8 @@ a.btn:hover {
 body { 
   /* dark gray */
   --color-primary: #2d2d2d;
+  --color-secondary: #cdaa65;
+  --color-secondary: hsl(37 54% 67% / 1);
   color: #787878; 
 }
 
@@ -613,7 +617,7 @@ h2::before {
   background: rgb(172, 172, 172);
   color: white;
   /* ? maybe */
-  max-height: calc(1080px - var(--header-height));
+  /* max-height: calc(1080px - var(--header-height)); */
   /* TEMP !!! */
   background: url('https://rezidencekolovraty.cz/app/uploads/2023/02/Kolovraty_II_002_220617-min-scaled.jpg') no-repeat 30% center/cover;
 }
@@ -645,53 +649,66 @@ h2::before {
 .hero__content {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  /* gap: 30px; */
+  width: 100%;
   position: absolute;
+  left: 50%;
   bottom: 55%;
-  translate: 0 50%;
+  translate: -50% 50%;
   max-width: calc(100% - 30px);
-  
+  justify-content: center;
+
+  /* Centered */
+  /* align-items: center;
+  text-align: center; */
 }
 
+/* WIP */
 .hero__logo {
-  width: 110px;
-  height: 110px;
-  aspect-ratio: 1;
-
-  /* TEMP */
-  border: 1px solid #cdaa65;
-  padding: 8px;
-  align-content: center;
+  max-width: 230px;
+  max-height: 130px;
+  margin-bottom: 36px;
 }
 
-.hero__logo img {
+.hero__logo :is(img, svg) {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
+
 .hero h1 {
-  /* font-size: 4rem; */
-  font-size: 4.5rem;
+  font-size: 85px;
   font-weight: 700;
-  line-height: 1;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  scale: 99% 100%;
   text-wrap: balance;
   color: white;
   margin: 0;
 }
 
-hgroup p {
+.hero hgroup {
+  display: contents;
+}
+
+.hero hgroup p {
   text-wrap: pretty;
-  line-height: 1.25;
+  /* text-wrap: balance; */
+  line-height: 1.2em;
   font-size: 1.5rem;
-  font-size: 1.25rem;
-  margin-top: 0.5em;
+  margin-top: 28px;
+  max-width: 700px;
+  letter-spacing: 0.015em;
 }
 
 .hero__cta-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  margin-top: 50px;
+
+  /* display: none; */
 }
 
 /* Jump to content Arrow */
