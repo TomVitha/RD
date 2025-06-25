@@ -27,6 +27,7 @@
 
   /** Layout **/
   --sections-spacing: 5.5rem;
+  --container-padding: 15px;
   --container-m: 1300px;
   --container-l: 1600px;
   --content-half: calc(var(--container-m) / 2);
@@ -240,7 +241,7 @@ address {
 
 :where(main) .container {
   max-width: 1110px !important;
-  padding-inline: 15px;
+  padding-inline: var(--container-padding);
   margin-inline: auto;
   height: 100%;
   position: relative;
@@ -252,7 +253,7 @@ address {
 
 .container-m {
   max-width: 800px !important;
-  padding-inline: 15px;
+  padding-inline: var(--container-padding);
   margin-inline: auto;
   height: 100%;
   position: relative;
@@ -503,12 +504,12 @@ a.btn:hover {
 }
 
 /* ! TEMP */
-body { 
+body {
   /* dark gray */
   --color-primary: #2d2d2d;
   --color-secondary: #cdaa65;
   --color-secondary: hsl(37 54% 67% / 1);
-  color: #787878; 
+  color: #787878;
 }
 
 h2 {
@@ -521,40 +522,28 @@ h3 {
   font-weight: 500;
 }
 
-h4 {
+h4 {}
 
-}
+h5 {}
 
-h5 {
-
-}
-
-h6 {
-
-}
+h6 {}
 
 @media (max-width: 991px) {
   h2 {
-    font-size: 24px
+    font-size: 26px
   }
 
   h3 {
     font-size: 22px
   }
 
-  h4 {
-
-  }
+  h4 {}
 
 
-  h5 {
-
-  }
+  h5 {}
 
 
-  h6 {
-
-  }
+  h6 {}
 
 }
 
@@ -655,7 +644,7 @@ h2::before {
   left: 50%;
   bottom: 55%;
   translate: -50% 50%;
-  max-width: calc(100% - 30px);
+  max-width: calc(100% - var(--container-padding) - var(--container-padding));
   justify-content: center;
 
   /* Centered */
@@ -665,9 +654,7 @@ h2::before {
 
 /* WIP */
 .hero__logo {
-  max-width: 230px;
-  max-height: 130px;
-  margin-bottom: 36px;
+  width: 200px;
 }
 
 .hero__logo :is(img, svg) {
@@ -678,14 +665,17 @@ h2::before {
 
 
 .hero h1 {
-  font-size: 85px;
+  font-size: 84px;
   font-weight: 700;
   line-height: 0.88;
-  letter-spacing: -0.01em;
-  scale: 99% 100%;
+  /* letter-spacing: -0.01em;
+  scale: 99% 100%; */
   text-wrap: balance;
   color: white;
   margin: 0;
+
+  margin-top: 0.44em;
+  margin-bottom: 0.333em;
 }
 
 .hero hgroup {
@@ -697,9 +687,10 @@ h2::before {
   /* text-wrap: balance; */
   line-height: 1.2em;
   font-size: 1.5rem;
-  margin-top: 28px;
+  /* margin-top: 28px; */
   max-width: 700px;
   letter-spacing: 0.015em;
+  margin: 0;
 }
 
 .hero__cta-buttons {
@@ -768,46 +759,57 @@ h2::before {
 }
 
 @keyframes scroll-icon-anim {
+
   /* Is on top, invisible */
   0% {
-      opacity: 0;
-      top: 25%
+    opacity: 0;
+    top: 25%
   }
+
   /* Stays on top, becomes visible */
   10% {
-      opacity: 1;
-      top: 25%
+    opacity: 1;
+    top: 25%
   }
+
   /* Comes down, stays visible */
   25% {
-      opacity: 1;
-      top: 75%
+    opacity: 1;
+    top: 75%
   }
+
   /* Is down, becomes invisible */
   60% {
-      opacity: 0;
-      top: 75%
+    opacity: 0;
+    top: 75%
   }
+
   /* Comes up, stays invisible */
   100% {
-      opacity: 0;
-      top: 25%
+    opacity: 0;
+    top: 25%
   }
 }
 
+@media (max-width: 1199px),
+(max-height: 767px) {
+  .hero h1 {
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+}
 
-@media (max-width: 991px), (max-height: 768px) {
+@media (max-width: 767px) {
   .hero__logo {
-    width: 90px;
-    height: 90px;
+    width: 150px;
   }
 
   .hero h1 {
-    font-size: 2.75rem;
+    font-size: 2.75rem
   }
 
-  hgroup p {
-    font-size: 1.125rem;
+  .hero hgroup p {
+    font-size: 1.0rem;
   }
 
 }
@@ -866,7 +868,7 @@ h2::before {
   .page-nav {
     --page-nav-height: 42px;
     /* ? maybe hide */
-    display: none; 
+    display: none;
   }
 
   .page-nav__mobile {
@@ -954,87 +956,97 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 /* SECTION (end) */
 
+/* TODO: Rewrite as mobile-first */
 /* # TWO-COL */
 .two-col {
-    align-items: center;
-    display: grid;
-    grid-template-columns: var(--supergrid);
-    margin-left: auto;
-    margin-right: auto;
+  align-items: center;
+  display: grid;
+  grid-template-columns: var(--supergrid);
+  margin-inline: auto;
 }
 
+/* First (left) div */
 .two-col>*:nth-child(odd) {
-    padding-right: calc(var(--two-col-gap, 4rem) / 2);
-    grid-column: span 1 / content-middle;
+  padding-left: var(--container-padding);
+  padding-right: calc(var(--two-col-gap, 4rem) / 2);
+  grid-column: span 1 / content-middle;
 }
+
+/* Second (right) div */
 .two-col>*:nth-child(even) {
-    padding-left: calc(var(--two-col-gap, 4rem) / 2);
-    grid-column: content-middle / span 1;
+  padding-left: calc(var(--two-col-gap, 4rem) / 2);
+  padding-right: var(--container-padding);
+  grid-column: content-middle / span 1;
 }
 
 /** Breakout on both sides **/
 .two-col.breakout>*:nth-child(odd) {
-    grid-column: span 2 / content-middle;
+  grid-column: span 2 / content-middle;
 }
+
 .two-col.breakout>*:nth-child(even) {
-    grid-column: content-middle / span 2;
+  grid-column: content-middle / span 2;
 }
 
 /** <img> breaks out on its side **/
 .two-col.img-text>*:nth-child(odd) {
-    grid-column: span 2 / content-middle;
+  /* padding: 0; */
+  grid-column: span 2 / content-middle;
 }
+
 .two-col.text-img>*:nth-child(even) {
-    grid-column: content-middle / span 2;
+  /* padding: 0; */
+  grid-column: content-middle / span 2;
 }
 
 .two-col img {
-    width: 100%;
-    object-fit: contain;
-    object-position: center center;
+  width: 100%;
+  object-fit: contain;
+  object-position: center center;
 }
 
-@media screen and (max-width: 1529px){
-    .two-col {
-        --two-col-gap: 3rem;
-    }
+@media screen and (max-width: 1500px) {
+  .two-col {
+    --two-col-gap: 3rem;
+    align-items: normal;
+  }
 
-    /** <img> no longer breaks out on its side **/
-    .two-col.img-text>*:nth-child(odd) {
-        grid-column: span 1 / content-middle;
-    }
+  /** <img> no longer breaks out on its side **/
+  .two-col.img-text>*:nth-child(odd) {
+    grid-column: span 1 / content-middle;
+  }
 
-    .two-col.text-img>*:nth-child(even) {
-        grid-column: content-middle / span 1;
-    }
+  .two-col.text-img>*:nth-child(even) {
+    grid-column: content-middle / span 1;
+  }
 }
 
+/** Mobile Single-column **/
+@media screen and (max-width: 767px) {
+  .two-col {
+    --two-col-gap: 0rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sections-spacing);
+    max-width: var(--container-s);
+  }
 
-@media screen and (max-width: 991px) {
-    .two-col {
-        --two-col-gap: 0rem;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        max-width: var(--container-s);
-    }
+  /** Places text above img **/
+  .two-col.img-text {
+    flex-direction: column-reverse;
+  }
 
-    /** Places text above img **/
-    .two-col.img-text {
-        flex-direction: column-reverse;
-    }
+  /** Removes padding that functioned as gap **/
+  .two-col>*:nth-child(odd),
+  .two-col>*:nth-child(even) {
+    padding-inline: var(--container-padding);
+  }
 
-    /** Removes padding that functioned as gap **/
-    .two-col>*:nth-child(odd),
-    .two-col>*:nth-child(even) {
-        padding: 0;
-    }
-
-    .two-col img {
-        width: 100vw;
-        max-width: 100vw;
-    }
+  .two-col img {
+    /* width: 100vw;
+    max-width: 100vw; */
+  }
 }
 
 .highlights {
@@ -1453,50 +1465,51 @@ table.price-table>thead>tr> :is(th, td) {
 }
 
 /* WIP START */
-.property-status{
-    border-radius: 999px;
-    line-height: 1;
-    text-align: center;
-    background-color: #ffffff;
-    display: block;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    -webkit-user-select: none;
-    user-select: none;
-    max-width: 9em;
-    padding: 0.25em 0.75em;
-    color: #696969;
-    font-weight: 600;
-    border: 1px solid currentColor;
-    font-size: 0.625rem;
+.property-status {
+  border-radius: 999px;
+  line-height: 1;
+  text-align: center;
+  background-color: #ffffff;
+  display: block;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  -webkit-user-select: none;
+  user-select: none;
+  max-width: 9em;
+  padding: 0.25em 0.75em;
+  color: #696969;
+  font-weight: 600;
+  border: 1px solid currentColor;
+  font-size: 0.625rem;
 }
 
-.property-status.dot{
-    display: inline-flex;
-    width: 10px;
-    height: 10px;
-    overflow: hidden;
-    overflow: clip;
-    aspect-ratio: 1;
-    padding: 0;
-    background-color: currentColor !important;
+.property-status.dot {
+  display: inline-flex;
+  width: 10px;
+  height: 10px;
+  overflow: hidden;
+  overflow: clip;
+  aspect-ratio: 1;
+  padding: 0;
+  background-color: currentColor !important;
 }
 
 
-.property-status.available{
-    color: #66cc66;
-    background-color: #f8fff9;
+.property-status.available {
+  color: #66cc66;
+  background-color: #f8fff9;
 }
 
-.property-status.under-offer{
-    color: #cc9933;
-    background-color: #fffdf8;
+.property-status.under-offer {
+  color: #cc9933;
+  background-color: #fffdf8;
 }
 
-.property-status.sold{
-    color: #993333;
-    background-color: #fffbfb;
+.property-status.sold {
+  color: #993333;
+  background-color: #fffbfb;
 }
+
 /* WIP END */
 
 
@@ -1619,228 +1632,252 @@ article.map {
 
 /**** CARDS ****/
 .apt-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
-    gap: 12px;
-    height: 100%;
-    margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
+  gap: 12px;
+  height: 100%;
+  margin-bottom: 1rem;
 }
 
-.apt-card{
-    background-color: white;
-    border-radius: 16px;
-    border-radius: 10px;
-    color: var(--color-gray-dark);
-    /* ? for some reason to na prod stránce hází na display: block, proto important */
-    display: flex !important;
-    flex-direction: column;
-    font-size: 0.875rem;
-    line-height: 1.15;
-    gap: 0.5rem;
-    box-shadow: 0px 0px 0px 1px #f1f1f1;
-    /* hidden used as fallback for clip */
-    overflow: hidden; 
-    overflow: clip;
-    padding: 1.0rem 1.25rem;
-    position: relative;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    transition: box-shadow 150ms, background-color 150ms, filter 150ms;
+.apt-card {
+  background-color: white;
+  border-radius: 16px;
+  border-radius: 10px;
+  color: var(--color-gray-dark);
+  /* ? for some reason to na prod stránce hází na display: block, proto important */
+  display: flex !important;
+  flex-direction: column;
+  font-size: 0.875rem;
+  line-height: 1.15;
+  gap: 0.5rem;
+  box-shadow: 0px 0px 0px 1px #f1f1f1;
+  /* hidden used as fallback for clip */
+  overflow: hidden;
+  overflow: clip;
+  padding: 1.0rem 1.25rem;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  transition: box-shadow 150ms, background-color 150ms, filter 150ms;
 }
 
-@media (pointer: coarse), not (hover: hover){
-    .apt-card:active{
-        /* background-color: #f9f9f9; */
-        filter: brightness(95%);
-    }
+@media (pointer: coarse),
+not (hover: hover) {
+  .apt-card:active {
+    /* background-color: #f9f9f9; */
+    filter: brightness(95%);
+  }
 }
 
 
-.apt-card__big-info{
-    font-size: 1.25rem;
-    color: var(--color-blue);
-    font-weight: 700;
-    line-height: 1.15;
+.apt-card__big-info {
+  font-size: 1.25rem;
+  color: var(--color-blue);
+  font-weight: 700;
+  line-height: 1.15;
 }
 
 a.apt-card,
-.apt-card a{
-    text-decoration: none;
-    color: inherit;
+.apt-card a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.apt-card a:hover{
-    text-decoration: underline;
+.apt-card a:hover {
+  text-decoration: underline;
 }
 
 .apt-card h4 {
-    font-size: 1.125rem;
-    color: var(--color-blue);
-    margin-bottom: 0.0em;
-    font-weight: 700;
-    line-height: 1.15;
+  font-size: 1.125rem;
+  color: var(--color-blue);
+  margin-bottom: 0.0em;
+  font-weight: 700;
+  line-height: 1.15;
 }
 
 .apt-card h5 {
-    font-size: 1rem;
-    color: var(--color-blue);
-    margin: 0;
-    font-weight: 400;
+  font-size: 1rem;
+  color: var(--color-blue);
+  margin: 0;
+  font-weight: 400;
 }
 
-.apt-card .apt-card__specs{
-    flex-grow: 1;
+.apt-card .apt-card__specs {
+  flex-grow: 1;
 }
 
 
 .apt-card__thumbnail-img {
-    width: auto;
-    height: 9rem;
-    aspect-ratio: 4/3;
-    object-fit: contain;
-    object-position: center;
-    padding: 0.25rem 0 0.625rem;
-    margin: 0 auto;
+  width: auto;
+  height: 9rem;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  object-position: center;
+  padding: 0.25rem 0 0.625rem;
+  margin: 0 auto;
 }
 
 @supports not (aspect-ratio: 4/3) {
-    .apt-card__thumbnail-img{
-	    max-width: min(12rem, 100%);
-    }
+  .apt-card__thumbnail-img {
+    max-width: min(12rem, 100%);
+  }
 }
 
 /* Růžice */
-.apt-card__compass{
-    position: absolute;
-    display: block;
-    width: 1.5rem;
-    mix-blend-mode: multiply;
-    object-fit: contain;
+.apt-card__compass {
+  position: absolute;
+  display: block;
+  width: 1.5rem;
+  mix-blend-mode: multiply;
+  object-fit: contain;
 }
 
-.apt-card__heading{
-    color: var(--color-blue, #20234c);
-    display: flex;
-    align-items: center;
-    gap: 0.25em 0.5em;
-    justify-content: left;
-    flex-wrap: wrap-reverse;
-}
-
-
-.apt-card__heading [class*="fa-"]{
-    font-size: 1rem;
-    margin-bottom: -0.1em;
+.apt-card__heading {
+  color: var(--color-blue, #20234c);
+  display: flex;
+  align-items: center;
+  gap: 0.25em 0.5em;
+  justify-content: left;
+  flex-wrap: wrap-reverse;
 }
 
 
-.apt-card dl.dl-grid{
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-    align-items: baseline;
-    margin: 0;
-    gap: 0.3em 0.6em;
-}
-
-.apt-card dt{
-    font-size: 0.875rem;
-    font-weight: 400;
-}
-
-.apt-card dd{
-    font-size: 1rem;
-    font-weight: 650;
-    line-height: 1;
+.apt-card__heading [class*="fa-"] {
+  font-size: 1rem;
+  margin-bottom: -0.1em;
 }
 
 
-.apt-card .label{
-    display: block;
-    line-height: 1.25;
+.apt-card dl.dl-grid {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  align-items: baseline;
+  margin: 0;
+  gap: 0.3em 0.6em;
+}
+
+.apt-card dt {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.apt-card dd {
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1;
 }
 
 
-.apt-card .apt-card__fav{
-    position: absolute;
-    top: 0rem;
-    right: 0rem;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+.apt-card .label {
+  display: block;
+  line-height: 1.25;
+}
+
+
+.apt-card .apt-card__fav {
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
 }
 
 /* If browser supports :has() selector */
-@supports selector(:has(*)){
-    /* and if device is capable of hover and uses mouse */
-    @media (hover: hover) and (pointer: fine){
-        /* hides heart by default */
-        .apt-card .apt-card__fav{
-            display: none;
-        }
-        /* shows heart on hover */
-        .apt-card:hover .apt-card__fav{
-            display: block;
-        }
-        /* heart stays visible if active */
-        .apt-card .apt-card__fav:has(.fa-heart.fas){
-            display: block;
-        }
+@supports selector(:has(*)) {
+  /* and if device is capable of hover and uses mouse */
+  @media (hover: hover) and (pointer: fine) {
+
+    /* hides heart by default */
+    .apt-card .apt-card__fav {
+      display: none;
     }
+
+    /* shows heart on hover */
+    .apt-card:hover .apt-card__fav {
+      display: block;
+    }
+
+    /* heart stays visible if active */
+    .apt-card .apt-card__fav:has(.fa-heart.fas) {
+      display: block;
+    }
+  }
 }
 
 /* Heart icon general */
-.apt-card__fav .fa-heart{
-    cursor: pointer;
-    color: var(--color-gray-dark);
-    transition: color 75ms, scale 150ms;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    font-size: 1.25rem;
-    padding: 16px 18px;
-    border-radius: 0 16px 0 16px; 
+.apt-card__fav .fa-heart {
+  cursor: pointer;
+  color: var(--color-gray-dark);
+  transition: color 75ms, scale 150ms;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-size: 1.25rem;
+  padding: 16px 18px;
+  border-radius: 0 16px 0 16px;
 }
 
 
 /* When primary pointer is fine (cursor, pen) */
 @media (pointer: fine) {
 
-    /* Smaller hitbox for heart icon */
-    .apt-card__fav .fa-heart{
-        margin: 12px 14px;
-        padding: 4px;
-    }
-    .apt-card__fav i.fal:hover {
-        color: var(--color-heart);
-    }
+  /* Smaller hitbox for heart icon */
+  .apt-card__fav .fa-heart {
+    margin: 12px 14px;
+    padding: 4px;
+  }
+
+  .apt-card__fav i.fal:hover {
+    color: var(--color-heart);
+  }
 }
 
 .apt-card__fav .fa-heart:hover:active {
-    scale: 75%;
-    color: var(--color-heart);
+  scale: 75%;
+  color: var(--color-heart);
 }
 
 /* Add to fav - heart fill */
-.apt-card__fav .fa-heart.fas{
-    color: var(--color-heart);
-    animation-name: heart-fill;
-    animation-duration: 125ms;
+.apt-card__fav .fa-heart.fas {
+  color: var(--color-heart);
+  animation-name: heart-fill;
+  animation-duration: 125ms;
 }
 
 /* Remove from fav - heart pop */
-.apt-card__fav .fa-heart.fal { 
-    animation-name: heart-pop;
-    animation-duration: 100ms;
+.apt-card__fav .fa-heart.fal {
+  animation-name: heart-pop;
+  animation-duration: 100ms;
 }
 
 
 @keyframes heart-fill {
-    0%   {scale: 100%;}
-    50%   {scale: 75%;}
-    75%   {scale: 110%;}
-    100%   {scale: 100%;}
+  0% {
+    scale: 100%;
+  }
+
+  50% {
+    scale: 75%;
+  }
+
+  75% {
+    scale: 110%;
+  }
+
+  100% {
+    scale: 100%;
+  }
 }
 
 @keyframes heart-pop {
-    0%   {scale: 100%;}
-    50%   {scale: 90%;}
-    100%   {scale: 100%;}
+  0% {
+    scale: 100%;
+  }
+
+  50% {
+    scale: 90%;
+  }
+
+  100% {
+    scale: 100%;
+  }
 }
 
 
