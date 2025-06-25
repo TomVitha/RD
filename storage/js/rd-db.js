@@ -143,9 +143,9 @@ export async function init(locale) {
             info: false,
             // FIXME: Throws error on iOS; TEMP OFF
             // Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301
-            language: {
-                url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
-            },
+            // language: {
+            //     url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
+            // },
             columnDefs: [
                 { orderable: false, targets: [3, 7] },
                 // { type: 'natural-nohtml', target: '_all' },

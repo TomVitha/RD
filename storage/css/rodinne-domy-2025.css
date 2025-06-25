@@ -956,47 +956,23 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 /* SECTION (end) */
 
-/* TODO: Rewrite as mobile-first */
+
 /* # TWO-COL */
+/** Mobile Single-column **/
 .two-col {
-  align-items: center;
-  display: grid;
-  grid-template-columns: var(--supergrid);
-  margin-inline: auto;
+  --two-col-gap: var(--sections-spacing);
+  display: flex;
+  flex-direction: column;
+  gap: var(--two-col-gap);
 }
 
-/* First (left) div */
-.two-col>*:nth-child(odd) {
-  padding-left: var(--container-padding);
-  padding-right: calc(var(--two-col-gap, 4rem) / 2);
-  grid-column: span 1 / content-middle;
+/* Places text above img */
+.two-col.img-text {
+  flex-direction: column-reverse;
 }
 
-/* Second (right) div */
-.two-col>*:nth-child(even) {
-  padding-left: calc(var(--two-col-gap, 4rem) / 2);
-  padding-right: var(--container-padding);
-  grid-column: content-middle / span 1;
-}
-
-/** Breakout on both sides **/
-.two-col.breakout>*:nth-child(odd) {
-  grid-column: span 2 / content-middle;
-}
-
-.two-col.breakout>*:nth-child(even) {
-  grid-column: content-middle / span 2;
-}
-
-/** <img> breaks out on its side **/
-.two-col.img-text>*:nth-child(odd) {
-  /* padding: 0; */
-  grid-column: span 2 / content-middle;
-}
-
-.two-col.text-img>*:nth-child(even) {
-  /* padding: 0; */
-  grid-column: content-middle / span 2;
+.two-col>div {
+  padding-inline: var(--container-padding);
 }
 
 .two-col img {
@@ -1005,49 +981,61 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   object-position: center center;
 }
 
-@media screen and (max-width: 1500px) {
+/* ? Maybe jump straight to (min-width: 991px) ? */
+/** Two column layout **/
+@media screen and (min-width: 768px) {
   .two-col {
     --two-col-gap: 3rem;
-    align-items: normal;
+    display: grid;
+    grid-template-columns: var(--supergrid);
+    gap: 0;
   }
 
-  /** <img> no longer breaks out on its side **/
-  .two-col.img-text>*:nth-child(odd) {
+  /* First (left) div */
+  .two-col>*:nth-child(odd) {
+    padding-right: calc(var(--two-col-gap) / 2);
     grid-column: span 1 / content-middle;
   }
 
-  .two-col.text-img>*:nth-child(even) {
+  /* Second (right) div */
+  .two-col>*:nth-child(even) {
+    padding-left: calc(var(--two-col-gap) / 2);
     grid-column: content-middle / span 1;
   }
 }
 
-/** Mobile Single-column **/
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 991px) {
+
+  /* Vertically align images and text */
   .two-col {
-    --two-col-gap: 0rem;
     align-items: center;
-    display: flex;
-    flex-direction: column;
-    gap: var(--sections-spacing);
-    max-width: var(--container-s);
   }
 
-  /** Places text above img **/
-  .two-col.img-text {
-    flex-direction: column-reverse;
+  /* Image containers break out **/
+  .two-col.img-text>*:nth-child(odd) {
+    grid-column: span 2 / content-middle;
+    padding-left: 0;
   }
 
-  /** Removes padding that functioned as gap **/
-  .two-col>*:nth-child(odd),
-  .two-col>*:nth-child(even) {
-    padding-inline: var(--container-padding);
-  }
-
-  .two-col img {
-    /* width: 100vw;
-    max-width: 100vw; */
+  .two-col.text-img>*:nth-child(even) {
+    grid-column: content-middle / span 2;
+    padding-right: 0;
   }
 }
+
+
+/* NOTE: Leftovers from before refactoring (class .breakout) */
+/* ? Maybe implement */
+/* * Breakout on both sides */
+/* .two-col.breakout>*:nth-child(odd) {
+  grid-column: span 2 / content-middle;
+}
+
+.two-col.breakout>*:nth-child(even) {
+  grid-column: content-middle / span 2;
+} */
+
+/* # TWO-COL (end) */
 
 .highlights {
   display: flex;
@@ -1106,6 +1094,8 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   z-index: -1;
 }
 
+/* NOTE: Until 15.4, Safari displayed 'fixed' and 'local' incorrectly */
+/* TODO: Find a @supports selector that will limit only to before fix  */
 /* iOS Fix */
 @supports (-webkit-touch-callout: none) {
   .strip {
