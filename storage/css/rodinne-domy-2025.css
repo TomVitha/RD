@@ -648,8 +648,8 @@ h2::before {
   justify-content: center;
 
   /* Centered */
-  /* align-items: center;
-  text-align: center; */
+  /* align-items: center; */
+  /* text-align: center; */
 }
 
 /* WIP */
@@ -664,12 +664,13 @@ h2::before {
 }
 
 
+/* TODO: Change font-size to 4.375rem (70px), line-height to 0.9, probaly limit width with max-width  */
 .hero h1 {
   font-size: 84px;
   font-weight: 700;
   line-height: 0.88;
-  /* letter-spacing: -0.01em;
-  scale: 99% 100%; */
+  /* letter-spacing: -0.01em; */
+  /* scale: 99% 100%; */
   text-wrap: balance;
   color: white;
   margin: 0;
@@ -682,6 +683,7 @@ h2::before {
   display: contents;
 }
 
+/* TODO: Change font-size to 20 or 22px */
 .hero hgroup p {
   text-wrap: pretty;
   /* text-wrap: balance; */
@@ -956,7 +958,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
 /* SECTION (end) */
 
-
+/* ? TODO: Rewrite to be less cumbersome and more flexible/explicit to use */
 /* # TWO-COL */
 /** Mobile Single-column **/
 .two-col {
