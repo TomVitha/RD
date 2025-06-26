@@ -13,9 +13,8 @@
 
   /** Palette **/
   --color-primary: #2d2d2d;
-  /* --color-secondary: #cdaa65; */
   --color-secondary: hsl(37 54% 67% / 1);
-  --color-tertiary: #ffffff;
+  --color-tertiary: #f8f8f8;
 
   /** Accessibility **/
   --color-focus-outline: #72c2ff;
@@ -72,7 +71,7 @@ html {
 
 /** Dark Reader optimization **/
 html[data-darkreader-scheme="dark"] {
-  --darkreader-bg-color-yellow: #dbb722;
+  --darkreader-bg--color-yellow: #dbb722;
 }
 
 html[data-darkreader-scheme="dark"] .btn-yellow {
@@ -498,54 +497,54 @@ a.btn:hover {
 }
 
 h1 {
-  font-size: 52px;
+  font-size: 3.25rem;
 }
 
 h2 {
-  font-size: 46px;
+  font-size: 2.625rem;
 }
 
 h3 {
-  font-size: 36px;
+  font-size: 2.25rem;
 }
 
 h4 {
-  font-size: 30px;
+  font-size: 1.875rem;
 }
 
 h5 {
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 h6 {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 @media (max-width: 991px) {
   h1 {
-    font-size: 28px;
+    font-size: 1.75rem;
   }
 
   h2 {
-    font-size: 26px
+    font-size: 1.625rem;
   }
 
   h3 {
-    font-size: 24px
+    font-size: 1.5rem;
   }
 
   h4 {
-    font-size: 22px
+    font-size: 1.375rem;
   }
 
 
   h5 {
-    font-size: 20px
+    font-size: 1.25rem;
   }
 
 
   h6 {
-    font-size: 18px
+    font-size: 1.125rem;;
   }
 
 }
@@ -565,6 +564,7 @@ h6 {
 
 :is(h1, h2, h3, h4, h5, h6) a {
   text-decoration: none;
+  -webkit-user-drag: none;
 }
 
 
@@ -675,8 +675,6 @@ h2::before {
   object-fit: contain;
 }
 
-
-/* DONE: Change font-size to 4.375rem (70px), line-height to 0.9, probaly limit width with max-width  */
 .hero h1 {
   font-size: 4.375rem;
   font-weight: 700;
@@ -696,7 +694,6 @@ h2::before {
   display: contents;
 }
 
-/* DONE: Change font-size to 20 or 22px */
 .hero hgroup p {
   text-wrap: pretty;
   /* text-wrap: balance; */
@@ -711,8 +708,6 @@ h2::before {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 50px;
-
-  /* display: none; */
 }
 
 /* Jump to content Arrow */
@@ -734,7 +729,7 @@ a.hero__jump,
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
 }
 
-/** Purely css-only scroll down icon with animation **/
+/** Pure css-only scroll down icon with animation **/
 .scroll-icon {
   width: 20px;
   height: 38px;
@@ -911,9 +906,9 @@ section {
 }
 
 /** Section with bg **/
-section:where([class*="bg-"]) {
+section:where([class*="bg--"]) {
   margin-block: 0;
-  padding-block: calc(var(--sections-spacing) / 2);
+  padding-block: calc(var(--sections-spacing) / 1.75);
 }
 
 /** Sub-sections **/
@@ -934,33 +929,44 @@ section section {
 
 
 /** Section colors **/
-.bg-primary {
+.bg--primary {
   background-color: var(--color-primary);
   color: white;
 }
 
-.bg-gray {
-  --color-text-behind: #f3f3f3;
-  background-color: var(--color-gray);
+.bg--secondary {
+  background-color: var(--color-secondary);
+  color: white;
 }
 
-.bg-blue {
+.bg--tertiary {
+  background-color: var(--color-tertiary);
+  color: white;
+}
+
+.bg--blue {
   background-color: var(--color-blue);
   color: white;
 }
 
-[class*="bg-"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
+.bg--gray {
+  --color-text-behind: #f3f3f3;
+  background-color: var(--color-gray);
+}
+
+
+[class*="bg--"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
   margin-top: 0;
 }
 
-section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
+/* section[class*="bg--"] :is(h1, h2, h3, h4, h5, h6) {
   color: inherit;
-}
+} */
 
 @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
 
   /* Frosted glass effect */
-  .bg-frost {
+  .bg--frost {
     background: hsla(0deg, 0%, 100%, 87%);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
@@ -971,13 +977,12 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 
   /** Accessibility **/
   @media (prefers-reduced-transparency: reduce) {
-    .bg-frost {
+    .bg--frost {
       background: hsla(0deg, 0%, 100%, 100%);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
   }
-
 }
 
 /* SECTION (end) */
@@ -1014,7 +1019,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
 /** Two column layout **/
 @media screen and (min-width: 768px) {
   .two-col {
-    --two-col-gap: 3rem;
+    --two-col-gap: 10%;
     display: grid;
     grid-template-columns: var(--supergrid);
     row-gap: 1rem;
@@ -1882,6 +1887,33 @@ a.apt-card,
   100% {
     scale: 100%;
   }
+}
+
+.gallery {
+  --gallery-columns: 1;
+}
+
+@media (min-width: 575px) {
+  .gallery {
+    --gallery-columns: 2;
+  }
+}
+@media (min-width: 992px) {
+  .gallery {
+    --gallery-columns: 3;
+  }
+}
+
+/* Hide all but the first image */
+.gallery:not(.gallery--grid)>:not(:first-child) {
+  display: none;
+}
+
+/* Grid layout */
+.gallery.gallery--grid {
+  display: grid;
+  grid-template-columns: repeat(var(--gallery-columns), 1fr);
+  gap: 12px;
 }
 
 
