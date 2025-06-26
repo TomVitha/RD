@@ -1,7 +1,8 @@
 <div class="hero">
+  <picture>
+    <img src="https://anglickyresort.cz/img/44486997_2160_q50.webp" alt="" srcset="">
+  </picture>
   <video playsinline muted autoplay loop poster="https://anglickyresort.cz/img/44486997_2160_q50.webp">
-    <!-- <source src="https://www.corwin.sk/files/videos/OUR-PROJECTS-FULL-HD-1.mp4" type="video/mp4"> -->
-    <!-- <source src="https://vr.corwin.sk/kvartet/video/kvartet-hp.mp4" type="video/mp4"> -->
     <source src="https://anglickyresort.cz/files/Kralupy.mp4" type="video/mp4">
   </video>
   <div class="hero__inside container">
@@ -11,7 +12,7 @@
         <svg viewBox="0 0 182 41" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect/>
           <g clip-path="url(#clip0_7574_480)">
-            <g fill="var(--color-secondary, #ff00ff)">
+            <g fill="var(--color-secondary, #ffffff)">
               <path d="M37.6763 0.0727539L29.9993 4.64824L32.2382 6.00357L37.6763 2.76302L55.5931 13.4375V35.8003H41.1723V38.0728H57.9993V12.1789L37.6763 0.0727539Z"/>
               <path d="M18.9993 0.0727539L-0.000732422 12.1789V38.0728H15.7309V35.8003H2.2488V13.4375L18.9993 2.76302L35.7497 13.4375V35.8003H21.0874V13.4375L26.2069 10.1765L24.1086 8.82631L18.8379 12.184V38.0728H37.9993V12.1789L18.9993 0.0727539Z"/>
             </g>
@@ -36,7 +37,7 @@
           Mám zájem
           <i class="far fa-calendar-check" aria-hidden="true"></i>
         </button>
-        <a href="#cenik" class="btn btn--white--inline">
+        <a href="#cenik" class="btn btn--white--inline--outline-fill">
           Ceník
           <i class="far fa-arrow-down" aria-hidden="true"></i>
         </a>
@@ -44,8 +45,7 @@
     </div>
     <div class="hero__jump">
       <a href="#uvod"
-        onclick="event.preventDefault(); document.querySelector('#uvod')?.scrollIntoView({behavior: 'smooth'})">
-        <!-- <img src="https://assets-v2.lottiefiles.com/a/ff109c6a-1151-11ee-be78-2f08adb66b54/vqaHpkb2tj.gif" alt="" srcset=""> -->
+        onclick="event.preventDefault(); document.querySelector('#uvod')?.scrollIntoView({behavior: window.matchMedia('(prefers-reduced-motion: reduce)') ? 'auto' : 'smooth'})">
         <div class="scroll-icon"></div>
       </a>
     </div>
@@ -295,8 +295,7 @@
             style="text-decoration: underline;">Načtěte stránku znovu</a>, nebo to zkuste později.</span>
       </div>
     </div>
-    <a href="#" class="btn btn--gray-dark--outline--rounded">Mám zájem</a>
-    <!-- <p>Máte zájem? <a href="#">Kontaktujte nás</a>.</p> -->
+    <a href="#" class="btn btn--gray-dark--outline">Mám zájem</a>
   </div>
 </section>
 

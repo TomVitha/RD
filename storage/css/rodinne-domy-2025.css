@@ -8,12 +8,13 @@
   /* --color-gray-light: #f2f2f2; */
   /* --color-gray-mid: #e4e4e4; */
   --color-gray-dark: #4D4D4D;
-  --color-text: var(--color-gray-dark, #4D4D4D);
+  --color-text: #787878;
   --color-text-behind: #c8bfd940;
 
   /** Palette **/
-  --color-primary: var(--color-blue);
-  --color-secondary: #ffffff;
+  --color-primary: #2d2d2d;
+  /* --color-secondary: #cdaa65; */
+  --color-secondary: hsl(37 54% 67% / 1);
   --color-tertiary: #ffffff;
 
   /** Accessibility **/
@@ -25,6 +26,7 @@
   --header-height: calc(var(--header-height-top) + var(--header-height-bottom));
   --page-nav-height: 52px;
 
+  /* TODO: Fix this mess with containers */
   /** Layout **/
   --sections-spacing: 5.5rem;
   --container-padding: 15px;
@@ -63,15 +65,10 @@
 }
 
 html {
-  /* TEMP value -> sticky nav height */
-  scroll-padding-top: calc(var(--page-nav-height) + 0px);
+  /* scroll-padding-top: calc(var(--page-nav-height) + 0px); */
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
+
 
 /** Dark Reader optimization **/
 html[data-darkreader-scheme="dark"] {
@@ -84,7 +81,7 @@ html[data-darkreader-scheme="dark"] .btn-yellow {
 
 
 body {
-  color: var(--color-text, #4D4D4D);
+  color: var(--color-text);
   overflow-x: clip;
 
   /* TEMP */
@@ -309,7 +306,9 @@ hr[data-text]::before {
 .btn {
   --btn-theme: transparent;
   --btn-theme-complementary: var(--color-primary);
-  --btn-border-radius: 0.35em;
+  /* --btn-border-radius: 0.35em; */
+  /* "I don't like it, but I'll have to go along with it." --German finance minister Reinhardt */
+  --btn-border-radius: 0em;
   --btn-background: var(--btn-theme, transparent);
   --btn-background-hover: var(--btn-background);
 
@@ -330,7 +329,7 @@ hr[data-text]::before {
   min-height: 2.7em;
   overflow: clip;
   overflow: hidden;
-  padding: 0.5em 1.25em;
+  padding: 0.6em 1.1em;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -489,61 +488,65 @@ a.btn:hover {
 :where(main) :is(h1, h2, h3, h4, h5, h6) {
   position: relative;
   color: var(--color-headings, var(--color-primary, var(--color-blue, #20234c)));
-  font-weight: 700;
+  font-weight: 500;
   transform-origin: left center;
 
   /* ? TEMP or MAYBE */
   margin-bottom: 0.5em;
   margin-top: 1.2em;
   letter-spacing: -0.01em;
-
-  /* ! super experimantal */
-  /* scale: 98.0% 100%;
-  transform-origin: left center;
-  letter-spacing: -0.015em !important; */
 }
 
-/* ! TEMP */
-body {
-  /* dark gray */
-  --color-primary: #2d2d2d;
-  --color-secondary: #cdaa65;
-  --color-secondary: hsl(37 54% 67% / 1);
-  color: #787878;
+h1 {
+  font-size: 52px;
 }
 
 h2 {
   font-size: 46px;
-  font-weight: 500;
 }
 
 h3 {
   font-size: 36px;
-  font-weight: 500;
 }
 
-h4 {}
+h4 {
+  font-size: 30px;
+}
 
-h5 {}
+h5 {
+  font-size: 24px;
+}
 
-h6 {}
+h6 {
+  font-size: 20px;
+}
 
 @media (max-width: 991px) {
+  h1 {
+    font-size: 28px;
+  }
+
   h2 {
     font-size: 26px
   }
 
   h3 {
+    font-size: 24px
+  }
+
+  h4 {
     font-size: 22px
   }
 
-  h4 {}
+
+  h5 {
+    font-size: 20px
+  }
 
 
-  h5 {}
-
-
-  h6 {}
+  h6 {
+    font-size: 18px
+  }
 
 }
 
@@ -603,12 +606,12 @@ h2::before {
   min-height: 350px;
   height: calc(100svh - var(--header-height));
   /* height: calc(100svh - var(--header-height) - var(--page-nav-height)); */
-  background: rgb(172, 172, 172);
+  /* background: rgb(172, 172, 172); */
   color: white;
   /* ? maybe */
   /* max-height: calc(1080px - var(--header-height)); */
-  /* TEMP !!! */
-  background: url('https://rezidencekolovraty.cz/app/uploads/2023/02/Kolovraty_II_002_220617-min-scaled.jpg') no-repeat 30% center/cover;
+  /* TEMP */
+  /* background: url('https://rezidencekolovraty.cz/app/uploads/2023/02/Kolovraty_II_002_220617-min-scaled.jpg') no-repeat 30% center/cover; */
 }
 
 /* Backdrop */
@@ -617,18 +620,27 @@ h2::before {
   display: block;
   position: absolute;
   inset: 0;
-  /* background-color: rgba(0, 0, 0, 0.25); */
-
-  background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .5)), linear-gradient(180deg, rgba(0, 0, 0, .2), transparent);
+  
+  background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .6)), linear-gradient(180deg, rgba(0, 0, 0, .4), transparent);
+  /* background-color: rgba(0, 0, 0, 0.4); */
 }
 
-.hero>video {
+.hero>:is(video, picture, img) {
   position: absolute;
   inset: 0;
+  z-index: -1;
+}
+
+.hero>:is(picture, img) {
+  z-index: -2;
+}
+
+.hero>video,
+.hero>img,
+.hero>picture img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
 }
 
 .hero__inside {
@@ -664,11 +676,11 @@ h2::before {
 }
 
 
-/* TODO: Change font-size to 4.375rem (70px), line-height to 0.9, probaly limit width with max-width  */
+/* DONE: Change font-size to 4.375rem (70px), line-height to 0.9, probaly limit width with max-width  */
 .hero h1 {
-  font-size: 84px;
+  font-size: 4.375rem;
   font-weight: 700;
-  line-height: 0.88;
+  line-height: 0.9;
   /* letter-spacing: -0.01em; */
   /* scale: 99% 100%; */
   text-wrap: balance;
@@ -677,21 +689,20 @@ h2::before {
 
   margin-top: 0.44em;
   margin-bottom: 0.333em;
+  max-width: 900px;
 }
 
 .hero hgroup {
   display: contents;
 }
 
-/* TODO: Change font-size to 20 or 22px */
+/* DONE: Change font-size to 20 or 22px */
 .hero hgroup p {
   text-wrap: pretty;
   /* text-wrap: balance; */
   line-height: 1.2em;
-  font-size: 1.5rem;
-  /* margin-top: 28px; */
-  max-width: 700px;
-  letter-spacing: 0.015em;
+  font-size: 1.25rem;
+  max-width: 650px;
   margin: 0;
 }
 
@@ -706,46 +717,43 @@ h2::before {
 
 /* Jump to content Arrow */
 .hero__jump {
+  position: absolute;
   bottom: 16px;
   left: 50%;
-  position: absolute;
   transform: translate(-50%, 0%);
-  transition: transform 300ms;
-  -webkit-user-drag: none;
-  z-index: 10;
   font-size: 24px;
   max-width: 50px;
-
-  /* TEMP off */
-  /* display: none; */
+  -webkit-user-drag: none;
+  z-index: 10;
 }
 
-/* temp (scroll icon gif) */
-.hero__jump img {
-  filter: brightness(0) invert(1);
-  opacity: 75%;
-}
-
+a.hero__jump,
 .hero__jump a {
   display: block;
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
 }
 
-/** alt - pure css-only animated scroll down icon **/
+/** Purely css-only scroll down icon with animation **/
 .scroll-icon {
-  text-align: left;
-  white-space: normal;
-  overflow: clip;
   width: 20px;
   height: 38px;
-  border: 2px solid rgba(255, 255, 255, 0.75);
   border-radius: 999px;
+  /* border: 2px solid rgba(255, 255, 255, 0.75); */
+  border: 2px solid white;
+  opacity: 0.75;
+  position: relative;
   transform-origin: 50% 50%;
   pointer-events: auto;
-  position: relative;
+  overflow: clip;
+  transition: opacity 100ms;
 }
 
+.scroll-icon:hover {
+  opacity: 1;
+}
+
+/* Dot */
 .scroll-icon::after {
   content: "";
   display: block;
@@ -757,8 +765,10 @@ h2::before {
   translate: -50% -50%;
   border-radius: 999px;
   animation: scroll-icon-anim 3s ease-out infinite;
-  background: rgba(255, 255, 255, 1)
+  background: rgba(255, 255, 255, 1);
 }
+
+
 
 @keyframes scroll-icon-anim {
 
@@ -814,7 +824,14 @@ h2::before {
     font-size: 1.0rem;
   }
 
+  .hero__content {
+    /* align-items: center;
+    text-align: center; */
+  }
+
 }
+
+/* Hero (end) */
 
 /* WIP: REWRITE */
 /* # Page Nav */
@@ -850,7 +867,6 @@ h2::before {
 
 .page-nav .btn {
   color: var(--gray-dark);
-  /* font-weight: 500; */
   padding: 1.15em 1.0em;
   font-size: 0.875rem;
   width: 100%;
@@ -897,14 +913,12 @@ section {
 /** Section with bg **/
 section:where([class*="bg-"]) {
   margin-block: 0;
-  /* padding-block: 3rem; */
   padding-block: calc(var(--sections-spacing) / 2);
 }
 
 /** Sub-sections **/
 section section {
   overflow: visible;
-  /* margin-block: 3.0rem; */
   margin-block: calc(var(--sections-spacing) / 2);
 }
 
@@ -935,19 +949,6 @@ section section {
   color: white;
 }
 
-@supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
-
-  /* ? Frosted glass effect */
-  .bg-frost {
-    background: hsla(0deg, 0%, 100%, 87%);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
-    box-shadow: inset 0px -1px 0px 0px rgb(246 246 246 / 75%);
-    /* NOTE: Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
-    transform: translate3d(0, 0, 0);
-  }
-}
-
 [class*="bg-"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
   margin-top: 0;
 }
@@ -956,22 +957,48 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   color: inherit;
 }
 
+@supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
+
+  /* Frosted glass effect */
+  .bg-frost {
+    background: hsla(0deg, 0%, 100%, 87%);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: inset 0px -1px 0px 0px rgb(246 246 246 / 75%);
+    /* NOTE: Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
+    transform: translate3d(0, 0, 0);
+  }
+
+  /** Accessibility **/
+  @media (prefers-reduced-transparency: reduce) {
+    .bg-frost {
+      background: hsla(0deg, 0%, 100%, 100%);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+}
+
 /* SECTION (end) */
 
 /* ? TODO: Rewrite to be less cumbersome and more flexible/explicit to use */
+/* ? Possibly/probably get rid of supergrid */
+/* TODO: Allow for headings above */
 /* # TWO-COL */
 /** Mobile Single-column **/
 .two-col {
   --two-col-gap: var(--sections-spacing);
   display: flex;
   flex-direction: column;
-  gap: var(--two-col-gap);
+  row-gap: var(--two-col-gap);
 }
 
 /* Places text above img */
 .two-col.img-text {
   flex-direction: column-reverse;
 }
+
 
 .two-col>div {
   padding-inline: var(--container-padding);
@@ -990,7 +1017,8 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
     --two-col-gap: 3rem;
     display: grid;
     grid-template-columns: var(--supergrid);
-    gap: 0;
+    row-gap: 1rem;
+    align-items: center;
   }
 
   /* First (left) div */
@@ -1004,27 +1032,30 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
     padding-left: calc(var(--two-col-gap) / 2);
     grid-column: content-middle / span 1;
   }
-}
-
-@media screen and (min-width: 991px) {
-
-  /* Vertically align images and text */
-  .two-col {
-    align-items: center;
-  }
 
   /* Image containers break out **/
   .two-col.img-text>*:nth-child(odd) {
     grid-column: span 2 / content-middle;
-    padding-left: 0;
+    align-self: start;
   }
 
   .two-col.text-img>*:nth-child(even) {
     grid-column: content-middle / span 2;
-    padding-right: 0;
+    align-self: start;
   }
 }
 
+@media screen and (min-width: 991px) {
+
+  .two-col.img-text>*:nth-child(odd) {
+    /* padding-left: 0; */
+  }
+
+  .two-col.text-img>*:nth-child(even) {
+    /* padding-right: 0; */
+  }
+
+}
 
 /* NOTE: Leftovers from before refactoring (class .breakout) */
 /* ? Maybe implement */
@@ -1037,7 +1068,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   grid-column: content-middle / span 2;
 } */
 
-/* # TWO-COL (end) */
+/* TWO-COL (end) */
 
 .highlights {
   display: flex;
@@ -1096,10 +1127,9 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   z-index: -1;
 }
 
-/* NOTE: Until 15.4, Safari displayed 'fixed' and 'local' incorrectly */
-/* TODO: Find a @supports selector that will limit only to before fix  */
-/* iOS Fix */
-@supports (-webkit-touch-callout: none) {
+/* Old iOS Safari bug fix Fix:  */
+/* NOTE: Safari versions prior to 15.4 had incorrect rendering of background-attachment 'fixed' and 'local'. We detect and limit to iOS, then versions older than 16, and then fallback to 'initial' */
+@supports (-webkit-touch-callout: none) and (not (display: subgrid;)) {
   .strip {
     background-attachment: initial;
   }
@@ -1163,11 +1193,6 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
   background-color: white;
   position: absolute;
   left: calc(var(--tl-dot-size) / 2);
-  top: 50%;
-  translate: 0 -50%;
-
-  /** ALT **/
-  translate: none;
   top: calc(0.75rem + 0.125rem);
 }
 
@@ -1176,7 +1201,7 @@ section[class*="bg-"] :is(h1, h2, h3, h4, h5, h6) {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
-    /** heading, line, dot, content **/
+    /** Order: heading, line, dot, content **/
     grid-template-rows: auto 0px var(--tl-dot-size) auto;
     width: fit-content;
     margin-inline: auto;
@@ -1456,7 +1481,6 @@ table.price-table>thead>tr> :is(th, td) {
   color: #933;
 }
 
-/* WIP START */
 .property-status {
   border-radius: 999px;
   line-height: 1;
@@ -1486,7 +1510,6 @@ table.price-table>thead>tr> :is(th, td) {
   background-color: currentColor !important;
 }
 
-
 .property-status.available {
   color: #66cc66;
   background-color: #f8fff9;
@@ -1502,10 +1525,7 @@ table.price-table>thead>tr> :is(th, td) {
   background-color: #fffbfb;
 }
 
-/* WIP END */
-
-
-/* ? Sold properties may be hidden */
+/* ? Sold properties may/will be hidden */
 .price-table [data-status="sold"] {
   /* display: none; */
 }
@@ -1622,7 +1642,7 @@ article.map {
   margin-top: -100px;
 }
 
-/**** CARDS ****/
+/* # CARDS */
 .apt-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
@@ -1636,14 +1656,13 @@ article.map {
   border-radius: 16px;
   border-radius: 10px;
   color: var(--color-gray-dark);
-  /* ? for some reason to na prod stránce hází na display: block, proto important */
+  /* NOTE: for some reason to na prod stránce hází na display: block, proto important */
   display: flex !important;
   flex-direction: column;
   font-size: 0.875rem;
   line-height: 1.15;
   gap: 0.5rem;
   box-shadow: 0px 0px 0px 1px #f1f1f1;
-  /* hidden used as fallback for clip */
   overflow: hidden;
   overflow: clip;
   padding: 1.0rem 1.25rem;
@@ -1652,14 +1671,12 @@ article.map {
   transition: box-shadow 150ms, background-color 150ms, filter 150ms;
 }
 
-@media (pointer: coarse),
-not (hover: hover) {
+@media (pointer: coarse), not (hover: hover) {
   .apt-card:active {
     /* background-color: #f9f9f9; */
     filter: brightness(95%);
   }
 }
-
 
 .apt-card__big-info {
   font-size: 1.25rem;
@@ -1697,7 +1714,6 @@ a.apt-card,
   flex-grow: 1;
 }
 
-
 .apt-card__thumbnail-img {
   width: auto;
   height: 9rem;
@@ -1732,12 +1748,10 @@ a.apt-card,
   flex-wrap: wrap-reverse;
 }
 
-
 .apt-card__heading [class*="fa-"] {
   font-size: 1rem;
   margin-bottom: -0.1em;
 }
-
 
 .apt-card dl.dl-grid {
   display: grid;
@@ -1758,12 +1772,10 @@ a.apt-card,
   line-height: 1;
 }
 
-
 .apt-card .label {
   display: block;
   line-height: 1.25;
 }
-
 
 .apt-card .apt-card__fav {
   position: absolute;
@@ -1778,12 +1790,12 @@ a.apt-card,
   /* and if device is capable of hover and uses mouse */
   @media (hover: hover) and (pointer: fine) {
 
-    /* hides heart by default */
+    /* hide heart by default */
     .apt-card .apt-card__fav {
       display: none;
     }
 
-    /* shows heart on hover */
+    /* show heart on hover */
     .apt-card:hover .apt-card__fav {
       display: block;
     }
@@ -1876,3 +1888,18 @@ a.apt-card,
 /* TODO: Price table apt-cards view */
 /* TODO: Improve gallery layout (grid, tabs/sections) */
 /* ? Refactor using SCSS? */
+/* TODO: Optimize for PRINT */
+
+/** Accessibility **/
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+  /* if hero has fallback image */
+  .hero:has(>img, >picture) video {
+    display: none;
+  }
+  .scroll-icon::after {
+    animation: none;
+  }
+}
