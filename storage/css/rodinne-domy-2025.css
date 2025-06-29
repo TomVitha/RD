@@ -687,7 +687,7 @@ h2::before {
 
   margin-top: 0.44em;
   margin-bottom: 0.333em;
-  max-width: 900px;
+  max-width: 21ch;
 }
 
 .hero hgroup {
@@ -823,8 +823,19 @@ a.hero__jump,
     /* align-items: center;
     text-align: center; */
   }
-
 }
+
+/* h1 for extra large resolutions (mainly 1440p) */
+/*
+@media (min-width: 2000px) {
+  .hero__inside {
+    max-width: var(--container-l) !important;
+  }
+  .hero h1 {
+    font-size: 5.5rem;
+  }
+}
+*/
 
 /* Hero (end) */
 
