@@ -87,7 +87,7 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
         // TEMP File URL
         row.insertCell().appendChild(
             document.querySelector('#price-table__detail-btn').content.cloneNode(true).querySelector('a')
-        ).setAttribute('href', `https://www.be-nice.lexxusnorton.cz/upload/flats/${property['name']}.pdf`);
+        ).setAttribute('href', `./temp/B1.pdf`);
     });
 
     // Append table to container (while replacing any existing content)

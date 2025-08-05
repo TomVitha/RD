@@ -301,6 +301,8 @@ hr[data-text]::before {
   font-family: "Font Awesome 6 Pro";
 }
 
+
+/* TODO: STEAM BTN FROM TABLER/Bootstrap */
 /* # BTN */
 .btn {
   --btn-theme: transparent;
@@ -1935,3 +1937,44 @@ a.apt-card,
     animation: none;
   }
 }
+
+
+/* ? CUSTOM  HEADER ? */
+/* :root { --header-height: 0px }
+header, #page-nav { display: none; }
+.hero__logo { display: none; }
+
+.c-header {
+  position: fixed;
+  inset: 0px 0px auto 0px;
+  width: 100%;
+  z-index: 50;
+  font-size: 1.0625rem;
+  color: var(--color-primary);
+  background-color: white;
+  box-shadow: 0 10px 15px -3px #0000001a,0 4px 6px -4px #0000001a;
+  transition-property: background, color, box-shadow;
+  transition-duration: 150ms;
+}
+.c-header.transparent {
+  color: white;
+  background: transparent;
+  box-shadow: none;
+}
+.c-header__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 1.75rem;
+}
+.c-header__links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2.75rem;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+.c-header__logo {
+  width: 150px;
+} */
