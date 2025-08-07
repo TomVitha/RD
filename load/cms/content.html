@@ -1,7 +1,7 @@
 <!-- TEMP - buttons dev debug -->
-<section hidden>
+<section class="m-0 py-5" style="background-color: #dadada;" hidden>
   <div class="px-2">
-    <div class="btn-list mt-3">
+    <div class="btn-list">
       <a href="#" class="btn ">Default</a>
       <a href="#" class="btn --primary">Primary</a>
       <a href="#" class="btn --secondary">Secondary</a>
@@ -295,7 +295,7 @@
         </p>
       </div>
       <div>
-        <img src="https://rezidencekolovraty.cz/app/uploads/2023/05/Kolovraty_II_004_220617-scaled.jpg" loading="lazy">
+        <img src="./img/vizualizace/RD-Pitkovice-p0_760.jpg" loading="lazy">
       </div>
     </div>
   </div>
@@ -326,7 +326,7 @@
   </div>
 </section>
 
-<section class="bg--gray">
+<section class="bg--tertiary">
   <div class="container">
     <div class="highlights">
       <div class="highlight">
@@ -389,7 +389,7 @@
         </p>
       </div>
       <div>
-        <img src="https://cdn.cpdevelopment.cz/containers/assets/a1-2_64_p/studiobarak-28.jpg/85a0a59c9d1a4d7fdddd858f29689c5b.webp" loading="lazy">
+        <img src="./img/vizualizace/RD-Pitkovice-p1_760.jpg" loading="lazy">
       </div>
     </div>
   </div>
@@ -400,7 +400,7 @@
   <div class="">
     <div class="two-col img-text">
       <div>
-        <img src="https://cdn.cpdevelopment.cz/containers/assets/a3-11_a3-10_a3-8_62_61_59/59-dom.jpg/bdbe8376903c0bbb6c1481a4f5a62d7b.webp" loading="lazy">
+        <img src="./img/vizualizace/RD-Pitkovice-p4_760.jpg" loading="lazy">
       </div>
       <div>
         <h3><a href="#typ-domu-2">Typ domu #2</a></h3>
@@ -416,7 +416,7 @@
   </div>
 </section>
 
-<section class="bg--gray">
+<section class="bg--tertiary">
   <div class="container">
     <div class="highlights">
       <div class="highlight">
@@ -444,7 +444,7 @@
 </section>
 
 <section>
-  <div style="background-image: url('https://greenland-brezineves.cz/wp-content/uploads/2022/03/Brezineves_EXT_Cam_05_2000.jpg')" class="strip">
+  <div style="background-image: url('./img/vizualizace/RD-Pitkovice-p3_3000.jpg')" class="strip">
     <!-- <h2>Vítejte ve svém novém domově</h2>
       <p>Kupte si prosím nějaký z těch baráků, byly fakt drahý a my potřebujeme na nový bazén.</p> -->
   </div>
@@ -455,7 +455,7 @@
     <h2><a href="#cenik">Ceník</a></h2>
     <div class="properties">
       <div class="layout-viewer">
-        <img src="https://www.bydlenikbelicky.cz/img/domy.webp" alt="" loading="lazy">
+        <img src="./temp/bydlenikbelicky.webp" alt="" loading="lazy">
         <button class="expand" data-lv-expand>
           <i class="fa-regular fa-expand"></i>
         </button>
@@ -466,7 +466,10 @@
         <span>Ceník se nepodařilo načíst. <a href="https://central-group.cz/page/rd-dev" style="text-decoration: underline;">Načtěte stránku znovu</a>, nebo to zkuste později.</span>
       </div>
     </div>
-    <a href="#" class="btn btn--gray-dark--outline-fill">Mám zájem</a>
+    <div class="container-m ta-c">
+      <!-- <p>Vybrali jste si? Kontaktujte nás a rodinný dům může být Váš.</p> -->
+      <button class="btn btn--gray-dark--outline-fill">Mám zájem</button>
+    </div>
   </div>
 </section>
 
@@ -522,7 +525,7 @@
   <div class="container">
     <h2><a href="#galerie">Galerie</a></h2>
     <div class="btn-list my-4">
-      <button class="btn btn--gray-dark--outline--inline ml-auto" onclick="$('#gallery-1').toggleClass('gallery--grid')">Přepnout zobrazení</button>
+      <button class="btn btn--gray-dark--outline--inline" onclick="$('#gallery-1').toggleClass('gallery--grid')">Přepnout zobrazení</button>
     </div>
     <!-- <div class="btn-list my-4">
       <div class="btn btn--gray-dark--inline">Vizualizace</div>
@@ -531,13 +534,15 @@
       <div class="btn btn--gray-dark--inline --outline">Okolí</div>
     </div> -->
     <div class="gallery" id="gallery-1">
-      <!-- <img src="https://be-nice.lexxusnorton.cz/upload/gallery/be-nice_1_web_pohled-z-ulice.jpg" alt="" loading="lazy"> -->
-      <img src="https://picsum.photos/1280/800?random=1" loading="lazy">
-      <img src="https://picsum.photos/1280/800?random=2" loading="lazy">
-      <img src="https://picsum.photos/1280/800?random=3" loading="lazy">
-      <img src="https://picsum.photos/1280/800?random=4" loading="lazy">
-      <img src="https://picsum.photos/1280/800?random=5" loading="lazy">
-      <img src="https://picsum.photos/1280/800?random=6" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p1_1600.jpg" alt="" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p2_1600.jpg" alt="" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p0_1600.jpg" alt="" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p6_1600.jpg" alt="" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p3_1600.jpg" alt="" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p4_1600.jpg" alt="" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p8_1600.jpg" alt="" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p5_1600.jpg" alt="" loading="lazy">
+      <img src="./img/vizualizace/RD-Pitkovice-p7_1600.jpg" alt="" loading="lazy">
     </div>
   </div>
 </section>
