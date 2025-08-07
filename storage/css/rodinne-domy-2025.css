@@ -11,15 +11,14 @@
   --color-body-text: #787878;
 
   /** Palette **/
-  --color-primary: #2d2d2d;
-  --color-secondary: #b08d56;
-  --color-tertiary: #eae0d1;
+  --color-primary: oklch(0.3 0 0);
+  --color-secondary: oklch(0.79 0.062 80);
+  --color-tertiary: oklch(0.985 0.006 80);
 
-  /** Elements **/
+  /** Headings **/
   --color-headings: var(--color-primary);
-  /* Value on white: #efe8dd / Secondary with transparency: #b08d5633 */
   --text-behind-color: var(--color-secondary);
-  --text-behind-opacity: 22%;
+  --text-behind-opacity: 30%;
 
   /** Header and nav **/
   --header-height-top: 55px;
@@ -41,10 +40,9 @@
   /** Accessibility **/
   --color-focus-outline: #72c2ff;
 
-
   /** Other */
   scroll-behavior: smooth;
-  accent-color: var(--color-primary);
+  accent-color: var(--color-secondary);
   interpolate-size: allow-keywords;
 }
 
@@ -95,6 +93,7 @@ div[data-v-5782d946] {
 
 main#main {
   flex: 1;
+  scrollbar-color: var(--color-secondary) var(--color-tertiary);
 }
 
 [hidden][hidden][hidden][hidden] {
@@ -300,7 +299,7 @@ hr[data-text]::before {
 }
 
 
-/* TODO: STEAM BTN FROM TABLER/Bootstrap */
+/* TODO: STEAL BTN FROM TABLER/Bootstrap */
 /* # BTN */
 .btn {
   --btn-theme: transparent;
@@ -326,8 +325,7 @@ hr[data-text]::before {
   line-height: 1.0;
   min-height: 2.7em;
   overflow: clip;
-  overflow: hidden;
-  padding: 0.6em 1.1em;
+  padding: 0.6em 1.25em;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -385,7 +383,6 @@ a.btn:hover {
 /** Fully rounded corners  **/
 .btn[class*="--pill"] {
   --btn-border-radius: 999px;
-  padding-inline: 1.25em;
 }
 
 /** COLORS **/
@@ -396,7 +393,7 @@ a.btn:hover {
 
 .btn[class*="--secondary"] {
   --btn-theme: var(--color-secondary);
-  /* TEMP */
+  /* TEMP? */
   --btn-theme-complementary: var(--color-primary);
 }
 
@@ -583,7 +580,12 @@ h6 {
   -webkit-user-drag: none;
 }
 
-/* WIP */
+[data-text-behind] {
+  padding-top: 1em;
+  /* HACK */
+  margin-top: -1em !important;
+}
+
 [data-text-behind]::before {
   content: attr(data-text-behind);
   color: var(--text-behind-color);
@@ -595,12 +597,20 @@ h6 {
   transform: translate(0.2em, -0.65em);
   z-index: -1;
   white-space: nowrap;
+  /* wip */
+  /* transition: translate 200ms, opacity 200ms; */
 }
+
+/* ? MAYBE ? */
+/* [data-text-behind]:hover::before,
+section:has(:is(h2, h3)[data-text-behind]):hover :is(h2, h3)[data-text-behind]::before{
+  --text-behind-opacity: 1;
+  translate: -0.45em 0;
+} */
 
 
 /** Styling of '#' **/
 h2::before {
-  /* wip */
   content: '#';
   font-size: 0.85em;
   width: 0px;
@@ -903,7 +913,7 @@ a.hero__jump,
 }
 
 /** Switch to mobile nav **/
-@media screen and (max-width: 991px) {
+@media (max-width: 991.98px) {
   .page-nav__desktop {
     display: none;
   }
@@ -939,6 +949,7 @@ section {
 section:where([class*="bg--"]) {
   margin-block: 0;
   padding-block: calc(var(--sections-spacing) / 1.75);
+  color: var(--color-body-text);
 }
 
 /** Sub-sections **/
@@ -971,7 +982,6 @@ section section {
 
 .bg--tertiary {
   background-color: var(--color-tertiary);
-  color: white;
 }
 
 .bg--blue {
@@ -983,7 +993,6 @@ section section {
   --text-behind-color: #f3f3f3;
   background-color: var(--color-gray);
 }
-
 
 [class*="bg--"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
   margin-top: 0;
@@ -1081,7 +1090,7 @@ section section {
 }
 
 /* ? REMOVE ? */
-@media (min-width: 991px) {
+@media (min-width: 992px) {
   .two-col.img-text > *:nth-child(odd) {
     padding-left: 0;
   }
@@ -1105,6 +1114,7 @@ section section {
 /* TWO-COL (end) */
 
 .highlights {
+  --hl-icon-color: var(--color-secondary);
   display: flex;
   justify-content: center;
   align-items: baseline;
@@ -1116,7 +1126,7 @@ section section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1 1 180px;
+  flex: 1 1 230px;
   /* line-height: 1.25; */
   text-align: center;
   width: 250px;
@@ -1125,7 +1135,7 @@ section section {
 .highlight > [class*="fa-"] {
   margin-bottom: 10px;
   font-size: 32px;
-  color: var(--color-primary);
+  color: var(--hl-icon-color);
   user-select: none;
 }
 
@@ -1172,6 +1182,8 @@ section section {
 /* # TIMELINE */
 .timeline {
   --tl-dot-size: 16px;
+  --tl-line-color: var(--color-secondary);
+  --tl-dot-color: var(--color-secondary);
   display: flex;
   flex-direction: column;
   isolation: isolate;
@@ -1190,21 +1202,21 @@ section section {
 .timeline__heading {
   font-size: 1.125rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
   line-height: 1.0;
   color: black;
   order: 1;
 }
 
 .timeline__content {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 /* Line */
 .timeline__point::before {
   content: '';
   display: block;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: var(--tl-line-color);
   height: 100%;
   width: 1px;
   position: absolute;
@@ -1223,7 +1235,7 @@ section section {
   height: var(--tl-dot-size);
   aspect-ratio: 1;
   border-radius: 999px;
-  border: 1px solid black;
+  border: 1px solid var(--tl-dot-color);
   background-color: white;
   position: absolute;
   left: calc(var(--tl-dot-size) / 2);
@@ -1307,13 +1319,14 @@ section section {
 /* # PHASES */
 .phases {
   --phase-icon-size: 76px;
+  --phase-icon-color: var(--color-secondary);
   display: flex;
   align-items: start;
   /* justify-content: center; */
   width: fit-content;
   margin-inline: auto;
   gap: 8px;
-  padding-block: 16px 8px;
+  padding-block: 8px;
   max-width: 100%;
   overflow-x: auto;
   scrollbar-width: thin;
@@ -1356,15 +1369,15 @@ section section {
   aspect-ratio: 1;
   padding: calc(var(--phase-icon-size) / 4);
   border-radius: 999px;
-  background-color: var(--color-gray, #e8e8e8);
+  background-color: var(--color-tertiary);
 }
 
 /** Common styling for Phase icon & Arrow icon between phases **/
 /* Note: This is the actual icon which can be just about anything - <img>, <picture>, <svg>, font awesome <i>, etc */
 .phase__icon > *,
 .phase__arrow {
-  display: flex;
   --fa-display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -1375,8 +1388,8 @@ section section {
   background-size: contain;
   background-position: center center;
   background-color: transparent;
-  color: #bbb;
-  fill: #bbb;
+  color: var(--color-secondary);
+  fill: var(--color-secondary);
   /* ? maybe */
   stroke: transparent;
   font-size: calc(var(--phase-icon-size) / 2.666);
@@ -1396,7 +1409,7 @@ section section {
 
 /** Done State (if has class .done OR precedes .current) **/
 :where(.done, .phase:has(~.current)) .phase__icon {
-  background-color: var(--color-primary);
+  background-color: var(--phase-icon-color);
 }
 
 :where(.done, .phase:has(~.current)) .phase__icon > * {
@@ -1404,20 +1417,21 @@ section section {
   fill: white;
 }
 
-:where(.done, .phase:has(~.current)) + .phase__arrow {
-  color: var(--color-primary);
-  fill: var(--color-primary);
-}
+/* Arrows preceeding .current */
+/* :where(.done, .phase:has(~.current)) + .phase__arrow {
+  color: var(--phase-icon-color);
+  fill: var(--phase-icon-color);
+} */
 
 /** Current State **/
 .current .phase__icon {
   background-color: white;
-  box-shadow: inset 0px 0px 0px 1.5px var(--color-primary);
+  box-shadow: inset 0px 0px 0px 1.5px var(--phase-icon-color);
 }
 
 .current .phase__icon > * {
-  color: var(--color-primary);
-  fill: var(--color-primary);
+  color: var(--phase-icon-color);
+  fill: var(--phase-icon-color);
 }
 
 /* PHASES (end) */
@@ -1537,7 +1551,6 @@ table.price-table > thead > tr > :is(th, td) {
   display: inline-flex;
   width: 10px;
   height: 10px;
-  overflow: hidden;
   overflow: clip;
   aspect-ratio: 1;
   padding: 0;
@@ -1697,7 +1710,6 @@ article.map {
   line-height: 1.15;
   gap: 0.5rem;
   box-shadow: 0px 0px 0px 1px #f1f1f1;
-  overflow: hidden;
   overflow: clip;
   padding: 1.0rem 1.25rem;
   position: relative;
