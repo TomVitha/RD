@@ -66,7 +66,7 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
         // Floors (number of floors)
         row.insertCell().innerHTML = property['floors']
         // Layout (number of rooms)
-        row.insertCell().innerHTML = property['layout'] + (locale.startsWith('en-') ? '+kt' : '+kk');
+        row.insertCell().innerHTML = property['layout'] + (locale.startsWith('en') ? '+kt' : '+kk');
         // Accessories
         row.insertCell().innerHTML = property['accessories']
         // Area (internal)
@@ -92,14 +92,13 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
 
     // Append table to container (while replacing any existing content)
     tableContainer.replaceChildren(table);
-    // console.debug(table);
 }
 
 function stripHTMLTags(string) {
     return string.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' ');
 }
 
-/// INITIALIZATION
+// # INITIALIZATION
 export async function init(locale) {
     const propertiesData = await fetchSheetData();
     if (!propertiesData) {
@@ -107,7 +106,7 @@ export async function init(locale) {
         return 
     }
     // console.debug('Fetched data: ', propertiesData.tableData);
-    populateTemplateTableWithData(propertiesData.tableData, locale, true);
+    populateTemplateTableWithData(propertiesData.tableData, locale, false);
     const priceTable = document.querySelector('.price-table');
     if (!priceTable) {
         console.error("Table .price-table not found after populating data.");
@@ -156,9 +155,7 @@ export async function init(locale) {
                 // { width: '0%', targets: 6 },
             ],
             responsive: false,
-            // ! TESTING
             autoWidth: false,    // Fixes wonky column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
-            
         });
     } );
     
