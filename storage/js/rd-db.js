@@ -9,10 +9,10 @@ export async function fetchSheetData() {
         // Extract the JSON part from the response (Google's response has a prefix we need to remove)
         const jsonString = responseText.substring(responseText.indexOf('{'), responseText.lastIndexOf('}') + 1);
         const data = JSON.parse(jsonString);
-        
+
         // Extract headers from column labels
         const headers = data.table.cols.map(col => col.label);
-        
+
         // Extract and format rows
         const tableData = data.table.rows.map(row => {
             const obj = {};
@@ -57,7 +57,7 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
 
         // Set attribute data-status to row
         row.setAttribute('data-status', property['status']);
-        
+
         /// CELLS
         // Name
         //// row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status" aria-hidden="true"></i>` + property['name']
@@ -73,16 +73,16 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
         row.insertCell().innerHTML = property['area'] + ' m²'
         // Completion date
         row.insertCell().innerHTML = new Intl.DateTimeFormat(locale, {
-                                        month: 'long',
-                                        year: 'numeric',
-                                    }).format(property['date_completion']);
+            month: 'long',
+            year: 'numeric',
+        }).format(property['date_completion']);
         // Price
         row.insertCell().innerHTML = new Intl.NumberFormat(locale, {
-                                        style: 'currency',
-                                        currency: 'CZK',
-                                        minimumFractionDigits: 0,
-                                        maximumFractionDigits: 0,
-                                    }).format(property['price']);
+            style: 'currency',
+            currency: 'CZK',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+        }).format(property['price']);
         // Detail PDF Card
         // TEMP File URL
         row.insertCell().appendChild(
@@ -103,7 +103,7 @@ export async function init(locale) {
     const propertiesData = await fetchSheetData();
     if (!propertiesData) {
         console.error('Failed to fetch or parse data.');
-        return 
+        return
     }
     // console.debug('Fetched data: ', propertiesData.tableData);
     populateTemplateTableWithData(propertiesData.tableData, locale, false);
@@ -113,29 +113,29 @@ export async function init(locale) {
         return
     }
 
-    $(document).ready( function () {
+    $(document).ready(function () {
 
         function naturalSort(a, b, multiplier = 1) {
             a = stripHTMLTags(a)
-            b  = stripHTMLTags(b)
+            b = stripHTMLTags(b)
             // console.debug('Natural sort: ', a, b);
-            const out = a.localeCompare(b, locale, {numeric: true, ignorePunctuation: true});
+            const out = a.localeCompare(b, locale, { numeric: true, ignorePunctuation: true });
             return out * multiplier;
         }
 
-        $.extend( DataTable.ext.type.order, {
-            "natural-asc": function ( a, b ) {
+        $.extend(DataTable.ext.type.order, {
+            "natural-asc": function (a, b) {
                 return naturalSort(a, b);
             },
-        
-            "natural-desc": function ( a, b ) {
+
+            "natural-desc": function (a, b) {
                 return naturalSort(a, b, -1);
             }
         });
 
         DataTable.defaults.column.orderSequence = ['asc', 'desc'];
 
-        $('.price-table').DataTable( {
+        $('.price-table').DataTable({
             order: [[6, 'asc']],       // Sort by Price on init
             paging: false,
             searching: false,
@@ -157,6 +157,69 @@ export async function init(locale) {
             responsive: false,
             autoWidth: false,    // Fixes wonky column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
         });
-    } );
-    
+    });
+
 }
+/**
+ * Layout Viewer map
+ */
+// WIP
+// HACK: HACK! THIS IS MESSY AND AWFUL. I HATE EVERYTHING ABOUT THIS.
+// TEMP: IIFE
+// TODO: Move to a more sensible place
+(async function LV() {
+    const propertiesData = await fetchSheetData();
+    if (!propertiesData) {
+        console.error('Failed to fetch or parse data.');
+        return
+    }
+
+    document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
+        let box = null;
+        path.addEventListener("mouseenter", (e) => {
+            const matchedProperty = propertiesData.tableData.find(
+            (property) => `rd-path-${property.id}` === path.getAttribute('id')
+            );
+            if (!matchedProperty) {
+            console.warn('No matching property found for path:', path.getAttribute('id'));
+            return;
+            }
+
+            box = document.querySelector("#lv-details-box").content.cloneNode(true).querySelector(".rd-details-box");
+            box.querySelector(".rd-details-box__id").textContent = matchedProperty.id;
+            box.querySelector(".rd-details-box__name").textContent = matchedProperty.name;
+            box.querySelector(".rd-details-box__price").textContent = matchedProperty.price;
+            box.querySelector(".rd-details-box__status").textContent = matchedProperty.status;
+            box.querySelector(".rd-details-box__layout").textContent = matchedProperty.layout;
+            box.querySelector(".rd-details-box__floors").textContent = matchedProperty.floors;
+            box.querySelector(".rd-details-box__accessories").textContent = matchedProperty.accessories;
+            box.querySelector(".rd-details-box__area").textContent = matchedProperty.area;
+            box.querySelector(".rd-details-box__date").textContent = matchedProperty.date_completion.toLocaleDateString('cs-CZ', {
+                month: 'long',
+                year: 'numeric',    
+            });
+            document.querySelector('.layout-viewer').appendChild(box);
+
+            //// Initial position
+            // box.style.position = "absolute";
+            // box.style.pointerEvents = "none";
+            // box.style.zIndex = 1000;
+        });
+
+        path.addEventListener("mousemove", (e) => {
+            if (box) {
+            const offset = 15;
+            // box.style.position = "fixed";
+            box.style.left = (e.clientX + offset) + "px";
+            box.style.top = (e.clientY + offset) + "px";
+            }
+        });
+
+        path.addEventListener("mouseleave", () => {
+            if (box) {
+            box.remove();
+            box = null;
+            }
+        });
+    })
+})();
