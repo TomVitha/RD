@@ -107,24 +107,10 @@ function mustacheReplace(html, object) {
   return html;
 }
 
-/**
- * Layout Viewer map
- */
-// WIP
-// HACK: HACK! THIS IS MESSY AND AWFUL. I HATE EVERYTHING ABOUT THIS.
-// TODO: Move to a more sensible place ?
-async function LV(locale) {
+function formatData(properties, locale) {
+  properties.forEach(property => {
 
-  const propertiesData = await fetchSheetData();
-  if (!propertiesData) {
-    console.error('Failed to fetch or parse data.');
-    return
-  }
-
-  // PRE-FORMAT DATA
-  propertiesData.tableData.forEach(property => {
-
-    // Price - to CZK currency, locale-formatted
+    // Price => CZK currency
     property.price = new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: 'CZK',
@@ -132,15 +118,57 @@ async function LV(locale) {
       maximumFractionDigits: 0,
     }).format(property['price']);
 
-    // Completion date - to human-readable, locale-formatted
-    if (property.date_completion instanceof Date) {
-      property.date_completion = property.date_completion.toLocaleDateString(locale, {
-        month: 'long',
-        year: 'numeric',
-      });
+    // TODO? Untangle this mess
+    // Completion date => [long month] [year] 
+    if (property.date_completion) {
+      // Convert to ISO string if possible, then create new Date from it
+      let dateObj;
+      if (typeof property.date_completion === 'object' && property.date_completion instanceof Date) {
+        dateObj = property.date_completion;
+      } else if (typeof property.date_completion === 'string' || typeof property.date_completion === 'number') {
+        // Try to convert to Date via ISO string
+        try {
+          dateObj = new Date(property.date_completion);
+        } catch (e) {
+          dateObj = null;
+        }
+      }
+      if (dateObj && !isNaN(dateObj)) {
+        property.date_completion = dateObj.toLocaleDateString(locale, {
+          month: 'long',
+          year: 'numeric',
+        });
+      }
     }
+    // Other
+    property.area += ' m²';
+    property.layout = property.layout + (locale.startsWith('en') ? '+kt' : '+kk');
 
-  });
+  })
+  return properties
+}
+
+function removeBox(box) {
+  if (box) {
+    box.remove();
+    box = null;
+  }
+  return box;
+}
+
+
+/**
+ * Layout Viewer map
+ */
+// WIP
+// TODO: Move to a more sensible place ?
+async function LV(propertiesData, locale) {
+
+  // NOTE: Pass as a DEEP COPY !
+  const propertiesDataFormatted = formatData(JSON.parse(JSON.stringify(propertiesData.tableData)), locale);
+
+  // console.debug("propertiesData: ", propertiesData);
+  // console.debug("propertiesDataFormatted: ", propertiesDataFormatted);
 
   let box = null;
 
@@ -158,14 +186,17 @@ async function LV(locale) {
   }
 
   // MOUSE POINTERS
+  // ? Use mobile behavior for desktop as well ?
   // Box shows while hovering over a path
-  if (window.matchMedia("(pointer: fine)").matches) {
+  //// TEMP
+  //if (false) {
+   if (window.matchMedia("(pointer: fine)").matches) {
 
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
 
       // Mouse enter (create box)
       path.addEventListener("mouseenter", (e) => {
-        const matchingProperty = propertiesData.tableData.find(
+        const matchingProperty = propertiesDataFormatted.find(
           (property) => `rd-path-${property.id}` === path.getAttribute('id')
         );
         if (!matchingProperty) {
@@ -184,10 +215,7 @@ async function LV(locale) {
 
       // Mouse leave (remove box)
       path.addEventListener("mouseleave", () => {
-        if (box) {
-          box.remove();
-          box = null;
-        }
+        box = removeBox(box);
       });
 
     })
@@ -212,7 +240,7 @@ async function LV(locale) {
         console.debug("Clicked on this path: ", path);
 
         /// Get matching property (and validate)
-        matchingProperty = propertiesData.tableData.find(
+        matchingProperty = propertiesDataFormatted.find(
           (property) => `rd-path-${property.id}` === path.getAttribute('id')
         );
         if (!matchingProperty) {
@@ -224,15 +252,10 @@ async function LV(locale) {
 
       }
 
-      // * Always remove existing box
-      if (boxExists) {
-        box.remove();
-        box = null;
-        console.debug("Box removed");
-      }
+      box = removeBox(box);
 
       /**
-       * Condition to create a new box:
+       * Conditions to create a new box:
        * - We clicked on, or inside a path
        * - Clicked path has a matching property
        * - Matching property is not the same as the open box's property
@@ -243,7 +266,8 @@ async function LV(locale) {
         // WIP: Position
         box.style.position = "fixed";
         box.style.left = 0 + "px";
-        box.style.top = 0 + "px";
+        box.style.right = 0 + "px";
+        box.style.bottom = 0 + "px";
         console.debug("BOX CREATED: ", box);
       } else {
         console.debug("Box NOT created")
@@ -306,9 +330,40 @@ function initDataTable(locale) {
   });
 }
 
+// # navigation Fix
+// TODO: Move to separate file ?
+function navigationFix() {
+
+  // Prevents page reload on:
+  // Links with no href, links with empty href, links with href starting with # (anchor links)
+  document.querySelectorAll('a:not([href]), a[href=""], a[href^="#"]').forEach(element => {
+    element.addEventListener('click', function (e) {
+      e.preventDefault();
+    });
+  });
+
+  // Anchor links navigation
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+
+      e?.preventDefault();     // Redundant - already prevented by preventDefaults()
+
+      let ele = document.querySelector(this.getAttribute("href"));
+      let fragment = this.getAttribute("href");
+
+      // history.pushState({}, "", fragment)      // Adds entry to the browser's session history
+      history.replaceState({}, "", fragment)      // Replaces current history entry
+
+      if (ele) {
+        ele.scrollIntoView();
+      }
+
+    });
+  });
+}
 
 // # INITIALIZATION
-export async function init(locale) {
+export async function init(locale = 'cs-CZ') {
 
   const propertiesData = await fetchSheetData();
   if (!propertiesData) {
@@ -326,7 +381,8 @@ export async function init(locale) {
 
   $(document).ready(function () {
     initDataTable(locale)
-    LV(locale);
+    LV(propertiesData, locale);
+    navigationFix()
   });
 
 }

@@ -304,7 +304,7 @@ hr[data-text]::before {
 .btn {
   --btn-theme: transparent;
   --btn-theme-complementary: var(--color-primary);
-  --btn-border-radius: 0.3em;
+  --btn-border-radius: 0.0em;
   --btn-background: var(--btn-theme, transparent);
   --btn-background-hover: var(--btn-background);
   --btn-icon-size: 1.15em;
@@ -1667,42 +1667,73 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 
 .lv-details-box {
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  width: 11rem;
-  padding: 0.75rem 1.25rem;
+  min-width: 12rem;
+
   font-size: 0.875rem;
-  /* background-color: white; */
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  -webkit-backdrop-filter: blur(26px) brightness(150%) saturate(60%);
-  backdrop-filter: blur(26px) brightness(150%) saturate(60%);
+  /* background-color: var(--color-secondary); */
+  background-color: var(--color-tertiary);
   color: black;
-  /* backdrop-filter: blur(28px) brightness(95%) saturate(70%);
-  color: white; */
-  z-index: 10;
+  /* color: white; */
+  z-index: 100;
+  /* temp */
+  font-family: "Plus Jakarta Sans", "Roboto", "Exo 2", sans-serif;
 }
 
-.lv-details-box dl {
+.lv-details-box__header {
+  background-color: var(--color-secondary);
+  padding: 0.5rem 1.25rem;
+  position: relative;
+}
+
+.lv-details-box__close{
+  inset: 0 0 0 auto;
+  height: 100%;
+  position: absolute;
+  appearance: none;
+  border: none;
+  outline: none;
+}
+
+.lv-details-box__body {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.75em;
+  padding: 1rem 1.25rem;
+}
+
+.lv-details-box__grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.5em 0.75em;
 }
 
 .lv-details-box dt {
-  font-weight: 250;
+  font-size: 0.75rem;
+  font-weight: 300;
+  line-height: 1.15;
 }
 
 .lv-details-box dd {
+  font-size: 0.875rem;
   font-weight: 400;
-  text-align: right;
 }
 
-/* .lv-details-box__price {
-  display: block;
-  text-align: center;
-  margin-inline: auto;
-} */
+.lv-details-box__name {
+  font-size: 1.5rem;
+}
+
+.lv-details-box__price {
+  font-size: 1.0rem;
+}
+
+@media (pointer: fine) {
+  .lv-details-box__btn-open {
+    display: none;
+  }
+  .lv-details-box__close {
+    display: none;
+  }
+}
 
 /* TEMP: preview only - already part of map box styling */
 article.map {
