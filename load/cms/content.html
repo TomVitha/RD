@@ -466,8 +466,23 @@
     <h2><a href="#cenik">Ceník</a></h2>
     <div class="properties">
       <div class="layout-viewer-wrapper">
+        <!-- TODO: HERE PANZOOM CONTROLS -->
+        <div class="pz-controls">
+          <div class="pz-controls-group">
+            <button id="lv-pz-zoom-in" class="pz-control" title="Přiblížit" aria-label="Přiblížit">
+              <i class="fal fa-plus"></i>
+            </button>
+            <button id="lv-pz-zoom-out" class="pz-control" title="Oddálit" aria-label="Oddálit">
+              <i class="fal fa-minus"></i>
+            </button>
+          </div>
+          <div class="pz-controls-group">
+            <button id="lv-pz-reset" class="pz-control" title="Resetovat" aria-label="Resetovat">
+              <i class="fal fa-sync"></i>
+            </button>
+          </div>
+        </div>
         <div class="layout-viewer" id="lv">
-          <!-- TODO: HERE PANZOOM CONTROLS -->
           <!-- Layout viewer image -->
           <!-- <img src="./temp/bydlenikbelicky.webp" alt="" loading="lazy"> -->
           <img src="https://www.novachyne.cz/img/plan/domy-2.webp" alt="" loading="lazy">
@@ -941,34 +956,36 @@
 </template>
 
 <template id="lv-details-box">
-  <div class="lv-details-box">
-    <div class="lv-details-box__header">
-      <span class="lv-details-box__name">{name}</span>
-      <!-- <span class="lv-details-box__status property-status {status} dot">{status}</span> -->
-      <button class="lv-details-box__close btn btn-icon">✕</button>
-    </div>
-    <div class="lv-details-box__body">
-      <div class="lv-details-box__grid">
-        <dl>
-          <dt>Dispozice</dt>
-          <dd>{layout}</dd>
-        </dl>
-        <dl>
-          <dt>Pater</dt>
-          <dd>{floors}</dd>
-        </dl>
-        <dl>
-          <dt>Plocha</dt>
-          <dd>{area}</dd>
-        </dl>
-        <dl>
-          <dt>Dokončení</dt>
-          <dd>{date_completion}</dd>
-        </dl>
+  <div class="lv-details-box" role="dialog">
+    <div class="lv-details-box__content">
+      <div class="lv-details-box__header">
+        <span class="lv-details-box__name">{name}</span>
+        <!-- <span class="lv-details-box__status property-status {status} dot">{status}</span> -->
+        <button class="lv-details-box__close btn btn-icon">✕</button>
       </div>
-      <span class="lv-details-box__price">{price}</span>
-      <div class="lv-details-box__btn-open">
-        <a href="#" class="btn btn-sm btn-secondary btn-full">Otevřít</a>
+      <div class="lv-details-box__body">
+        <div class="lv-details-box__grid">
+          <dl>
+            <dt>Dispozice</dt>
+            <dd>{layout}</dd>
+          </dl>
+          <dl>
+            <dt>Pater</dt>
+            <dd>{floors}</dd>
+          </dl>
+          <dl>
+            <dt>Plocha</dt>
+            <dd>{area}</dd>
+          </dl>
+          <dl>
+            <dt>Dokončení</dt>
+            <dd>{date_completion}</dd>
+          </dl>
+        </div>
+        <span class="lv-details-box__price">{price}</span>
+        <div class="lv-details-box__btn-open">
+          <a href="#" class="btn btn-sm btn-secondary btn-full">Otevřít</a>
+        </div>
       </div>
     </div>
   </div>
@@ -986,9 +1003,3 @@
     }
   });
 </script>
-
-<!-- <script>
-	tippy('[data-tippy-content]', {
-		
-	});
-</script> -->

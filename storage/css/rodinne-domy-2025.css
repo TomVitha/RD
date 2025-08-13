@@ -37,6 +37,15 @@
   --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end];
   --two-col-gap: 5rem;
 
+  /** Property availability status **/
+  --status-available-color: #66cc66;
+  --status-available-color-lt: #f8fff9;
+  --status-under-offer-color: #cc9933;
+  --status-under-offer-color-lt: #fffdf8;
+  --status-sold-color: #993333;
+  --status-sold-color-lt: #fffbfb;
+
+
   /** Accessibility **/
   --color-focus-outline: #72c2ff;
 
@@ -297,8 +306,6 @@ hr[data-text]::before {
   font-family: "Font Awesome 6 Pro";
 }
 
-
-/* TODO: STEAL BTN FROM TABLER/Bootstrap */
 /* # BTN */
 .btn {
   --btn-theme: transparent;
@@ -400,7 +407,6 @@ a.btn:hover {
 
 .btn-secondary {
   --btn-theme: var(--color-secondary);
-  /* TEMP? */
   --btn-theme-complementary: var(--color-primary);
 }
 
@@ -518,6 +524,13 @@ a.btn:hover {
   overflow: visible;
   text-align: center;
   width: var(--btn-icon-size);
+}
+
+/* Contact form fix */
+.cnt-frm-submit[data-v-13bb746e] {
+  font-size: inherit;
+  --btn-theme: var(--color-yellow, #ffed00);
+  --btn-theme-complementary: var(--color-blue, #20234c);
 }
 
 /* BTN (end) */
@@ -672,13 +685,7 @@ h2::before {
   isolation: isolate;
   min-height: 350px;
   height: calc(100svh - var(--header-height));
-  /* height: calc(100svh - var(--header-height) - var(--page-nav-height)); */
-  /* background: rgb(172, 172, 172); */
   color: white;
-  /* ? maybe ? */
-  /* max-height: calc(1080px - var(--header-height)); */
-  /* TEMP */
-  /* background: url('https://rezidencekolovraty.cz/app/uploads/2023/02/Kolovraty_II_002_220617-min-scaled.jpg') no-repeat 30% center/cover; */
 }
 
 /* Backdrop */
@@ -1639,6 +1646,10 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 /* WIP */
 /* # LAYOUT VIEWER */
 
+.layout-viewer-wrapper {
+  position: relative;
+}
+
 .layout-viewer {
   position: relative;
 }
@@ -1658,22 +1669,43 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   height: 100%;
 }
 
-.layout-viewer-map path:hover {
-  fill: rgba(173, 216, 230, 0.5);
+/* WIP */
+.layout-viewer-map [id^="rd-path"] {
+  fill: rgb(255, 255, 255);
+  fill-opacity: 0.5;
+}
+
+.layout-viewer-map [id^="rd-path"]:hover {
   stroke: white;
   stroke-width: 2px;
 }
 
+.layout-viewer-map [id^="rd-path"].available {
+  fill: var(--status-available-color);
+}
+
+.layout-viewer-map [id^="rd-path"].under-offer {
+  fill: var(--status-under-offer-color);
+}
+
+.layout-viewer-map [id^="rd-path"].sold {
+  fill: var(--status-sold-color);
+}
+
 .lv-details-box {
   position: fixed;
+  z-index: 100;
+}
+
+.lv-details-box__content {
+  margin: auto;
   min-width: 12rem;
 
   font-size: 0.875rem;
-  /* background-color: var(--color-secondary); */
   background-color: var(--color-tertiary);
   color: var(--color-primary);
-  /* color: white; */
-  z-index: 100;
+  box-shadow: 0 0.625rem 1.875rem rgba(2, 2, 3, 0.28);
+  max-width: 450px;
   /* temp */
   font-family: "Plus Jakarta Sans", "Roboto", "Exo 2", sans-serif;
 }
@@ -1684,7 +1716,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   position: relative;
 }
 
-.lv-details-box__close{
+.lv-details-box__close {
   inset: 0 0 0 auto;
   height: 100%;
   position: absolute;
@@ -1729,10 +1761,53 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   .lv-details-box__btn-open {
     display: none;
   }
+
   .lv-details-box__close {
     display: none;
   }
 }
+
+.pz-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+.pz-controls-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.pz-control, .pz-controls button {
+  width: 2.0em;
+  height: 2.0em;
+  border-radius: 4px;
+  border: 1px solid lightgray;
+  outline: none;
+  color: black;
+  background-color: rgb(255, 255, 255);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pz-controls-group :is(.pz-control, .pz-controls button):not(:first-child) {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.pz-controls-group :is(.pz-control, .pz-controls button):not(:last-child) {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom: none;
+}
+
 
 /* TEMP: preview only - already part of map box styling */
 article.map {
@@ -1744,7 +1819,7 @@ article.map {
   overflow: clip;
 }
 
-/* TEMP AGAIN - dušan preview only */
+/* TEMP: ditto */
 .map iframe {
   height: calc(100% + 100px);
   margin-top: -100px;
@@ -2080,3 +2155,18 @@ header, #page-nav { display: none; }
 .c-header__logo {
   width: 150px;
 } */
+
+
+/* Contact form fix */
+.v--modal-overlay .v--modal-background-click {
+  width: 100%;
+  height: 100%;
+  max-width: 100dvw;
+  max-height: 100dvh;
+  margin: 0;
+}
+
+.v--modal-overlay .v--modal-box {
+  max-width: 90dvw;
+  max-height: 90dvh;
+}

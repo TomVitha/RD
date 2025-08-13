@@ -60,8 +60,6 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
 
     /// CELLS
     // Name
-    //// row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status" aria-hidden="true"></i>` + property['name']
-    // row.insertCell().innerHTML = `<i class="fa-solid fa-circle property-status ${property['status']}" aria-hidden="true"></i>` + property['name']
     row.insertCell().innerHTML = `<span class="property-status ${property['status']} dot" aria-hidden="true">${property['status']}</span>` + property['name']
     // Floors (number of floors)
     row.insertCell().innerHTML = property['floors']
@@ -85,6 +83,7 @@ export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', 
     }).format(property['price']);
     // Detail PDF Card
     // TEMP File URL
+    // TODO: Replace with actual path
     row.insertCell().appendChild(
       document.querySelector('#price-table__detail-btn').content.cloneNode(true).querySelector('a')
     ).setAttribute('href', `./temp/B1.pdf`);
@@ -157,18 +156,21 @@ function removeBox(box) {
 }
 
 
+// WIP
+// TODO: Move to a more sensible place ?
 /**
  * Layout Viewer map
  */
-// WIP
-// TODO: Move to a more sensible place ?
 async function LV(propertiesData, locale) {
 
   // NOTE: Pass as a DEEP COPY !
   const propertiesDataFormatted = formatData(JSON.parse(JSON.stringify(propertiesData.tableData)), locale);
 
-  // console.debug("propertiesData: ", propertiesData);
-  // console.debug("propertiesDataFormatted: ", propertiesDataFormatted);
+  // Assign status classes to property paths
+  propertiesData.tableData.forEach((property) => {
+    const ele = document.getElementById(`rd-path-${property.id}`)
+    ele.classList.add(`${property.status}`)
+  })
 
   let box = null;
 
@@ -252,6 +254,7 @@ async function LV(propertiesData, locale) {
 
       }
 
+      // Remove box
       box = removeBox(box);
 
       /**
@@ -268,9 +271,10 @@ async function LV(propertiesData, locale) {
         box.style.left = 0 + "px";
         box.style.right = 0 + "px";
         box.style.bottom = 0 + "px";
+
+        // box.style.left = (e.clientX + 0) + "px";
+        // box.style.top = (e.clientX - 0) + "px";
         console.debug("BOX CREATED: ", box);
-      } else {
-        console.debug("Box NOT created")
       }
 
     });
@@ -330,6 +334,86 @@ function initDataTable(locale) {
   });
 }
 
+// Panzoom
+function initPanzoom(elemId = 'lv') {
+  const elem = document.getElementById(elemId)
+  const panzoom = Panzoom(elem, {
+    cursor: 'inherit',
+    pinchAndPan: true,
+    panOnlyWhenZoomed: true,
+    startScale: 1,
+    minScale: 1,
+    contain: 'outside',
+    // canvas: false,
+    // startScale: 1.5, // debug
+    // disablePan: true,
+    // touchAction: 'pan-y',
+  })
+
+  // * CONTROLS
+  const btnZoomIn = document.getElementById('lv-pz-zoom-in');
+  const btnZoomOut = document.getElementById('lv-pz-zoom-out');
+  const btnReset = document.getElementById('lv-pz-reset');
+
+  btnZoomIn?.addEventListener('click', panzoom.zoomIn)
+  btnZoomOut?.addEventListener('click', panzoom.zoomOut)
+  btnReset?.addEventListener('click', panzoom.reset)
+
+  // BUG: When panning with cursor over link, link is activated when mouse up
+
+  // FIXED: When fully zooming out with mousewheel, the scale often doesn't round to 1
+  // NOTE: It's often something like 1.0000047 or whatever. That's why the threshold is a bit higher than 1
+  elem.addEventListener('panzoomzoom', (event) => {
+    if (panzoom.getScale() > 1.01) {
+      panzoom.setOptions({ cursor: 'grab' });
+      btnReset?.classList.remove('hidden');
+    } else {
+      panzoom.setOptions({ cursor: 'default' });
+      btnReset?.classList.add('hidden');
+    }
+  })
+
+  // Reset
+  elem.addEventListener('panzoomreset', (event) => {
+    btnReset?.classList.add('hidden');
+  })
+
+  // Start grabbing
+  elem.addEventListener('panzoomstart', (event) => {
+    panzoom.setOptions({ cursor: 'grabbing' });
+  })
+
+  // End grabbing
+  elem.addEventListener('panzoomend', (event) => {
+    panzoom.setOptions({ cursor: 'grab' });
+  })
+
+  elem.parentElement.addEventListener('wheel', function (event) {
+    // Enables zoom with mouse wheen while holding Ctrl
+    if (event.ctrlKey) {
+      panzoom.zoomWithWheel(event)
+    }
+    // Without Ctrl, we scroll can the page
+  })
+
+  // When fully zoomed out, disable panning (allow scrolling the page)
+  // FIXME: Buggy on iPad
+  // NOTE: touchAction is CSS property: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
+  // BUG: Minor - Behavior doesn't work on page init, only kicks in after a touch move
+  elem.addEventListener('touchmove', function (event) {
+    // Allow panning
+    if (panzoom.getScale() <= 1.01) {
+      panzoom.setOptions({ disablePan: true, touchAction: 'pan-y' });
+    }
+    // Disallow panning, allows page scroll
+    else {
+      panzoom.setOptions({ disablePan: false, touchAction: 'none' });
+    }
+  })
+
+
+}
+
 
 // # INITIALIZATION
 export async function init(locale = 'cs-CZ') {
@@ -351,67 +435,6 @@ export async function init(locale = 'cs-CZ') {
   $(document).ready(function () {
     initDataTable(locale)
     LV(propertiesData, locale)
-
-    // WIP - panzoom
-    // FIXME: Infobox positioned inside LV
-    // TODO: Add controls: zoom in/out, fullscreen
-    // NOTE: Intended only for touch screens
-    const elem = document.getElementById('lv')
-    const panzoom = Panzoom(elem, {
-      cursor: 'inherit',
-      pinchAndPan: true,
-      panOnlyWhenZoomed: true,
-      startScale: 1,
-      minScale: 1,
-      contain: 'outside',
-      // canvas: false,
-      // startScale: 1.5, // debug
-      // disablePan: true,
-      // touchAction: 'pan-y',
-    })
-
-    // BUG: When fully zooming out with mousewheel, the scale often doesn't round to 1
-    // NOTE: It's often something like 1.0000047 or whatever. That's why the threshold is a bit higher than 1
-    elem.addEventListener('panzoomzoom', (event) => {
-      if (panzoom.getScale() > 1.01) {
-        panzoom.setOptions({ cursor: 'grab' });
-      } else {
-        panzoom.setOptions({ cursor: 'default' });
-      }
-    })
-
-    // Start grabbing
-    elem.addEventListener('panzoomstart', (event) => {
-      panzoom.setOptions({ cursor: 'grabbing' });
-    })
-
-    // End grabbing
-    elem.addEventListener('panzoomend', (event) => {
-      panzoom.setOptions({ cursor: 'grab' });
-    })
-
-    elem.parentElement.addEventListener('wheel', function (event) {
-      // Enables zoom with mouse wheen while holding Ctrl
-      if (event.ctrlKey) {
-        panzoom.zoomWithWheel(event)
-      }
-      // Without Ctrl, we scroll the page
-    })
-
-    // When fully zoomed out, disable panning (allow scrolling the page)
-    // NOTE: touchAction is CSS property: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
-    // BUG: Minor - Behavior doesn't work on page init, only kicks in after a touch move
-    elem.addEventListener('touchmove', function (event) {
-      console.log("Touch move event detected", event);
-      // Allow panning
-      if (panzoom.getScale() <= 1.01) {
-        panzoom.setOptions({ disablePan: true, touchAction: 'pan-y' });
-      }
-      // Disallow panning, allows page scroll
-      else {
-        panzoom.setOptions({ disablePan: false, touchAction: 'none' });
-      }
-    })
-
+    initPanzoom();
   });
 }
