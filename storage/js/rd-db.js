@@ -181,7 +181,7 @@ async function LV(propertiesData, locale) {
     box = document.querySelector("#lv-details-box").content.cloneNode(true).querySelector(".lv-details-box");
     box.setAttribute('id', `lv-details-box-${property.id}`);
     box.innerHTML = mustacheReplace(box.innerHTML, property)
-    document.querySelector('.layout-viewer').appendChild(box);
+    document.querySelector('.layout-viewer-wrapper').appendChild(box);
     return box;
   }
 
@@ -190,7 +190,7 @@ async function LV(propertiesData, locale) {
   // Box shows while hovering over a path
   //// TEMP
   //if (false) {
-   if (window.matchMedia("(pointer: fine)").matches) {
+  if (window.matchMedia("(pointer: fine)").matches) {
 
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
 
@@ -330,37 +330,6 @@ function initDataTable(locale) {
   });
 }
 
-// # navigation Fix
-// TODO: Move to separate file ?
-function navigationFix() {
-
-  // Prevents page reload on:
-  // Links with no href, links with empty href, links with href starting with # (anchor links)
-  document.querySelectorAll('a:not([href]), a[href=""], a[href^="#"]').forEach(element => {
-    element.addEventListener('click', function (e) {
-      e.preventDefault();
-    });
-  });
-
-  // Anchor links navigation
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-
-      e?.preventDefault();     // Redundant - already prevented by preventDefaults()
-
-      let ele = document.querySelector(this.getAttribute("href"));
-      let fragment = this.getAttribute("href");
-
-      // history.pushState({}, "", fragment)      // Adds entry to the browser's session history
-      history.replaceState({}, "", fragment)      // Replaces current history entry
-
-      if (ele) {
-        ele.scrollIntoView();
-      }
-
-    });
-  });
-}
 
 // # INITIALIZATION
 export async function init(locale = 'cs-CZ') {
@@ -381,8 +350,68 @@ export async function init(locale = 'cs-CZ') {
 
   $(document).ready(function () {
     initDataTable(locale)
-    LV(propertiesData, locale);
-    navigationFix()
-  });
+    LV(propertiesData, locale)
 
+    // WIP - panzoom
+    // FIXME: Infobox positioned inside LV
+    // TODO: Add controls: zoom in/out, fullscreen
+    // NOTE: Intended only for touch screens
+    const elem = document.getElementById('lv')
+    const panzoom = Panzoom(elem, {
+      cursor: 'inherit',
+      pinchAndPan: true,
+      panOnlyWhenZoomed: true,
+      startScale: 1,
+      minScale: 1,
+      contain: 'outside',
+      // canvas: false,
+      // startScale: 1.5, // debug
+      // disablePan: true,
+      // touchAction: 'pan-y',
+    })
+
+    // BUG: When fully zooming out with mousewheel, the scale often doesn't round to 1
+    // NOTE: It's often something like 1.0000047 or whatever. That's why the threshold is a bit higher than 1
+    elem.addEventListener('panzoomzoom', (event) => {
+      if (panzoom.getScale() > 1.01) {
+        panzoom.setOptions({ cursor: 'grab' });
+      } else {
+        panzoom.setOptions({ cursor: 'default' });
+      }
+    })
+
+    // Start grabbing
+    elem.addEventListener('panzoomstart', (event) => {
+      panzoom.setOptions({ cursor: 'grabbing' });
+    })
+
+    // End grabbing
+    elem.addEventListener('panzoomend', (event) => {
+      panzoom.setOptions({ cursor: 'grab' });
+    })
+
+    elem.parentElement.addEventListener('wheel', function (event) {
+      // Enables zoom with mouse wheen while holding Ctrl
+      if (event.ctrlKey) {
+        panzoom.zoomWithWheel(event)
+      }
+      // Without Ctrl, we scroll the page
+    })
+
+    // When fully zoomed out, disable panning (allow scrolling the page)
+    // NOTE: touchAction is CSS property: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
+    // BUG: Minor - Behavior doesn't work on page init, only kicks in after a touch move
+    elem.addEventListener('touchmove', function (event) {
+      console.log("Touch move event detected", event);
+      // Allow panning
+      if (panzoom.getScale() <= 1.01) {
+        panzoom.setOptions({ disablePan: true, touchAction: 'pan-y' });
+      }
+      // Disallow panning, allows page scroll
+      else {
+        panzoom.setOptions({ disablePan: false, touchAction: 'none' });
+      }
+    })
+
+  });
 }

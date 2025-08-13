@@ -247,7 +247,7 @@
         <p>Objevte harmonii života v&nbsp;klidném prostředí s&nbsp;výbornou dostupností do centra.</p>
       </hgroup>
       <div class="btn-list">
-        <button class="btn btn-secondary btn-inline">
+        <button class="btn btn-secondary btn-inline" data-open-form>
           Mám zájem
           <i class="far fa-calendar-check" aria-hidden="true"></i>
         </button>
@@ -465,22 +465,16 @@
   <div class="container">
     <h2><a href="#cenik">Ceník</a></h2>
     <div class="properties">
-      <div class="layout-viewer">
-        <!-- Layout viewer image -->
-        <!-- <img src="./temp/bydlenikbelicky.webp" alt="" loading="lazy"> -->
-        <img src="https://www.novachyne.cz/img/plan/domy-2.webp" alt="" loading="lazy">
-        <!-- Layout Viewer svg map -->
-        <div class="layout-viewer-map">
-          <svg version="1.1" id="lv-map" preserveAspectRatio="xMinYMin meet" inkscape:version="0.91 r13725"
+      <div class="layout-viewer-wrapper">
+        <div class="layout-viewer" id="lv">
+          <!-- TODO: HERE PANZOOM CONTROLS -->
+          <!-- Layout viewer image -->
+          <!-- <img src="./temp/bydlenikbelicky.webp" alt="" loading="lazy"> -->
+          <img src="https://www.novachyne.cz/img/plan/domy-2.webp" alt="" loading="lazy">
+          <!-- Layout Viewer svg map -->
+          <svg version="1.1" class="layout-viewer-map" id="lv-map" preserveAspectRatio="xMinYMin meet" inkscape:version="0.91 r13725"
             x="0px" y="0px" width="1140px" height="590px" viewBox="0 0 1140 590"
             enable-background="0 0 1140 680" xml:space="">
-            <!-- <sodipodi:namedview objecttolerance="10" borderopacity="1" gridtolerance="10" guidetolerance="10"
-      inkscape:cx="509.19152" inkscape:cy="282.2353" inkscape:zoom="1.2137643" showgrid="false"
-      id="namedview71" inkscape:current-layer="" inkscape:window-maximized="1" inkscape:window-y="-8"
-      inkscape:window-x="-8" inkscape:pageopacity="0" inkscape:window-height="590"
-      inkscape:window-width="1920" inkscape:pageshadow="2">
-    </sodipodi:namedview> -->
-
             <g>
               <a href="rd-detail-1">
                 <path id="rd-path-1"
@@ -723,7 +717,7 @@
     </div>
     <div class="container-m ta-c">
       <!-- <p>Vybrali jste si? Kontaktujte nás a rodinný dům může být Váš.</p> -->
-      <button class="btn btn-gray-dark btn-outline-fill">Mám zájem</button>
+      <button class="btn btn-gray-dark btn-outline-fill" data-open-form>Mám zájem</button>
     </div>
   </div>
 </section>

@@ -195,8 +195,7 @@ strong {
 em {
   font-style: normal;
   font-weight: 700;
-
-  color: black;
+  color: var(--color-primary);
 }
 
 label {
@@ -1223,7 +1222,7 @@ section section {
   font-weight: 700;
   margin-bottom: 0.5rem;
   line-height: 1.0;
-  color: black;
+  color: var(--color-primary);
   order: 1;
 }
 
@@ -1652,7 +1651,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 }
 
 
-.layout-viewer-map svg {
+.layout-viewer-map {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1672,7 +1671,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   font-size: 0.875rem;
   /* background-color: var(--color-secondary); */
   background-color: var(--color-tertiary);
-  color: black;
+  color: var(--color-primary);
   /* color: white; */
   z-index: 100;
   /* temp */
