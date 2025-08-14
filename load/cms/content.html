@@ -243,8 +243,8 @@
         </svg>
       </picture>
       <hgroup>
-        <h1>Moderní bydlení v&nbsp;přírodě na okraji Prahy</h1>
-        <p>Objevte harmonii života v&nbsp;klidném prostředí s&nbsp;výbornou dostupností do centra.</p>
+        <h1 data-bind="quote1">Moderní bydlení v&nbsp;přírodě na okraji Prahy</h1>
+        <p data-bind="quote2">Objevte harmonii života v&nbsp;klidném prostředí s&nbsp;výbornou dostupností do centra.</p>
       </hgroup>
       <div class="btn-list">
         <button class="btn btn-secondary btn-inline" data-open-form>
@@ -306,7 +306,7 @@
         </p>
       </div>
       <div>
-        <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p0_760.jpg" loading="lazy">
+        <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p0_760.jpg" alt="" loading="lazy">
       </div>
     </div>
   </div>
@@ -316,7 +316,7 @@
   <div class="">
     <div class="two-col img-text">
       <div>
-        <img src="https://i.ibb.co/LD2hz5pk/fffff.jpg" loading="lazy">
+        <img src="https://i.ibb.co/LD2hz5pk/fffff.jpg" alt="" loading="lazy">
       </div>
       <div>
         <h3><a href="#lokalita">Pitkovice a okolí</a></h3>
@@ -743,7 +743,7 @@
   <div class="container">
     <h2>DEV CENÍK KARTY</h2>
     <div class="apt-cards">
-      <a href="https://example.com" target="_blank" class="apt-card">
+      <a href="https://example.com" target="_blank" rel="noopener" class="apt-card">
         <!-- <div class="apt-card__thumbnail">
           <img class="apt-card__compass" src="https://www.central-group.cz/uloziste/80/804f5c80-cc09-4457-8f65-bf9b13ebd68f.gif" alt="" srcset="">
           <img class="apt-card__thumbnail-img" src="https://www.central-group.cz/uloziste/d8/d8e7fdfa-ce14-4160-a10c-bce634f6f45a.gif" alt="" srcset="">
@@ -948,13 +948,30 @@
   </table>
 </template>
 
-<!-- DETAIL BUTTON -->
-<template id="price-table__detail-btn">
-  <a href="" class="btn btn-black btn-transparent btn-sm btn-full btn-link" data-fancybox="detail" data-type="iframe">
-    Otevřít
-  </a>
+<!-- PRICE TABLE ROW-->
+<template id="template-price-table-tr">
+  <tr>
+    <td>{name}</td>
+    <td>{floors}</td>
+    <td>{layout}</td>
+    <td>{accessories}</td>
+    <td>{area}</td>
+    <td>{date_completion}</td>
+    <td>{price}</td>
+    <td>
+      <a 
+        href="/rd-detail/{id}.pdf" 
+        class="btn btn-secondary btn-sm" 
+        data-fancybox="detail" 
+        data-type="iframe"
+      >
+        Detail
+      </a>
+    </td>
+  </tr>
 </template>
 
+<!-- LAYOUT VIEWER DETAILS BOX -->
 <template id="lv-details-box">
   <div class="lv-details-box" role="dialog">
     <div class="lv-details-box__content">

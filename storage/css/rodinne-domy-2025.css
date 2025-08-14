@@ -610,11 +610,6 @@ h6 {
   margin-bottom: 0;
 }
 
-/* ? maybe */
-:is(h1, h2) strong {
-  /* font-weight: 800; */
-}
-
 :is(h1, h2, h3, h4, h5, h6) a {
   text-decoration: none;
   -webkit-user-drag: none;

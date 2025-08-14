@@ -42,66 +42,34 @@ export async function fetchSheetData() {
   }
 }
 
-export function populateTemplateTableWithData(propertiesData, locale = 'cs-CZ', displaySold = false) {
+export function populatePriceTableWithData(propertiesData, locale = 'cs-CZ', displaySold = false) {
+  // Format data to human-readable for display
+  const properties = formatData(JSON.parse(JSON.stringify(propertiesData.tableData)), locale);
+
   const table = document.querySelector('#template-price-table').content.cloneNode(true).querySelector('table');
   const tableBody = table.querySelector('tbody');
   const tableContainer = document.querySelector('#price-table-container')
 
-  propertiesData.forEach(property => {
+  properties.forEach(property => {
+
     // Sold properties are not displayed
     if (!displaySold && property['status'] === 'sold')
       return;
 
-    // Create and insert row
-    const row = tableBody.insertRow();
-
-    // Set attribute data-status to row
-    row.setAttribute('data-status', property['status']);
-
-    /// CELLS
-    // Name
-    row.insertCell().innerHTML = `<span class="property-status ${property['status']} dot" aria-hidden="true">${property['status']}</span>` + property['name']
-    // Floors (number of floors)
-    row.insertCell().innerHTML = property['floors']
-    // Layout (number of rooms)
-    row.insertCell().innerHTML = property['layout'] + (locale.startsWith('en') ? '+kt' : '+kk');
-    // Accessories
-    row.insertCell().innerHTML = property['accessories']
-    // Area (internal)
-    row.insertCell().innerHTML = property['area'] + ' m²'
-    // Completion date
-    row.insertCell().innerHTML = new Intl.DateTimeFormat(locale, {
-      month: 'long',
-      year: 'numeric',
-    }).format(property['date_completion']);
-    // Price
-    row.insertCell().innerHTML = new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: 'CZK',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(property['price']);
-    // Detail PDF Card
-    // TEMP File URL
-    // TODO: Replace with actual path
-    row.insertCell().appendChild(
-      document.querySelector('#price-table__detail-btn').content.cloneNode(true).querySelector('a')
-    ).setAttribute('href', `./temp/B1.pdf`);
+    const row = document.querySelector('#template-price-table-tr').content.cloneNode(true).querySelector('tr');
+    row.innerHTML = mustacheReplace(row.innerHTML, property)
+    tableBody.appendChild(row)
   });
 
   // Append table to container (while replacing any existing content)
   tableContainer.replaceChildren(table);
 }
 
-function stripHTMLTags(string) {
-  return string.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' ');
-}
-
 // Mustache
 function mustacheReplace(html, object) {
   Object.entries(object).forEach(([key, value]) => {
-    const placeholder = `{${key}}`;
-    html = html.replace(new RegExp(placeholder, 'g'), value);
+    const regex = new RegExp(`{\\s*${key}\\s*}`, 'g');
+    html = html.replace(regex, value);
   });
   return html;
 }
@@ -187,11 +155,9 @@ async function LV(propertiesData, locale) {
     return box;
   }
 
-  // MOUSE POINTERS
+  // * MOUSE POINTERS
   // ? Use mobile behavior for desktop as well ?
   // Box shows while hovering over a path
-  //// TEMP
-  //if (false) {
   if (window.matchMedia("(pointer: fine)").matches) {
 
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
@@ -223,7 +189,7 @@ async function LV(propertiesData, locale) {
     })
 
   }
-  // TOUCH SCREENS
+  // * TOUCH SCREENS
   // Box shows on click; clicking again or outside closes box
   else {
 
@@ -233,8 +199,6 @@ async function LV(propertiesData, locale) {
       const boxExists = box ? true : false
       let isSamePropertyAsOpenBox = false
       let matchingProperty = null;
-
-      // * Determine if we clicked on a path, and the path is different than current (=> will create a new box)
 
       /// If click on a path, or inside it
       if (closestPath) {
@@ -251,7 +215,6 @@ async function LV(propertiesData, locale) {
           isSamePropertyAsOpenBox = (box?.id === `lv-details-box-${matchingProperty.id}`) ? true : false;
           console.debug("Matching property: ", matchingProperty);
         }
-
       }
 
       // Remove box
@@ -280,11 +243,9 @@ async function LV(propertiesData, locale) {
     });
     // End of document click handler
 
+    // Prevent redirecting (opening link) on click
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
-
-      // Click on path
       path.addEventListener("click", (event) => {
-        // Prevent redirect
         event.preventDefault();
       });
 
@@ -294,11 +255,14 @@ async function LV(propertiesData, locale) {
 }
 
 function initDataTables(locale) {
-  
+
+  function stripHTMLTags(string) {
+    return string.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' ');
+  }
+
   function naturalSort(a, b, m = 1) {
     a = stripHTMLTags(a)
     b = stripHTMLTags(b)
-    // console.debug('Natural sort: ', a, b);
     const out = a.localeCompare(b, locale, { numeric: true, ignorePunctuation: true });
     return out * m;
   }
@@ -429,7 +393,7 @@ export async function init(locale = 'cs-CZ') {
   }
   // console.debug('Fetched data: ', propertiesData.tableData);
 
-  populateTemplateTableWithData(propertiesData.tableData, locale, false);
+  populatePriceTableWithData(propertiesData, locale, false);
   const priceTable = document.querySelector('.price-table');
   if (!priceTable) {
     console.error("Table .price-table not found after populating data.");

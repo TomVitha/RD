@@ -23,16 +23,11 @@ const setState = (state) => {
   // return new Proxy({...state}, {
   return new Proxy(state, {
     get(target, property) {
-      // target: the state object
-      // property: property name (e.g. quote1)
-      // console.debug("GETTER: target: ", target, "property:", property);
-
       return target[property] ?? ''
     },
     set(target, property, value) {
-      // console.debug("SETTER: target: ", target, "property: ", property, "value:", value);
-      target[property] = value         // update the state object
-      updateElementsByProperty(property)                // updates the view everytime the state changes
+      target[property] = value                          // update the state object
+      updateElementsByProperty(property)                // updates the view every time the state changes
       return true;
     }
   })
