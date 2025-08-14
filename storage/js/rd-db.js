@@ -293,13 +293,14 @@ async function LV(propertiesData, locale) {
   }
 }
 
-function initDataTable(locale) {
-  function naturalSort(a, b, multiplier = 1) {
+function initDataTables(locale) {
+  
+  function naturalSort(a, b, m = 1) {
     a = stripHTMLTags(a)
     b = stripHTMLTags(b)
     // console.debug('Natural sort: ', a, b);
     const out = a.localeCompare(b, locale, { numeric: true, ignorePunctuation: true });
-    return out * multiplier;
+    return out * m;
   }
 
   $.extend(DataTable.ext.type.order, {
@@ -319,7 +320,8 @@ function initDataTable(locale) {
     paging: false,
     searching: false,
     info: false,
-    // FIXME: Throws following error on iOS: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
+    // BUG: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
+    // NOTE: Likely happens when not https (like localhost)
     // language: {
     //     url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
     // },
@@ -330,7 +332,7 @@ function initDataTable(locale) {
       { className: "dt-right", targets: [6] },
     ],
     responsive: false,
-    autoWidth: false,    // Fixes wonky column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
+    autoWidth: false,    // Fixes weird column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
   });
 }
 
@@ -414,6 +416,8 @@ function initPanzoom(elemId = 'lv') {
 
 }
 
+// TODO? Global "locale" variable? (So we don't have to pass it around everywhere)
+
 
 // # INITIALIZATION
 export async function init(locale = 'cs-CZ') {
@@ -433,7 +437,7 @@ export async function init(locale = 'cs-CZ') {
   }
 
   $(document).ready(function () {
-    initDataTable(locale)
+    initDataTables(locale)
     LV(propertiesData, locale)
     initPanzoom();
   });

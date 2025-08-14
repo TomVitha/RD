@@ -87,7 +87,7 @@ html[data-darkreader-scheme="dark"] .btn-yellow {
 
 body {
   color: var(--color-body-text);
-  overflow-x: clip;
+  overflow-x: hidden;
 
   /* Alt font */
   /* font-family: "Plus Jakarta Sans" !important; */
@@ -330,7 +330,7 @@ hr[data-text]::before {
   justify-content: center;
   line-height: 1.0;
   min-height: 2.7em;
-  overflow: clip;
+  overflow: hidden;
   padding: 0.6em 1.25em;
   position: relative;
   text-align: center;
@@ -837,7 +837,7 @@ a.hero__jump,
   opacity: 0.75;
   transform-origin: 50% 50%;
   pointer-events: auto;
-  overflow: clip;
+  overflow: hidden;
   transition: opacity 100ms;
 }
 
@@ -965,7 +965,7 @@ a.hero__jump,
 section {
   position: relative;
   overflow-x: hidden;
-  overflow-x: clip;
+  overflow-x: hidden;
   margin-block: var(--sections-spacing);
   scroll-margin-top: var(--sections-spacing);
 }
@@ -1420,7 +1420,7 @@ section section {
   font-size: calc(var(--phase-icon-size) / 2.666);
   user-select: none;
   isolation: isolate;
-  overflow: clip;
+  overflow: hidden;
 }
 
 .phase__arrow {
@@ -1462,12 +1462,12 @@ section section {
 /* PHASES (end) */
 
 /* # CENÍK TABULKA */
-/* .price-table-wrapper */
-.dt-layout-table {
+.price-table-wrapper:not(:has(.dt-layout-table)),
+.dt-layout-table 
+{
   border: 1px solid #ededed;
   border-radius: 10px;
-  overflow-y: hidden;
-  overflow-x: auto;
+  overflow: auto;
   scrollbar-color: #c5c5c5 transparent;
   scrollbar-width: thin;
   margin-block: 24px;
@@ -1576,7 +1576,7 @@ table.price-table > thead > tr > :is(th, td) {
   display: inline-flex;
   width: 10px;
   height: 10px;
-  overflow: clip;
+  overflow: hidden;
   aspect-ratio: 1;
   padding: 0;
   background-color: currentColor !important;
@@ -1759,7 +1759,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 
 @media (pointer: fine) {
   .lv-details-box__btn-open {
-    display: none;
+    /* display: none; */
   }
 
   .lv-details-box__close {
@@ -1816,7 +1816,7 @@ article.map {
   height: 60vh;
   max-width: 100%;
   /* margin-bottom: 3.5rem; */
-  overflow: clip;
+  overflow: hidden;
 }
 
 /* TEMP: ditto */
@@ -1846,7 +1846,7 @@ article.map {
   line-height: 1.15;
   gap: 0.5rem;
   box-shadow: 0px 0px 0px 1px #f1f1f1;
-  overflow: clip;
+  overflow: hidden;
   padding: 1.0rem 1.25rem;
   position: relative;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
