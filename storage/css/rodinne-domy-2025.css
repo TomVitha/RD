@@ -1754,7 +1754,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 
 @media (pointer: fine) {
   .lv-details-box__btn-open {
-    /* display: none; */
+    display: none;
   }
 
   .lv-details-box__close {

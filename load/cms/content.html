@@ -959,10 +959,10 @@
     <td>{date_completion}</td>
     <td>{price}</td>
     <td>
-      <a 
-        href="/rd-detail/{id}.pdf" 
-        class="btn btn-secondary btn-sm" 
-        data-fancybox="detail" 
+      <a
+        href="/rd-detail/{id}.pdf"
+        class="btn btn-secondary btn-sm"
+        data-fancybox="detail"
         data-type="iframe"
       >
         Detail
@@ -1010,13 +1010,16 @@
 
 
 <script>
-  // FIXME: On initial page load, the .transparent class is not applied, only after scroll
-  $(window).on("scroll", function () {
+  function headerTransparency() {
     if ($(this).scrollTop() > 100) {
       $(".c-header").removeClass("transparent")
     }
     else {
       $(".c-header").addClass("transparent")
     }
+  }
+  $(window).on("scroll", function () {
+    headerTransparency()
   });
+  headerTransparency() // initial load
 </script>

@@ -1,11 +1,28 @@
-// fetch Google Sheets data
-const url = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
+import * as bind from './data-binding.js'
 
-// Fetch data from Google Sheets and parse it as JSON
-export async function fetchSheetData() {
+bind.setNestedObjValue(bind.state, 'rd-db',
+  {
+    'A': 'aaaaa',
+  }
+)
+
+console.log("state from rd-db:", bind.state);
+
+let locale = 'cs-CZ' // GLOBAL variable for locale
+
+// fetch Google Sheets data
+const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
+
+/**
+ * Fetch data from Google Sheets and parse it as JSON
+ * @param {string} url URL of the Google Sheet
+ * @returns {Object|null} Parsed JSON data
+ */
+export async function fetchSheetData(url) {
   try {
     const response = await fetch(url);
     const responseText = await response.text();
+
     // Extract the JSON part from the response (Google's response has a prefix we need to remove)
     const jsonString = responseText.substring(responseText.indexOf('{'), responseText.lastIndexOf('}') + 1);
     const data = JSON.parse(jsonString);
@@ -42,7 +59,7 @@ export async function fetchSheetData() {
   }
 }
 
-export function populatePriceTableWithData(propertiesData, locale = 'cs-CZ', displaySold = false) {
+export function populatePriceTableWithData(propertiesData, displaySold = false) {
   // Format data to human-readable for display
   const properties = formatData(JSON.parse(JSON.stringify(propertiesData.tableData)), locale);
 
@@ -129,7 +146,7 @@ function removeBox(box) {
 /**
  * Layout Viewer map
  */
-async function LV(propertiesData, locale) {
+async function LV(propertiesData) {
 
   // NOTE: Pass as a DEEP COPY !
   const propertiesDataFormatted = formatData(JSON.parse(JSON.stringify(propertiesData.tableData)), locale);
@@ -203,7 +220,7 @@ async function LV(propertiesData, locale) {
       /// If click on a path, or inside it
       if (closestPath) {
         const path = closestPath;
-        console.debug("Clicked on this path: ", path);
+        // console.debug("Clicked on this path: ", path);
 
         /// Get matching property (and validate)
         matchingProperty = propertiesDataFormatted.find(
@@ -213,7 +230,7 @@ async function LV(propertiesData, locale) {
           console.log("No matching property for path this path:", path.id);
         } else {
           isSamePropertyAsOpenBox = (box?.id === `lv-details-box-${matchingProperty.id}`) ? true : false;
-          console.debug("Matching property: ", matchingProperty);
+          // console.debug("Matching property: ", matchingProperty);
         }
       }
 
@@ -227,17 +244,14 @@ async function LV(propertiesData, locale) {
        * - Matching property is not the same as the open box's property
        */
       if (closestPath && matchingProperty && !isSamePropertyAsOpenBox) {
-        console.debug("CREATING A NEW BOX FOR PROPERTY: ", matchingProperty.id);
+        // console.debug("CREATING A NEW BOX FOR PROPERTY: ", matchingProperty.id);
         box = createFillAppendBox(matchingProperty);
         // WIP: Position
         box.style.position = "fixed";
         box.style.left = 0 + "px";
         box.style.right = 0 + "px";
         box.style.bottom = 0 + "px";
-
-        // box.style.left = (e.clientX + 0) + "px";
-        // box.style.top = (e.clientX - 0) + "px";
-        console.debug("BOX CREATED: ", box);
+        // console.debug("BOX CREATED: ", box);
       }
 
     });
@@ -254,7 +268,7 @@ async function LV(propertiesData, locale) {
   }
 }
 
-function initDataTables(locale) {
+function initDataTables() {
 
   function stripHTMLTags(string) {
     return string.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' ');
@@ -311,8 +325,6 @@ function initPanzoom(elemId = 'lv') {
     minScale: 1,
     contain: 'outside',
     // canvas: false,
-    // startScale: 1.5, // debug
-    // disablePan: true,
     // touchAction: 'pan-y',
   })
 
@@ -384,25 +396,22 @@ function initPanzoom(elemId = 'lv') {
 
 
 // # INITIALIZATION
-export async function init(locale = 'cs-CZ') {
+export async function init(loc = 'cs-CZ') {
 
-  const propertiesData = await fetchSheetData();
+  locale = loc; // Set global locale value
+
+  const propertiesData = await fetchSheetData(sheetURL);
   if (!propertiesData) {
     console.error('Failed to fetch or parse data.');
     return
   }
   // console.debug('Fetched data: ', propertiesData.tableData);
 
-  populatePriceTableWithData(propertiesData, locale, false);
-  const priceTable = document.querySelector('.price-table');
-  if (!priceTable) {
-    console.error("Table .price-table not found after populating data.");
-    return
-  }
-
+  
   $(document).ready(function () {
-    initDataTables(locale)
-    LV(propertiesData, locale)
+    populatePriceTableWithData(propertiesData, false);
+    initDataTables()
+    LV(propertiesData)
     initPanzoom();
   });
 }
