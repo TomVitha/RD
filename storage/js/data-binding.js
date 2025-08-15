@@ -2,37 +2,94 @@
 
 const bindAttr = 'data-bind' // attribute for binding data
 
-const updateElement = (element, prop) => {
+/**
+ * 
+ * @param {Object} obj 
+ * @param {string} path 
+ * @returns {string|Object|undefined}
+ */
+const getNestedObjValue = (obj, path) => {
+  if (!obj || typeof obj !== 'object') 
+    throw new TypeError("getNestedObjValue: 'obj' must be a non-null object.");
+
+  if (!path || typeof path !== 'string')
+    throw new TypeError("getNestedObjValue: 'path' must be a non-empty string.");
+
+  return path.split('.').reduce((acc, key) => acc && acc[key], obj);
+};
+
+/**
+ * 
+ * @param {Object} obj 
+ * @param {String} path 
+ * @param {*} value 
+ */
+const setNestedObjValue = (obj, path, value) => {
+  const keys = path.split('.');
+  const lastKey = keys.pop();
+  const lastObj = keys.reduce((acc, key) => acc && acc[key], obj);
+  if (lastObj && lastKey) lastObj[lastKey] = value;
+}
+
+/**
+ * Renders element
+ * @param {Node} element 
+ * @param {string} propPath 
+ */
+const updateElement = (element, propPath) => {
+  console.log("updateElement propPath:", propPath);
+  const value = getNestedObjValue(state, propPath);
   // Set value - mainly for <input> elements + <textarea>
   if ("value" in element || element.tagName === 'TEXTAREA') {
-    element.value = state[prop]
+    element.value = value;
   }
   // Set inner text
   else {
-    element.innerText = state[prop]
+    element.innerText = value;
   }
 }
 
-const updateElementsByProperty = (property) => {
-  document.querySelectorAll(`[${bindAttr}=${property}]`)?.forEach((element) => {
-    updateElement(element, property)
-  })
+/**
+ * Renders all elements with the given property path
+ * @param {string} propertyPath 
+ */
+const updateElementsByProperty = (propertyPath) => {
+  document.querySelectorAll(`[${bindAttr}="${propertyPath}"]`)?.forEach((element) => {
+    updateElement(element, propertyPath);
+  });
 }
 
-const setState = (state) => {
-  // return new Proxy({...state}, {
-  return new Proxy(state, {
+function createDeepProxy(obj, path = '') {
+  return new Proxy(obj, {
     get(target, property) {
-      return target[property] ?? ''
+      const value = target[property];
+      if (typeof value === 'object' && value !== null) {
+        const newPath = path ? `${path}.${property}` : property;
+        return createDeepProxy(value, newPath);
+      }
+      return value;
     },
     set(target, property, value) {
-      target[property] = value                          // update the state object
-      updateElementsByProperty(property)                // updates the view every time the state changes
+      target[property] = value;
+      const propPath = path ? `${path}.${property}` : property;
+      updateElementsByProperty(propPath);
       return true;
     }
-  })
+  });
 }
+
+const setState = (state) => createDeepProxy(state);
+
 const state = setState({
+  meals: {
+    'pizza': 'with pepperoni and pineapple',
+    meat: {
+      1: 'Chicken',
+      2: 'Beef',
+      3: 'Pork',
+    },
+    'vegetarian': 'go away',
+  },
   quote1: 'You either die a hero or live long enough to see yourself become the villain.',
   quote2: 'It’s not who I am underneath, but what I do that defines me.',
   quote3: 'Sometimes the truth isn’t good enough, sometimes people deserve more. Sometimes people deserve to have their faith rewarded.',
@@ -71,8 +128,21 @@ observer.observe(document.body, {
 
 // Initialize elements
 function init() {
-  Object.keys(state).forEach(updateElementsByProperty);
+  // For each top-level key, update all nested bindings
+  const traverse = (obj, prefix = '') => {
+    Object.keys(obj).forEach(key => {
+      const path = prefix ? `${prefix}.${key}` : key;
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        traverse(obj[key], path);
+      } else {
+        updateElementsByProperty(path);
+      }
+    });
+  };
+  traverse(state);
 }
 
-// Init on page load
-init(state)
+// On page load
+$(document).ready(() => {
+  init(state)
+})
