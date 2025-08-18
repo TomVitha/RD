@@ -951,7 +951,10 @@
 <!-- PRICE TABLE ROW-->
 <template id="template-price-table-tr">
   <tr>
-    <td>{name}</td>
+    <td>
+      <span class="property-status {status} dot mr-2" aria-hidden="true">{status}</span>
+      {name}
+    </td>
     <td>{floors}</td>
     <td>{layout}</td>
     <td>{accessories}</td>
@@ -977,7 +980,6 @@
     <div class="lv-details-box__content">
       <div class="lv-details-box__header">
         <span class="lv-details-box__name">{name}</span>
-        <!-- <span class="lv-details-box__status property-status {status} dot">{status}</span> -->
         <button class="lv-details-box__close btn btn-icon">✕</button>
       </div>
       <div class="lv-details-box__body">

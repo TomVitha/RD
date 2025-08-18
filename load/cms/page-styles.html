@@ -22,7 +22,11 @@
 <!-- Panzoom (for LV navigation) -->
 <script src="https://unpkg.com/@panzoom/panzoom@4.6.0/dist/panzoom.min.js"></script>
 
-<!-- WIP -->
+<!-- 
+  Scripts loaded through content that's fetched via AJAX operate in a different execution context:
+    - They still run, but their scope is isolated
+    - Variables aren't automatically attached to the global window object
+-->
 <!-- <script src="./storage/js/data-binding.js"></script> -->
 
 <!-- *** MAIN PAGE STYLING *** -->

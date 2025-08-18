@@ -1,12 +1,4 @@
-import * as bind from './data-binding.js'
-
-bind.setNestedObjValue(bind.state, 'rd-db',
-  {
-    'A': 'aaaaa',
-  }
-)
-
-console.log("state from rd-db:", bind.state);
+import * as databind from './data-binding.js'
 
 let locale = 'cs-CZ' // GLOBAL variable for locale
 
@@ -337,36 +329,43 @@ function initPanzoom(elemId = 'lv') {
   btnZoomOut?.addEventListener('click', panzoom.zoomOut)
   btnReset?.addEventListener('click', panzoom.reset)
 
-  // BUG: When panning with cursor over link, link is activated when mouse up
+  // BUG: When panning with cursor over link, link is activated on click up
+  const mapLinks = document.querySelectorAll('.layout-viewer-map a')
 
-  // FIXED: When fully zooming out with mousewheel, the scale often doesn't round to 1
-  // NOTE: It's often something like 1.0000047 or whatever. That's why the threshold is a bit higher than 1
-  elem.addEventListener('panzoomzoom', (event) => {
-    if (panzoom.getScale() > 1.01) {
-      panzoom.setOptions({ cursor: 'grab' });
-      btnReset?.classList.remove('hidden');
-    } else {
-      panzoom.setOptions({ cursor: 'default' });
-      btnReset?.classList.add('hidden');
+  // Helper function to update UI based on zoom level
+  function updateZoomUI(scale) {
+    const isZoomedIn = scale > 1.01;
+    panzoom.setOptions({ cursor: isZoomedIn ? 'grab' : 'default' });
+    if (btnReset) {
+      isZoomedIn ? btnReset.classList.remove('hidden') : btnReset.classList.add('hidden');
     }
-  })
+  }
 
-  // Reset
+  // Handle zoom events
+  elem.addEventListener('panzoomzoom', (event) => {
+    updateZoomUI(panzoom.getScale());
+  });
+
+  // Reset event
   elem.addEventListener('panzoomreset', (event) => {
-    btnReset?.classList.add('hidden');
-  })
+    updateZoomUI(1); // After reset, scale is always 1
+  });
 
   // Start grabbing
   elem.addEventListener('panzoomstart', (event) => {
-    panzoom.setOptions({ cursor: 'grabbing' });
-  })
+    if (panzoom.getScale() > 1.01) {
+      panzoom.setOptions({ cursor: 'grabbing' });
+    }
+  });
 
   // End grabbing
   elem.addEventListener('panzoomend', (event) => {
-    panzoom.setOptions({ cursor: 'grab' });
-  })
+    updateZoomUI(panzoom.getScale());
+  });
+
 
   elem.parentElement.addEventListener('wheel', function (event) {
+    console.log(event);
     // Enables zoom with mouse wheen while holding Ctrl
     if (event.ctrlKey) {
       panzoom.zoomWithWheel(event)
@@ -392,8 +391,6 @@ function initPanzoom(elemId = 'lv') {
 
 }
 
-// TODO? Global "locale" variable? (So we don't have to pass it around everywhere)
-
 
 // # INITIALIZATION
 export async function init(loc = 'cs-CZ') {
@@ -405,9 +402,9 @@ export async function init(loc = 'cs-CZ') {
     console.error('Failed to fetch or parse data.');
     return
   }
-  // console.debug('Fetched data: ', propertiesData.tableData);
+  console.debug('Fetched RAW data: ', propertiesData.tableData);
 
-  
+
   $(document).ready(function () {
     populatePriceTableWithData(propertiesData, false);
     initDataTables()

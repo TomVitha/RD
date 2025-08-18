@@ -97,10 +97,28 @@ export const state = setState({
   quote1: 'You either die a hero or live long enough to see yourself become the villain.',
   quote2: 'It’s not who I am underneath, but what I do that defines me.',
   quote3: 'Sometimes the truth isn’t good enough, sometimes people deserve more. Sometimes people deserve to have their faith rewarded.',
+  // Debug data type values
   s: 'Something stringy',
   e: '',
   n: null,
   u: undefined,
+  a: ['one', 'two', 'three'],
+  obj: {
+    "id": 1,
+    "name": "A1",
+    "price": 3500000,
+    "status": "available",
+    "layout": 3,
+    "floors": 2,
+    "accessories": {
+      1: "Air conditioner",
+      2: "Water heater",
+      3: "Smart home system",
+    },
+    "area": 405,
+    "date_completion": "2026-11-30"
+  },
+
 })
 
 /// Observe DOM changes
@@ -111,9 +129,9 @@ const observer = new MutationObserver((mutations) => {
       mutation.addedNodes.forEach((node) => {
         // console.debug("MUTATION added node: ", node);
         if (node.nodeType === Node.ELEMENT_NODE) {
-          // Update node itself if it has bindAttr
+          /// Update node itself if it has bindAttr
           node.hasAttribute(bindAttr) ? updateElement(node, node.getAttribute(bindAttr)) : null;
-          // Update all descendants with bindAttr
+          /// Update all descendants with bindAttr
           node.querySelectorAll(`[${bindAttr}]`).forEach((child) => {
             updateElement(child, child.getAttribute(bindAttr));
           });

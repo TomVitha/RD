@@ -1491,6 +1491,7 @@ div.dt-container.dt-empty-footer tbody > tr:last-child > * {
 }
 
 th {
+  color: var(--color-primary);
   user-select: none;
 }
 
@@ -1529,25 +1530,6 @@ table.price-table > thead > tr > :is(th, td) {
 
 
 /* # STATUS */
-
-.property-status {
-  font-size: 0.7em;
-  vertical-align: middle;
-  margin-right: 0.6em;
-  margin-top: -3%;
-}
-
-.property-status.available {
-  color: #6c6;
-}
-
-.property-status.under-offer {
-  color: #c93;
-}
-
-.property-status.sold {
-  color: #933;
-}
 
 .property-status {
   border-radius: 999px;
@@ -1624,7 +1606,6 @@ table.price-table > thead > tr > :is(th, td) {
 .price-table .sortable.active {
   color: #0576DE;
   box-shadow: inset 0px -1px 0px 0px currentColor;
-  border-color: #6c6;
 }
 
 .price-table .sortable.active::after {
