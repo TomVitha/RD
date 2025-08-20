@@ -306,6 +306,9 @@ function initDataTables() {
   });
 }
 
+// TODO: REPLACE WITH FANCYAPPS PANZOOM ?
+// LINK: https://fancyapps.com/panzoom/guides/custom-controls/
+
 // Panzoom
 function initPanzoom(elemId = 'lv') {
   const elem = document.getElementById(elemId)
@@ -329,7 +332,7 @@ function initPanzoom(elemId = 'lv') {
   btnZoomOut?.addEventListener('click', panzoom.zoomOut)
   btnReset?.addEventListener('click', panzoom.reset)
 
-  // BUG: When panning with cursor over link, link is activated on click up
+
   const mapLinks = document.querySelectorAll('.layout-viewer-map a')
 
   // Helper function to update UI based on zoom level
@@ -364,6 +367,7 @@ function initPanzoom(elemId = 'lv') {
   });
 
 
+  // BUG: When panning with cursor over link, link is activated on click up
   elem.parentElement.addEventListener('wheel', function (event) {
     console.log(event);
     // Enables zoom with mouse wheen while holding Ctrl

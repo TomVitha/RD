@@ -1,33 +1,51 @@
+/* TEMP: Plus Jakarta Sans */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+/* TEMP: Helvetica Now */
+@font-face {
+  font-family: 'Helvetica Now';
+  font-style: normal;
+  font-weight: 100 900;
+  /* NOTE: .ttf and .eot don't seem to work */
+  src: url('https://www.central-group.cz/storage/CG/test/rodinne-domy/fonts/helvetica-now-var-display/HelveticaNowVar.woff2') format('woff2');
+}
+
+
 :root {
-  /** Brand **/
+  /* * Brand * */
   --color-blue: #20234c;
   --color-yellow: #ffed00;
 
-  /** Grays **/
+  /* * Grays * */
   --color-gray: #f8f8f8;
   /* --color-gray-light: #f2f2f2; */
   /* --color-gray-mid: #e4e4e4; */
   --color-gray-dark: #4D4D4D;
   --color-body-text: #787878;
+  --color-body-text-complimentary: white;
 
-  /** Palette **/
+  /* * Palette * */
   --color-primary: oklch(0.3 0 0);
-  --color-secondary: oklch(0.79 0.062 80);
+  /* --color-secondary: oklch(0.79 0.062 80); */
+  --color-secondary: oklch(0.84 0.05 79.99);
   --color-tertiary: oklch(0.985 0.006 80);
 
-  /** Headings **/
+  /* Sections */
+  --color-background-body: white;
+
+  /* * Headings * */
   --color-headings: var(--color-primary);
   --text-behind-color: var(--color-secondary);
   --text-behind-opacity: 30%;
 
-  /** Header and nav **/
+  /* * Header and nav * */
   --header-height-top: 55px;
   --header-height-bottom: 39px;
   --header-height: var(--header-height-top);
   --page-nav-height: 52px;
 
   /* TODO: Fix this mess with containers */
-  /** Layout **/
+  /* * Layout * */
   --sections-spacing: 2.5rem;
   --container-padding: 15px;
   --container-m: 1320px;
@@ -37,7 +55,7 @@
   --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end];
   --two-col-gap: 5rem;
 
-  /** Property availability status **/
+  /* * Property availability status * */
   --status-available-color: #66cc66;
   --status-available-color-lt: #f8fff9;
   --status-under-offer-color: #cc9933;
@@ -46,10 +64,10 @@
   --status-sold-color-lt: #fffbfb;
 
 
-  /** Accessibility **/
+  /* * Accessibility * */
   --color-focus-outline: #72c2ff;
 
-  /** Other */
+  /* * Other */
   scroll-behavior: smooth;
   accent-color: var(--color-secondary);
   interpolate-size: allow-keywords;
@@ -76,7 +94,7 @@
 }
 
 
-/** Dark Reader optimization **/
+/* * Dark Reader optimization * */
 html[data-darkreader-scheme="dark"] {
   --darkreader-bg--color-yellow: #dbb722;
 }
@@ -88,12 +106,11 @@ html[data-darkreader-scheme="dark"] .btn-yellow {
 body {
   color: var(--color-body-text);
   overflow-x: hidden;
-
-  /* Alt font */
-  /* font-family: "Plus Jakarta Sans" !important; */
+  /* TESTING */
+  background-color: var(--color-background-body);
 }
 
-/** Page will always fill screen height **/
+/* * Page will always fill screen height * */
 div[data-v-5782d946] {
   display: flex;
   flex-direction: column;
@@ -109,7 +126,7 @@ main#main {
   display: none !important;
 }
 
-/** Disables sticky header **/
+/* * Disables sticky header * */
 .head {
   position: static !important;
 }
@@ -179,6 +196,7 @@ sup {
 
 input,
 button {
+  color: inherit;
   font-size: 100%;
   font-family: inherit;
 }
@@ -295,7 +313,7 @@ hr[data-text]::before {
 
 /* RESET (end) */
 
-/** Common Font awesome styling **/
+/* * Common Font awesome styling * */
 .price-table .sortable::after {
   -webkit-font-smoothing: antialiased;
   display: var(--fa-display, inline-block);
@@ -308,8 +326,8 @@ hr[data-text]::before {
 
 /* # BTN */
 .btn {
-  --btn-theme: transparent;
-  --btn-theme-complementary: var(--color-primary);
+  --btn-theme: var(--color-body-text);
+  --btn-theme-complementary: var(--color-body-text-complimentary);
   --btn-border-radius: 0.0em;
   --btn-background: var(--btn-theme, transparent);
   --btn-background-hover: var(--btn-background);
@@ -358,12 +376,12 @@ a.btn:hover {
   transition: none;
 }
 
-/** Inline **/
+/* * Inline * */
 .btn-inline {
   display: inline-flex;
 }
 
-/** Full width **/
+/* * Full width * */
 .btn-full {
   width: 100%;
   /* ? maybe ? */
@@ -371,34 +389,34 @@ a.btn:hover {
   /* display: flex; */
 }
 
-/** Small **/
+/* * Small * */
 .btn-sm {
   font-size: 0.75rem;
 }
 
-/** Large **/
+/* * Large * */
 .btn-lg {
   font-size: 1.125rem;
 }
 
-/** Sharp corners **/
+/* * Sharp corners * */
 .btn-sharp {
   --btn-border-radius: 0px;
 }
 
-/** Fully rounded corners  **/
+/* * Fully rounded corners  * */
 .btn-pill {
   --btn-border-radius: 999px;
 }
 
-/** Icons only (no text)  **/
+/* * Icons only (no text)  * */
 .btn-icon {
   padding-inline: 0;
   width: 2.7em;
   height: 2.7em;
 }
 
-/** COLORS **/
+/* * COLORS * */
 
 .btn-primary {
   --btn-theme: var(--color-primary);
@@ -440,7 +458,7 @@ a.btn:hover {
   --btn-theme-complementary: white;
 }
 
-/** Outline **/
+/* * Outline * */
 .btn-outline,
 .btn-outline-fill {
   --btn-background: transparent;
@@ -448,26 +466,26 @@ a.btn:hover {
   border: 1px solid var(--btn-theme);
 }
 
-/** Outline with fill on hover  **/
+/* * Outline with fill on hover  * */
 .btn-outline-fill:hover {
   --btn-background-hover: var(--btn-theme);
   color: var(--btn-theme-complementary);
 }
 
-/** Ghost **/
+/* * Ghost * */
 .btn-ghost {
   --btn-background: transparent;
   color: var(--btn-theme);
 }
 
-/** Transparent **/
+/* * Transparent * */
 .btn-transparent {
   --btn-background: transparent;
   --btn-background-hover: transparent;
   color: var(--btn-theme);
 }
 
-/** Link **/
+/* * Link * */
 .btn-link {
   --btn-background: transparent;
   --btn-background-hover: transparent;
@@ -482,7 +500,7 @@ a.btn:hover {
   text-underline-offset: 0.15em;
 }
 
-/** Container for Btns **/
+/* * Container for Btns * */
 .btn-list {
   display: flex;
   flex-wrap: wrap;
@@ -636,15 +654,9 @@ h6 {
   /* transition: translate 200ms, opacity 200ms; */
 }
 
-/* ? MAYBE ? */
-/* [data-text-behind]:hover::before,
-section:has(:is(h2, h3)[data-text-behind]):hover :is(h2, h3)[data-text-behind]::before{
-  --text-behind-opacity: 1;
-  translate: -0.45em 0;
-} */
 
 
-/** Styling of '#' **/
+/* * Styling of '#' * */
 h2::before {
   content: '#';
   font-size: 0.85em;
@@ -735,7 +747,8 @@ h2::before {
 
 /* WIP */
 .hero__logo {
-  width: 150px;
+  height: 32px;
+  width: fit-content;
 }
 
 .hero__logo :is(img, svg) {
@@ -773,7 +786,7 @@ h2::before {
 /* md - Tablet */
 @media (min-width: 768px) and (min-height: 700px) {
   .hero__logo {
-    width: 200px;
+    height: 42px;
   }
 
   .hero h1 {
@@ -822,7 +835,7 @@ a.hero__jump,
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.0);
 }
 
-/** Pure css-only scroll down icon with animation **/
+/* * Pure css-only scroll down icon with animation * */
 .scroll-icon {
   width: 20px;
   height: 38px;
@@ -902,7 +915,7 @@ a.hero__jump,
 }
 
 .page-nav__desktop {
-  /** Proportional columns **/
+  /* * Proportional columns * */
   display: grid;
   align-items: stretch;
   grid-auto-flow: column;
@@ -910,7 +923,7 @@ a.hero__jump,
 }
 
 .page-nav__mobile {
-  /** Equal columns **/
+  /* * Equal columns * */
   align-items: stretch;
   display: grid;
   display: none;
@@ -932,7 +945,7 @@ a.hero__jump,
   font-weight: 700;
 }
 
-/** Switch to mobile nav **/
+/* * Switch to mobile nav * */
 @media (max-width: 991.98px) {
   .page-nav__desktop {
     display: none;
@@ -958,21 +971,22 @@ a.hero__jump,
 
 /* # SECTIONS */
 section {
+  --color-background-section: var(--color-background-body);
+  background: var(--color-background-section);
   position: relative;
-  overflow-x: hidden;
-  overflow-x: hidden;
   margin-block: var(--sections-spacing);
   scroll-margin-top: var(--sections-spacing);
 }
 
-/** Section with bg **/
+/* * Section with bg * */
 section:where([class*="bg--"]) {
   margin-block: 0;
   padding-block: calc(var(--sections-spacing) / 1.75);
   color: var(--color-body-text);
+
 }
 
-/** Sub-sections **/
+/* * Sub-sections * */
 section section {
   overflow: visible;
   margin-block: var(--sections-spacing)
@@ -989,29 +1003,32 @@ section section {
 }
 
 
-/** Section colors **/
+/* * Section colors * */
 .bg--primary {
-  background-color: var(--color-primary);
+  --color-background-section: var(--color-primary);
   color: white;
+  /* TEMP? */
+  --color-headings: var(--color-secondary);
+  color: #cdcdcd;
 }
 
 .bg--secondary {
-  background-color: var(--color-secondary);
+  --color-background-section: var(--color-secondary);
   color: white;
 }
 
 .bg--tertiary {
-  background-color: var(--color-tertiary);
+  --color-background-section: var(--color-tertiary);
 }
 
 .bg--blue {
-  background-color: var(--color-blue);
+  --color-background-section: var(--color-blue);
   color: white;
 }
 
 .bg--gray {
   --text-behind-color: #f3f3f3;
-  background-color: var(--color-gray);
+  --color-background-section: var(--color-gray);
 }
 
 [class*="bg--"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
@@ -1034,7 +1051,7 @@ section section {
     transform: translate3d(0, 0, 0);
   }
 
-  /** Accessibility **/
+  /* * Accessibility * */
   @media (prefers-reduced-transparency: reduce) {
     .bg--frost {
       background: hsla(0deg, 0%, 100%, 100%);
@@ -1050,7 +1067,7 @@ section section {
 /* ? Possibly/probably get rid of supergrid */
 /* TODO: Allow for headings above */
 /* # TWO-COL */
-/** Mobile Single-column **/
+/* * Mobile Single-column * */
 .two-col {
   --two-col-gap: var(--sections-spacing);
   display: flex;
@@ -1075,7 +1092,7 @@ section section {
 }
 
 /* ? Maybe jump straight to (min-width: 991px) ? */
-/** Two column layout **/
+/* * Two column layout * */
 @media screen and (min-width: 768px) {
   .two-col {
     --two-col-gap: 10%;
@@ -1097,7 +1114,7 @@ section section {
     grid-column: content-middle / span 1;
   }
 
-  /* Image containers break out **/
+  /* Image containers break out * */
   .two-col.img-text > *:nth-child(odd) {
     grid-column: span 2 / content-middle;
     align-self: start;
@@ -1130,6 +1147,22 @@ section section {
 .two-col.breakout>*:nth-child(even) {
   grid-column: content-middle / span 2;
 } */
+
+
+/* WIP */
+:is(.two-col.breakout-full>*, .two-col>.breakout-full):nth-child(odd) {
+  grid-column: span 2 / content-middle;
+  /* background-color: red; */
+}
+
+:is(.two-col.breakout-full>*, .two-col>.breakout-full):nth-child(even) {
+  grid-column: content-middle / span 2;
+  /* background-color: cyan; */
+}
+
+
+
+
 
 /* TWO-COL (end) */
 
@@ -1256,7 +1289,7 @@ section section {
   aspect-ratio: 1;
   border-radius: 999px;
   border: 1px solid var(--tl-dot-color);
-  background-color: white;
+  background-color: var(--color-background-body);
   position: absolute;
   left: calc(var(--tl-dot-size) / 2);
   top: calc(0.75rem + 0.125rem);
@@ -1267,7 +1300,7 @@ section section {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 1fr;
-    /** Order: heading, line, dot, content **/
+    /* * Order: heading, line, dot, content * */
     grid-template-rows: auto 0px var(--tl-dot-size) auto;
     width: fit-content;
     margin-inline: auto;
@@ -1392,7 +1425,7 @@ section section {
   background-color: var(--color-tertiary);
 }
 
-/** Common styling for Phase icon & Arrow icon between phases **/
+/* * Common styling for Phase icon & Arrow icon between phases * */
 /* Note: This is the actual icon which can be just about anything - <img>, <picture>, <svg>, font awesome <i>, etc */
 .phase__icon > *,
 .phase__arrow {
@@ -1427,14 +1460,16 @@ section section {
   font-size: 24px;
 }
 
-/** Done State (if has class .done OR precedes .current) **/
+/* * Done State (if has class .done OR precedes .current) * */
 :where(.done, .phase:has(~.current)) .phase__icon {
   background-color: var(--phase-icon-color);
 }
 
 :where(.done, .phase:has(~.current)) .phase__icon > * {
-  color: white;
-  fill: white;
+  /* color: white; */
+  /* fill: white; */
+  color: var(--color-background-body);
+  fill: var(--color-background-body);
 }
 
 /* Arrows preceeding .current */
@@ -1443,9 +1478,9 @@ section section {
   fill: var(--phase-icon-color);
 } */
 
-/** Current State **/
+/* * Current State * */
 .current .phase__icon {
-  background-color: white;
+  background-color: var(--color-background-body);
   box-shadow: inset 0px 0px 0px 1.5px var(--phase-icon-color);
 }
 
@@ -1458,8 +1493,7 @@ section section {
 
 /* # CENÍK TABULKA */
 .price-table-wrapper:not(:has(.dt-layout-table)),
-.dt-layout-table 
-{
+.dt-layout-table {
   border: 1px solid #ededed;
   border-radius: 10px;
   overflow: auto;
@@ -2070,13 +2104,108 @@ a.apt-card,
   gap: 12px;
 }
 
+/* FIXME: Does not fill width on higher res / when zoomed out */
+/* WIP */
+/* only handles overflow */
+.pointz {
+  max-width: 100dvw;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior: none;
+  scrollbar-color: var(--color-secondary) transparent;
+}
+
+.pointz__content {
+  position: relative;
+  height: 65vh;
+  width: fit-content;
+}
+
+.pointz__content > img {
+  height: 100%;
+  width: auto;
+  max-width: unset;
+}
+
+@media (min-width: 992px) {
+  .pointz__content {
+    height: auto;
+    width: 100%;
+  }
+
+  .pointz__content > img {
+    max-width: 100%;
+  }
+}
+
+.pointz__item {
+  position: absolute;
+  translate: -50% 0%;
+  padding: 0rem 0.5rem;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pointz__point {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background-color: var(--color-secondary);
+  border: 6px solid white;
+  cursor: pointer;
+}
+
+.pointz__textbox {
+  width: 180px;
+  cursor: default;
+  font-size: 0.75rem;
+  background-color: white;
+  padding: 0.75em 1.25em;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.pointz__item:focus-within .pointz__point {
+  background-color: white;
+  border-color: var(--color-secondary);
+}
+
+.pointz__item:not(:focus-within) .pointz__textbox {
+  display: none;
+}
+
+/* * Individual points positioning */
+.pointz__item:nth-child(1) {
+  top: 30.75%;
+  left: 24.75%;
+}
+
+.pointz__extras {
+  color: white;
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pointz__swipe {
+
+}
+
 
 /* TODO: Price table apt-cards view */
 /* TODO: Improve gallery layout (grid, tabs/sections) */
 /* ? Refactor using SCSS? */
 /* TODO: Optimize for PRINT */
 
-/** Accessibility **/
+/* * Accessibility * */
 @media (prefers-reduced-motion: reduce) {
   :root {
     scroll-behavior: auto;
@@ -2092,44 +2221,153 @@ a.apt-card,
   }
 }
 
+main {
+  /* TEST: Alt fonts */
+  /* font-family: 'Helvetica Now' !important; */
+  font-family: "Plus Jakarta Sans" !important;
+}
 
 /* ? CUSTOM  HEADER ? */
-/* :root { --header-height: 0px }
-header, #page-nav { display: none; }
-.hero__logo { display: none; }
+/* .rd-header { display: none; } */
+:root {
+  --header-height: 0px;
+  scroll-margin-top: var(--rd-header-height);
 
-.c-header {
-  position: fixed;
+}
+
+header, #page-nav {
+  display: none;
+}
+
+.hero__logo {
+  display: none;
+}
+
+:root {
+  /* --breakout-half: calc((100% - var(--container-m)) / 2); */
+  --breakout-half: calc((1800px - var(--container-m)) / 2); 
+  --content-half: calc(var(--container-l) / 2);
+}
+
+/* FIXME: Anchor navigation - header overlaps page content */
+/* BUG: Opening mobile nav when header has .transparent then header is, well, transparent */
+.rd-header {
+  --rd-header-height: 72px;
+  background-color: white;
+  box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
+  color: var(--color-primary);
+  height: var(--rd-header-height);
   inset: 0px 0px auto 0px;
+  position: fixed;
+  transition-duration: 300ms;
+  transition-property: background, color, box-shadow, height;
   width: 100%;
   z-index: 50;
-  font-size: 1.0625rem;
-  color: var(--color-primary);
-  background-color: white;
-  box-shadow: 0 10px 15px -3px #0000001a,0 4px 6px -4px #0000001a;
-  transition-property: background, color, box-shadow;
-  transition-duration: 150ms;
 }
-.c-header.transparent {
+
+.rd-header.dark {
+  background: var(--color-primary);
   color: white;
+}
+
+/* NOTE: Transparent overrides .dark */
+.rd-header.transparent {
+  --rd-header-height: 120px;
   background: transparent;
   box-shadow: none;
+  color: white;
 }
-.c-header__content {
+
+.rd-header__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-block: 1.75rem;
 }
-.c-header__links {
-  display: flex;
-  justify-content: space-between;
+
+/* TEMP */
+@media (min-width: 2000px) and (min-height: 1000px) {
+  .rd-header__content {
+    max-width: var(--container-l) !important;
+  }
+}
+
+.rd-header__links {
   align-items: center;
+  display: flex;
   gap: 2.75rem;
+  justify-content: space-between;
   letter-spacing: 0.01em;
 }
-.c-header__logo {
-  width: 150px;
+
+/* ? Gold hover links ? */
+.rd-header .rd-header__links a:hover {
+  color: var(--color-secondary);
+}
+
+.rd-header__logo {
+  height: 32px;
+}
+
+.rd-header__burger {
+  display: none;
+}
+
+/* HACK */
+@media (min-width: 992px) {
+  .rd-header nav {
+    display: contents !important;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 991.98px) {
+  .rd-header__burger {
+    appearance: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: block;
+    display: flex;
+    font-size: 20px;
+    outline: none;
+  }
+
+  .rd-header,
+  .rd-header.transparent {
+    --rd-header-height: 62px;
+  }
+
+  .rd-header nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+  }
+
+  .rd-header__links {
+    background-color: var(--color-primary);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-block: 1rem;
+  }
+
+  .rd-header__logo {
+    width: 120px;
+  }
+}
+
+/* TEMP: DARK THEME */
+/* :root {
+  --color-primary: #101010;
+  --color-headings: var(--color-secondary);
+  --color-background-body: var(--color-primary);
+  --color-body-text: hsl(0, 0%, 85%);
+  --color-body-text-complimentary: var(--color-background-section);
+}
+section.bg--tertiary {
+  --color-background-section: url('https://c.victoria-palace.cz/images/pattern.png') no-repeat center center;
 } */
 
 
