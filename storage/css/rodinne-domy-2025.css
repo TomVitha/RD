@@ -21,8 +21,11 @@
   /* --color-gray-light: #f2f2f2; */
   /* --color-gray-mid: #e4e4e4; */
   --color-gray-dark: #4D4D4D;
+
+  /* * Body * */
   --color-body-text: #787878;
   --color-body-text-complimentary: white;
+  --color-body-text-em: #3b3b3b;
 
   /* * Palette * */
   --color-primary: oklch(0.3 0 0);
@@ -31,7 +34,8 @@
   --color-tertiary: oklch(0.985 0.006 80);
 
   /* Sections */
-  --color-background-body: white;
+  --body-bg-color: white;
+  --section-bg-color: var(--body-bg-color);
 
   /* * Headings * */
   --color-headings: var(--color-primary);
@@ -107,7 +111,7 @@ body {
   color: var(--color-body-text);
   overflow-x: hidden;
   /* TESTING */
-  background-color: var(--color-background-body);
+  background-color: var(--body-bg-color);
 }
 
 /* * Page will always fill screen height * */
@@ -222,7 +226,7 @@ strong {
 em {
   font-style: normal;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-body-text-em);
 }
 
 label {
@@ -326,6 +330,7 @@ hr[data-text]::before {
 
 /* # BTN */
 .btn {
+  /* Note: Default color theme is body color */
   --btn-theme: var(--color-body-text);
   --btn-theme-complementary: var(--color-body-text-complimentary);
   --btn-border-radius: 0.0em;
@@ -971,8 +976,7 @@ a.hero__jump,
 
 /* # SECTIONS */
 section {
-  --color-background-section: var(--color-background-body);
-  background: var(--color-background-section);
+  background: var(--section-bg-color);
   position: relative;
   margin-block: var(--sections-spacing);
   scroll-margin-top: var(--sections-spacing);
@@ -1005,7 +1009,7 @@ section section {
 
 /* * Section colors * */
 .bg--primary {
-  --color-background-section: var(--color-primary);
+  --section-bg-color: var(--color-primary);
   color: white;
   /* TEMP? */
   --color-headings: var(--color-secondary);
@@ -1013,22 +1017,22 @@ section section {
 }
 
 .bg--secondary {
-  --color-background-section: var(--color-secondary);
+  --section-bg-color: var(--color-secondary);
   color: white;
 }
 
 .bg--tertiary {
-  --color-background-section: var(--color-tertiary);
+  --section-bg-color: var(--color-tertiary);
 }
 
 .bg--blue {
-  --color-background-section: var(--color-blue);
+  --section-bg-color: var(--color-blue);
   color: white;
 }
 
 .bg--gray {
   --text-behind-color: #f3f3f3;
-  --color-background-section: var(--color-gray);
+  --section-bg-color: var(--color-gray);
 }
 
 [class*="bg--"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
@@ -1236,7 +1240,9 @@ section section {
 .timeline {
   --tl-dot-size: 16px;
   --tl-line-color: var(--color-secondary);
+  --tl-line-thickness: 2px;
   --tl-dot-color: var(--color-secondary);
+  --tl-dot-thickness: var(--tl-line-thickness);
   display: flex;
   flex-direction: column;
   isolation: isolate;
@@ -1257,7 +1263,7 @@ section section {
   font-weight: 700;
   margin-bottom: 0.5rem;
   line-height: 1.0;
-  color: var(--color-primary);
+  color: var(--color-body-text-em);
   order: 1;
 }
 
@@ -1271,7 +1277,7 @@ section section {
   display: block;
   background-color: var(--tl-line-color);
   height: 100%;
-  width: 1px;
+  width: var(--tl-line-thickness);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -1288,8 +1294,8 @@ section section {
   height: var(--tl-dot-size);
   aspect-ratio: 1;
   border-radius: 999px;
-  border: 1px solid var(--tl-dot-color);
-  background-color: var(--color-background-body);
+  border: var(--tl-dot-thickness) solid var(--tl-dot-color);
+  background-color: var(--body-bg-color);
   position: absolute;
   left: calc(var(--tl-dot-size) / 2);
   top: calc(0.75rem + 0.125rem);
@@ -1329,9 +1335,9 @@ section section {
   /* Line */
   .timeline__point::before {
     width: 100%;
-    height: 1px;
+    height: var(--tl-line-thickness);
     position: static;
-    translate: 0 calc(var(--tl-dot-size) / 2);
+    translate: 0 calc((var(--tl-dot-size) / 2) - 50%);
     order: 2;
   }
 
@@ -1468,8 +1474,8 @@ section section {
 :where(.done, .phase:has(~.current)) .phase__icon > * {
   /* color: white; */
   /* fill: white; */
-  color: var(--color-background-body);
-  fill: var(--color-background-body);
+  color: var(--body-bg-color);
+  fill: var(--body-bg-color);
 }
 
 /* Arrows preceeding .current */
@@ -1480,7 +1486,7 @@ section section {
 
 /* * Current State * */
 .current .phase__icon {
-  background-color: var(--color-background-body);
+  background-color: var(--body-bg-color);
   box-shadow: inset 0px 0px 0px 1.5px var(--phase-icon-color);
 }
 
@@ -1495,7 +1501,7 @@ section section {
 .price-table-wrapper:not(:has(.dt-layout-table)),
 .dt-layout-table {
   border: 1px solid #ededed;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   overflow: auto;
   scrollbar-color: #c5c5c5 transparent;
   scrollbar-width: thin;
@@ -1525,7 +1531,7 @@ div.dt-container.dt-empty-footer tbody > tr:last-child > * {
 }
 
 th {
-  color: var(--color-primary);
+  color: var(--color-body-text-em);
   user-select: none;
 }
 
@@ -1611,7 +1617,7 @@ table.price-table > thead > tr > :is(th, td) {
 .price-table tbody td.active,
 .price-table td[class*="sorting"] {
   font-weight: bold;
-  color: #3b3b3b;
+  color: var(--color-body-text-em);
 }
 
 .price-table .sortable {
@@ -2107,7 +2113,7 @@ a.apt-card,
 /* FIXME: Does not fill width on higher res / when zoomed out */
 /* WIP */
 /* only handles overflow */
-.pointz {
+.hotspots {
   max-width: 100dvw;
   overflow-x: auto;
   overflow-y: hidden;
@@ -2115,30 +2121,30 @@ a.apt-card,
   scrollbar-color: var(--color-secondary) transparent;
 }
 
-.pointz__content {
+.hotspots__content {
   position: relative;
   height: 65vh;
   width: fit-content;
 }
 
-.pointz__content > img {
+.hotspots__content > img {
   height: 100%;
   width: auto;
   max-width: unset;
 }
 
 @media (min-width: 992px) {
-  .pointz__content {
+  .hotspots__content {
     height: auto;
     width: 100%;
   }
 
-  .pointz__content > img {
+  .hotspots__content > img {
     max-width: 100%;
   }
 }
 
-.pointz__item {
+.hotspots__item {
   position: absolute;
   translate: -50% 0%;
   padding: 0rem 0.5rem;
@@ -2150,7 +2156,7 @@ a.apt-card,
   text-align: center;
 }
 
-.pointz__point {
+.hotspots__point {
   display: block;
   width: 28px;
   height: 28px;
@@ -2160,7 +2166,7 @@ a.apt-card,
   cursor: pointer;
 }
 
-.pointz__textbox {
+.hotspots__textbox {
   width: 180px;
   cursor: default;
   font-size: 0.75rem;
@@ -2170,22 +2176,22 @@ a.apt-card,
   text-transform: uppercase;
 }
 
-.pointz__item:focus-within .pointz__point {
+.hotspots__item:focus-within .hotspots__point {
   background-color: white;
   border-color: var(--color-secondary);
 }
 
-.pointz__item:not(:focus-within) .pointz__textbox {
+.hotspots__item:not(:focus-within) .hotspots__textbox {
   display: none;
 }
 
 /* * Individual points positioning */
-.pointz__item:nth-child(1) {
+.hotspots__item:nth-child(1) {
   top: 30.75%;
   left: 24.75%;
 }
 
-.pointz__extras {
+.hotspots__extras {
   color: white;
   position: absolute;
   left: 20px;
@@ -2195,7 +2201,7 @@ a.apt-card,
   gap: 16px;
 }
 
-.pointz__swipe {
+.hotspots__swipe {
 
 }
 
@@ -2362,12 +2368,12 @@ header, #page-nav {
 /* :root {
   --color-primary: #101010;
   --color-headings: var(--color-secondary);
-  --color-background-body: var(--color-primary);
+  --body-bg-color: var(--color-primary);
   --color-body-text: hsl(0, 0%, 85%);
-  --color-body-text-complimentary: var(--color-background-section);
+  --color-body-text-complimentary: var(--section-bg-color);
 }
 section.bg--tertiary {
-  --color-background-section: url('https://c.victoria-palace.cz/images/pattern.png') no-repeat center center;
+  --section-bg-color: url('https://c.victoria-palace.cz/images/pattern.png') no-repeat center center;
 } */
 
 
