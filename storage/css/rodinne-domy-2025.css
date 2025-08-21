@@ -40,7 +40,7 @@
   /* * Headings * */
   --color-headings: var(--color-primary);
   --text-behind-color: var(--color-secondary);
-  --text-behind-opacity: 30%;
+  --text-behind-opacity: 40%;
 
   /* * Header and nav * */
   --header-height-top: 55px;
@@ -2218,7 +2218,7 @@ a.apt-card,
   left: 44%;
 }
 
-.hotspots__extras {
+.hotspots__controls {
   color: white;
   position: absolute;
   left: 20px;
@@ -2251,14 +2251,14 @@ a.apt-card,
 }
 
 main {
-  /* TEST: Alt fonts */
+  /* !! ALT FONT */
   /* font-family: 'Helvetica Now' !important; */
-  font-family: "Plus Jakarta Sans" !important;
+  /* font-family: "Plus Jakarta Sans" !important; */
 }
 
-/* ? CUSTOM  HEADER ? */
-/* .rd-header { display: none; } */
-:root {
+/* !! CUSTOM  HEADER !! */
+.rd-header { display: none; }
+/* :root {
   --header-height: 0px;
   scroll-margin-top: var(--rd-header-height);
 
@@ -2273,10 +2273,10 @@ header, #page-nav {
 }
 
 :root {
-  /* --breakout-half: calc((100% - var(--container-m)) / 2); */
   --breakout-half: calc((1800px - var(--container-m)) / 2); 
   --content-half: calc(var(--container-l) / 2);
-}
+} */
+/* !! WIDER two-cols (↑ above ↑) */
 
 /* FIXME: Anchor navigation - header overlaps page content */
 /* BUG: Opening mobile nav when header has .transparent then header is, well, transparent */
@@ -2296,6 +2296,7 @@ header, #page-nav {
   z-index: 50;
 }
 
+/* !! DARK HEADER */
 .rd-header.dark {
   --rd-header-bg-color: var(--color-primary);
   --rd-header-color: white;
@@ -2418,3 +2419,10 @@ section.bg--tertiary {
   max-width: 90dvw;
   max-height: 90dvh;
 }
+
+/* DEBUG MENU */
+/* Custom Header vs CG header */
+/* custom header light/dark */
+/* wider container (100vw) */
+/* FONT Plus Jakarta Sans */
+/* CENÍK současný vs cinematic waltrovka */
