@@ -262,13 +262,16 @@ address {
   white-space: nowrap;
 }
 
-:where(main) .container {
-  max-width: 1110px !important;
+/* Common styling for containers */
+:where(main) :where(.container, .container-m, .container-l) {
   padding-inline: var(--container-padding);
   margin-inline: auto;
   height: 100%;
   position: relative;
+}
 
+:where(main) .container {
+  max-width: 1110px !important;
   /* ? consider */
   /* max-width: 1400px !important; */
   max-width: var(--container-m) !important;
@@ -276,12 +279,9 @@ address {
 
 .container-m {
   max-width: 800px !important;
-  padding-inline: var(--container-padding);
-  margin-inline: auto;
-  height: 100%;
-  position: relative;
 }
 
+/* WIP */
 .container--breakout {
   margin-left: calc((100vw - 100% - 0px)* -1 / 2);
   width: calc(100vw - 0px);
@@ -2250,32 +2250,75 @@ a.apt-card,
   }
 }
 
-main {
-  /* !! ALT FONT */
-  /* font-family: 'Helvetica Now' !important; */
-  /* font-family: "Plus Jakarta Sans" !important; */
+
+
+
+
+
+/* # DEBUG MENU */
+/* * Custom Header vs CG header */
+/* * custom header light/dark */
+/* * CG logo v custom headeru */
+/* * FONT Plus Jakarta Sans */
+/* wider container (100vw) */
+/* CENÍK současný vs cinematic waltrovka */
+
+/* TEMP: DEBUG MENU */
+.debug {
+  position: fixed;
+  z-index: 999;
+  right: 12px;
+  bottom: 24px;
+  user-select: none;
+}
+.debug__icon {
+  color: white;
+  background-color: var(--color-blue);
+  cursor: pointer;
+  appearance: none;
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+}
+.debug__items {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  color: white;
+  background-color: var(--color-blue);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: max-content;
+  padding: 0.75rem 1rem;
+}
+.debug__items label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.875rem;
 }
 
-/* !! CUSTOM  HEADER !! */
-.rd-header { display: none; }
-/* :root {
+
+/* * ALT: Custom header */
+:root:has(.alt-custom-header) {
   --header-height: 0px;
   scroll-margin-top: var(--rd-header-height);
 
+  .rd-header { display: block; }
+
+  header, #page-nav { display: none; }
+  .hero__logo { display: none; }
 }
 
-header, #page-nav {
-  display: none;
-}
 
-.hero__logo {
-  display: none;
-}
-
-:root {
-  --breakout-half: calc((1800px - var(--container-m)) / 2); 
-  --content-half: calc(var(--container-l) / 2);
-} */
 /* !! WIDER two-cols (↑ above ↑) */
 
 /* FIXME: Anchor navigation - header overlaps page content */
@@ -2294,9 +2337,11 @@ header, #page-nav {
   transition-property: background, color, box-shadow, height;
   width: 100%;
   z-index: 50;
+  /* NOTE: Hidden by default */
+  display: none;
 }
 
-/* !! DARK HEADER */
+
 .rd-header.dark {
   --rd-header-bg-color: var(--color-primary);
   --rd-header-color: white;
@@ -2393,6 +2438,19 @@ header, #page-nav {
   }
 }
 
+/* * ALT: wider breakout */
+:root:has(.wider) {
+  --breakout-half: calc((100% - var(--container-m)) / 2);
+}
+
+.font-jakarta main,
+main .font-jakarta {
+  /* !! ALT FONT */
+  /* font-family: 'Helvetica Now' !important; */
+  font-family: "Plus Jakarta Sans" !important;
+}
+
+
 /* TEMP: DARK THEME */
 /* :root {
   --color-primary: #101010;
@@ -2420,9 +2478,3 @@ section.bg--tertiary {
   max-height: 90dvh;
 }
 
-/* DEBUG MENU */
-/* Custom Header vs CG header */
-/* custom header light/dark */
-/* wider container (100vw) */
-/* FONT Plus Jakarta Sans */
-/* CENÍK současný vs cinematic waltrovka */
