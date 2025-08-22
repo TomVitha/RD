@@ -302,7 +302,7 @@ function initDataTables() {
       { className: "dt-right", targets: [6] },
     ],
     responsive: false,
-    autoWidth: false,    // Fixes weird column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
+    autoWidth: false,    // Fix: Corrects weird column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
   });
 }
 

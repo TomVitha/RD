@@ -52,6 +52,9 @@
   /* * Layout * */
   --sections-spacing: 2.5rem;
   --container-padding: 15px;
+  --container-sm: 800px;
+  /* --container-m: 1110px; */
+  /* ? consider */
   --container-m: 1320px;
   --container-l: 1600px;
   --content-half: calc(var(--container-m) / 2);
@@ -110,7 +113,6 @@ html[data-darkreader-scheme="dark"] .btn-yellow {
 body {
   color: var(--color-body-text);
   overflow-x: hidden;
-  /* TESTING */
   background-color: var(--body-bg-color);
 }
 
@@ -263,7 +265,7 @@ address {
 }
 
 /* Common styling for containers */
-:where(main) :where(.container, .container-m, .container-l) {
+:where(main) :is(.container, .container-sm, .container-m, .container-l) {
   padding-inline: var(--container-padding);
   margin-inline: auto;
   height: 100%;
@@ -271,14 +273,15 @@ address {
 }
 
 :where(main) .container {
-  max-width: 1110px !important;
-  /* ? consider */
-  /* max-width: 1400px !important; */
   max-width: var(--container-m) !important;
 }
 
-.container-m {
-  max-width: 800px !important;
+.container-sm {
+  max-width: var(--container-sm) !important;
+}
+
+.container-l {
+  max-width: var(--container-l) !important;
 }
 
 /* WIP */
@@ -906,7 +909,6 @@ a.hero__jump,
     top: 25%
   }
 }
-
 /* Hero (end) */
 
 /* WIP: REWRITE */
@@ -1725,7 +1727,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   color: var(--color-primary);
   box-shadow: 0 0.625rem 1.875rem rgba(2, 2, 3, 0.28);
   max-width: 450px;
-  /* temp */
+  /* ? maybe ? */
   font-family: "Plus Jakarta Sans", "Roboto", "Exo 2", sans-serif;
 }
 
@@ -1842,6 +1844,14 @@ article.map {
 .map iframe {
   height: calc(100% + 100px);
   margin-top: -100px;
+}
+
+/* TEMP: ditto */
+.map>img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
 }
 
 /* # CARDS */
@@ -2120,9 +2130,9 @@ a.apt-card,
 }
 
 .hotspots__content {
-    width: 1200px;
-    overscroll-behavior: none;
-    position: relative;
+  width: 1200px;
+  overscroll-behavior: none;
+  position: relative;
 }
 
 .hotspots__content > img {
@@ -2146,7 +2156,7 @@ a.apt-card,
   .hotspots__content {
     /* TEMP: Hotspots width */
     /* HACK: Hard-coded values */
-    max-width: 2080px;
+    /* max-width: 2080px; */
     margin-inline: auto;
   }
 
@@ -2160,33 +2170,22 @@ a.apt-card,
 .hotspots__item {
   position: absolute;
   translate: -50% -50%;
-  padding: 0rem 0.5rem;
   top: 0;
-
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
   text-align: center;
 }
 
 .hotspots__point {
   display: block;
-  width:  30px;
+  width: 30px;
   height: 30px;
   border-radius: 999px;
   background-color: var(--color-secondary);
+  box-shadow: 0 0 10px -2px hsla(0deg, 0%, 0%, 90%);
   cursor: pointer;
-
-  /* WIP */
-  /* Rounded */
-  /* background-image:  url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="white" d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>'); */
-  /* Sharp */
-  background-image:  url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="white" d="M352 128L352 96L288 96L288 288L96 288L96 352L288 352L288 544L352 544L352 352L544 352L544 288L352 288L352 128z"/></svg>');
-
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="white" d="M352 128L352 96L288 96L288 288L96 288L96 352L288 352L288 544L352 544L352 352L544 352L544 288L352 288L352 128z"/></svg>');
   background-size: 75%;
   background-repeat: no-repeat;
   background-position: center center;
-  box-shadow: 0 0 8px -2px hsla(0deg, 0%, 0%, 60%);
 }
 
 .hotspots__textbox {
@@ -2208,24 +2207,22 @@ a.apt-card,
   display: none;
 }
 
-/* * Individual points positioning */
-.hotspots__item:nth-child(1) {
-  top: 36%;
-  left: 29%;
-}
-.hotspots__item:nth-child(2) {
-  top: 54%;
-  left: 44%;
-}
 
 .hotspots__controls {
   color: white;
   position: absolute;
   left: 20px;
-  bottom: 20px;
+  bottom: 32px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.hotspots__switches {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 10rem;
 }
 
 
@@ -2260,8 +2257,8 @@ a.apt-card,
 /* * custom header light/dark */
 /* * CG logo v custom headeru */
 /* * FONT Plus Jakarta Sans */
-/* wider container (100vw) */
-/* CENÍK současný vs cinematic waltrovka */
+/* * wider container (100vw) */
+/* * CENÍK současný vs cinematic waltrovka */
 
 /* TEMP: DEBUG MENU */
 .debug {
@@ -2271,6 +2268,7 @@ a.apt-card,
   bottom: 24px;
   user-select: none;
 }
+
 .debug__icon {
   color: white;
   background-color: var(--color-blue);
@@ -2285,18 +2283,22 @@ a.apt-card,
   height: 56px;
   border-radius: 999px;
 }
+
 .debug__items {
   position: absolute;
   bottom: 100%;
   right: 0;
+  margin-bottom: 6px;
   color: white;
   background-color: var(--color-blue);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   width: max-content;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
 }
+
 .debug__items label {
   display: flex;
   align-items: center;
@@ -2312,14 +2314,18 @@ a.apt-card,
   --header-height: 0px;
   scroll-margin-top: var(--rd-header-height);
 
-  .rd-header { display: block; }
+  .rd-header {
+    display: block;
+  }
 
-  header, #page-nav { display: none; }
-  .hero__logo { display: none; }
+  header, #page-nav {
+    display: none;
+  }
+
+  .hero__logo {
+    display: none;
+  }
 }
-
-
-/* !! WIDER two-cols (↑ above ↑) */
 
 /* FIXME: Anchor navigation - header overlaps page content */
 /* BUG: Opening mobile nav when header has .transparent then header is, well, transparent */
@@ -2463,6 +2469,43 @@ section.bg--tertiary {
   --section-bg-color: url('https://c.victoria-palace.cz/images/pattern.png') no-repeat center center;
 } */
 
+/* WIP: Gray CG header */
+:root {
+  --cg-header-bg-prim: hsl(236, 0%, 21%);
+  --cg-header-bg-prim-hover: hsl(237, 0%, 33%);
+  --cg-header-bg-sec: hsl(234, 0%, 14%);
+  --cg-header-bg-sec-hover: hsl(234, 0%, 28%);
+  --cg-header-text-color: hsl(234, 0%, 14%);
+}
+header.head.gray {
+  &,
+  .hd-container, .hd-container2,
+  .hd-top-menu .main-menu li {
+    background-color: var(--cg-header-bg-prim);
+  }
+  .hd-top-menu .mm-level-0 li>ul,
+  .hd-top-menu .mm-submenu-item {
+    border-color: var(--cg-header-bg-prim);
+  }
+  .hd-top-menu .main-menu li:hover {
+      background-color: var(--cg-header-bg-prim-hover);
+  }
+  .hd-top-menu .mm-submenu-item-big-dark a {
+      color: var(--cg-header-text-color);
+  }
+  .head-bottom,
+  .head-bottom .hd-container2,
+  .head-bottom .mm-menu-bottom li {
+      background-color: var(--cg-header-bg-sec);
+  }
+  .mm-level-0 li>ul {
+    border-color: var(--cg-header-bg-sec);
+  }
+  .head-bottom .mm-menu-bottom li:hover {
+      background-color: var(--header-bg-sec-hover);
+  }
+}
+
 
 /* Contact form fix */
 .v--modal-overlay .v--modal-background-click {
@@ -2478,3 +2521,30 @@ section.bg--tertiary {
   max-height: 90dvh;
 }
 
+
+/* WIP: For elements INSIDE a .continer to break out of its max-width */
+
+/* ? Do we want to include padding?? Or go edge-to-edge ? */
+.container-br-l,
+.container-br-full {
+  --br-w: var(--container-m);
+  width: var(--br-w);
+  /* * no padding (edge-to-edge) */
+  max-width: 100vw;
+  /* * with padding */
+  /* max-width: calc(100vw - (var(--container-padding) * 2)); */
+  margin-inline: auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.container-br-l {
+  --br-w: var(--container-l);
+}
+
+.container-br-full {
+  --br-w: 100dvw;
+}
+
+/* TODO: Rewite two-col to make use of container-out */
