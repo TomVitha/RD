@@ -1,6 +1,8 @@
-import * as databind from './data-binding.js'
+// UNUSED
+// import * as databind from './data-binding.js'
 
-let locale = 'cs-CZ' // GLOBAL variable for locale
+// GLOBAL variable for locale
+let locale = 'cs-CZ' 
 
 // fetch Google Sheets data
 const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
@@ -22,6 +24,7 @@ export async function fetchSheetData(url) {
     // Extract headers from column labels
     const headers = data.table.cols.map(col => col.label);
 
+    // TODO: Refactor/untangle?
     // Extract and format rows
     const tableData = data.table.rows.map(row => {
       const obj = {};
@@ -140,7 +143,7 @@ function removeBox(box) {
  */
 async function LV(propertiesData) {
 
-  // NOTE: Pass as a DEEP COPY !
+  // ! Pass as a DEEP COPY !
   const propertiesDataFormatted = formatData(JSON.parse(JSON.stringify(propertiesData.tableData)), locale);
 
   // Assign status classes to property paths

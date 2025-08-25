@@ -24,8 +24,8 @@
 
   /* * Body * */
   --color-body-text: #787878;
-  --color-body-text-complimentary: white;
   --color-body-text-em: #3b3b3b;
+  --color-body-text-complimentary: white;
 
   /* * Palette * */
   --color-primary: oklch(0.3 0 0);
@@ -466,6 +466,11 @@ a.btn:hover {
   --btn-theme-complementary: white;
 }
 
+.btn-complimentary {
+  --btn-theme-complementary: var(--color-body-text);
+  --btn-theme: var(--color-body-text-complimentary);
+}
+
 /* * Outline * */
 .btn-outline,
 .btn-outline-fill {
@@ -731,6 +736,7 @@ h2::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center bottom;
 }
 
 .hero__inside {
@@ -909,6 +915,7 @@ a.hero__jump,
     top: 25%
   }
 }
+
 /* Hero (end) */
 
 /* WIP: REWRITE */
@@ -1202,6 +1209,7 @@ section section {
 }
 
 
+/* DEPRECATED (possibly) */
 .strip {
   width: 100%;
   height: 600px;
@@ -1847,7 +1855,7 @@ article.map {
 }
 
 /* TEMP: ditto */
-.map>img {
+.map > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -2123,11 +2131,15 @@ a.apt-card,
   gap: 12px;
 }
 
-/* FIXME: Does not fill width on higher res / when zoomed out */
+
 /* WIP */
 .hotspots {
   overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary) transparent;
 }
+
+/* ? MAYBE: Fit to screen width when screen in horizontal ? */
 
 .hotspots__content {
   width: 1200px;
@@ -2140,6 +2152,9 @@ a.apt-card,
   height: 100%;
   object-fit: cover;
   object-position: center center;
+
+  /* !!! SUPER TEMP !!! */
+  aspect-ratio: 18/9;
 }
 
 @media (min-width: 1200px) {
@@ -2179,7 +2194,8 @@ a.apt-card,
   width: 30px;
   height: 30px;
   border-radius: 999px;
-  background-color: var(--color-secondary);
+  /* background-color: var(--color-secondary); */
+  background-color: black;
   box-shadow: 0 0 10px -2px hsla(0deg, 0%, 0%, 90%);
   cursor: pointer;
   background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="white" d="M352 128L352 96L288 96L288 288L96 288L96 352L288 352L288 544L352 544L352 352L544 352L544 288L352 288L352 128z"/></svg>');
@@ -2189,13 +2205,14 @@ a.apt-card,
 }
 
 .hotspots__textbox {
-  width: 180px;
+  width: 200px;
   cursor: default;
   font-size: 0.75rem;
   background-color: white;
   padding: 0.75em 1.25em;
   margin-top: 6px;
   text-transform: uppercase;
+  line-height: 1.333;
 
   position: absolute;
   top: 100%;
@@ -2223,6 +2240,21 @@ a.apt-card,
   flex-direction: column;
   gap: 0.5rem;
   min-width: 10rem;
+}
+
+.hotspots__disclaimer {
+  position: absolute;
+  right: 20px;
+  bottom: 32px;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #f3f3f3;
+  opacity: 75%;
+  text-align: right;
+  max-width: 200px;
+  line-height: 1.25;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
+  user-select: none;
 }
 
 
@@ -2477,32 +2509,40 @@ section.bg--tertiary {
   --cg-header-bg-sec-hover: hsl(234, 0%, 28%);
   --cg-header-text-color: hsl(234, 0%, 14%);
 }
+
 header.head.gray {
+
   &,
   .hd-container, .hd-container2,
   .hd-top-menu .main-menu li {
     background-color: var(--cg-header-bg-prim);
   }
-  .hd-top-menu .mm-level-0 li>ul,
+
+  .hd-top-menu .mm-level-0 li > ul,
   .hd-top-menu .mm-submenu-item {
     border-color: var(--cg-header-bg-prim);
   }
+
   .hd-top-menu .main-menu li:hover {
-      background-color: var(--cg-header-bg-prim-hover);
+    background-color: var(--cg-header-bg-prim-hover);
   }
+
   .hd-top-menu .mm-submenu-item-big-dark a {
-      color: var(--cg-header-text-color);
+    color: var(--cg-header-text-color);
   }
+
   .head-bottom,
   .head-bottom .hd-container2,
   .head-bottom .mm-menu-bottom li {
-      background-color: var(--cg-header-bg-sec);
+    background-color: var(--cg-header-bg-sec);
   }
-  .mm-level-0 li>ul {
+
+  .mm-level-0 li > ul {
     border-color: var(--cg-header-bg-sec);
   }
+
   .head-bottom .mm-menu-bottom li:hover {
-      background-color: var(--header-bg-sec-hover);
+    background-color: var(--header-bg-sec-hover);
   }
 }
 

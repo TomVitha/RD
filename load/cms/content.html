@@ -239,15 +239,26 @@
 
 <div class="hero">
   <!-- TODO: Sizes -->
-  <picture>
-    <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p6_3000.jpg" alt="" srcset="">
-  </picture>
-  <video playsinline muted autoplay loop poster="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p6_3000.jpg">
+  <!-- <picture>
+    <img 
+      alt=""
+      sizes="100vw"
+      srcset="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p6_3000.jpg 3000w,
+              https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p6_1600.jpg 1600w,
+              https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p6_760.jpg 760w"
+      src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p6_3000.jpg" 
+    >
+  </picture> -->
+  <video playsinline muted autoplay loop disablepictureinpicture disableremoteplayback poster="https://www.central-group.cz/storage/CG/test/rodinne-domy/videos/temp/v2-poster.jpg">
     <!-- <source src="https://www.corwin.sk/files/videos/OUR-PROJECTS-FULL-HD-1.mp4" type="video/mp4"> -->
     <!-- <source src="https://anglickyresort.cz/files/Kralupy.mp4" type="video/mp4"> -->
     <!-- <source src="https://vr.corwin.sk/kvartet/video/kvartet-hp.mp4" type="video/mp4"> -->
     <!-- * NAŠE -->
-    <source src="https://www.central-group.cz/storage/CG/test/rodinne-domy/videos/Pitkovice-RD-full.mp4" type="video/mp4">
+    <!-- <source src="https://www.central-group.cz/storage/CG/test/rodinne-domy/videos/Pitkovice-RD-full.mp4" type="video/mp4"> -->
+    <!-- <source src="https://www.central-group.cz/storage/CG/test/rodinne-domy/videos/Pitkovice-RD-0.mp4" type="video/mp4"> -->
+    <!-- <source src="https://www.central-group.cz/storage/CG/test/rodinne-domy/videos/temp/alts.mp4" type="video/mp4"> -->
+    <source src="https://www.central-group.cz/storage/CG/test/rodinne-domy/videos/temp/v2.mp4" type="video/mp4">
+    <!-- <source src="https://www.central-group.cz/storage/CG/test/rodinne-domy/videos/temp/norbert-v1.mp4" type="video/mp4"> -->
   </video>
   <div class="hero__inside container">
     <div class="hero__content">
@@ -284,17 +295,13 @@
 
 <div id="page-nav" class="page-nav bg--frost">
   <nav id="page-nav__desktop" class="page-nav__desktop container">
-    <!-- <a href="#cenik" class="btn btn-transparent btn-yellow">Ceník</a> -->
     <a href="#o-projektu" class="btn btn-transparent btn-sharp">O projektu</a>
     <a href="#lokalita" class="btn btn-transparent btn-sharp">Lokalita</a>
-    <!-- <a href="#standardy" class="btn btn-transparent btn-sharp">Standardy</a> -->
-    <a href="#typy" class="btn btn-transparent btn-sharp">Typy domů</a>
     <a href="#cenik" class="btn btn-transparent btn-sharp">Ceník</a>
+    <a href="#typy" class="btn btn-transparent btn-sharp">Typy domů</a>
     <a href="#galerie" class="btn btn-transparent btn-sharp">Galerie</a>
-    <a href="#financovani" class="btn btn-transparent btn-sharp">Financování</a>
   </nav>
   <nav id="page-nav__mobile" class="page-nav__mobile container">
-    <!-- <a href="#cenik" class="btn btn-transparent btn-sharp--yellow">Ceník</a> -->
     <a href="#cenik" class="btn btn-transparent btn-sharp">Ceník</a>
     <button class="btn btn-transparent btn-sharp" data-open-form>Sjednat schůzku</button>
   </nav>
@@ -381,7 +388,7 @@
   <div>
     <!-- TEMP  -->
     <article class="map lazy" id="temp-map-1">
-      <iframe src="https://www.google.com/maps/d/embed?mid=1C4el619k6LVjvfD7MtnR_DogwM48Rp4&amp;ehbc&amp;z=16" frameborder="0" width="100%" height="100%"></iframe>
+      <iframe src="https://www.google.com/maps/d/embed?mid=1C4el619k6LVjvfD7MtnR_DogwM48Rp4&amp;ehbc&amp;z=16" frameborder="0" width="100%" height="100%" loading="lazy"></iframe>
     </article>
     <!-- TEMP 2 -->
     <article class="map" id="temp-map-2" hidden>
@@ -389,143 +396,6 @@
     </article>
   </div>
 </section>
-
-<section id="typy">
-  <div class="container-sm ta-c">
-    <!-- PLACEHOLDER: Texts -->
-    <h2><a href="#typy">Vyberte si provedení, které je to pravé pro vás</a></h2>
-    <p>Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
-      morbi et fames eget aliquam augue aliquam.</p>
-  </div>
-</section>
-
-<section id="typ-domu-1">
-  <div class="">
-    <div class="two-col text-img">
-      <div>
-        <!-- PLACEHOLDER: Texts -->
-        <h3 data-text-behind="4+kk"><a href="#typ-domu-1">Typ A </a></h3>
-        <p>
-          Středový rodinný dům o dipozici 4+kk ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae.
-        </p>
-        <!-- TODO: Highlight points with different (you look and see their differences - cuz they are 90% same) -->
-        <a href="https://novawaltrovka.cz/cms/uploads/PRE_Katalog_vybaveni_interieru_1a4bf8a4be.pdf" target="_blank" rel="noopener" class="btn btn-gray-dark btn-outline-fill">Provedení</a>
-      </div>
-      <div>
-        <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p1_1600.jpg" loading="lazy">
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section id="typ-domu-2">
-  <div class="">
-    <div class="two-col img-text">
-      <div>
-        <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p4_1600.jpg" loading="lazy">
-      </div>
-      <div>
-        <!-- PLACEHOLDER: Texts -->
-        <h3 data-text-behind="5+kk"><a href="#typ-domu-2">Typ B</a></h3>
-        <p>
-          Krajový rodinný dům o dipozici 4+kk diam adipiscing nam porttitor
-          facilisi morbi ullamcorper tincidunt turpis. Ut blandit ut condimentum diam.
-        </p>
-        <a href="https://c.victoria-palace.cz/files/dokumenty/Standardni-provedeni-Platinum.pdf" target="_blank" rel="noopener" class="btn btn-gray-dark btn-outline-fill">Provedení</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="hotspots">
-    <!-- HACK: Multiple images -->
-    <div class="hotspots__content hotspots__content--1">
-      <img src="./temp/VIC_2560b_Koupelna.jpg" alt="" srcset="">
-      <!-- PLACEHOLDER: Texts -->
-      <div class="hotspots__items">
-        <div class="hotspots__item" tabindex="0" style="top: 36%; left: 29%;">
-          <div class="hotspots__point"></div>
-          <div class="hotspots__textbox">Neprůstřelné dveře</div>
-        </div>
-        <div class="hotspots__item" tabindex="0" style="top: 54%; left: 44%;">
-          <div class="hotspots__point"></div>
-          <div class="hotspots__textbox">Falešné umyvadlo</div>
-        </div>
-        <div class="hotspots__item" tabindex="0" style="top: 74%; left: 68%;">
-          <div class="hotspots__point"></div>
-          <div class="hotspots__textbox">Bomba pod záchodem</div>
-        </div>
-      </div>
-    </div>
-    <div class="hotspots__content hotspots__content--2" hidden>
-      <img src="./temp/VIC_2560b_OP.jpg" alt="" srcset="">
-      <!-- PLACEHOLDER: Texts -->
-      <div class="hotspots__items">
-        <div class="hotspots__item" tabindex="0" style="top: 22%; left: 27%;">
-          <div class="hotspots__point"></div>
-          <div class="hotspots__textbox">Výhled na Pražský hrad</div>
-        </div>
-        <div class="hotspots__item" tabindex="0" style="top: 47%; left: 49%;">
-          <div class="hotspots__point"></div>
-          <div class="hotspots__textbox">Nepohodlný gauč</div>
-        </div>
-      </div>
-    </div>
-    <div class="hotspots__controls">
-      <div class="hotspots__swipe">
-        <svg fill="currentColor" width="50" viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 1000 1000" xml:space="preserve">
-          <g>
-            <g transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)">
-              <path d="M1296,4545.5L833.5,4083l474.7-474.7l472.7-472.7l122.2,122.3l122.2,122.2l-264.9,264.9l-264.9,264.9h1238.7h1236.7V4083v173.2H2744.6H1516l254.7,254.7l254.7,254.7l-122.2,122.2c-67.2,67.2-126.3,122.2-132.4,122.2C1764.6,5010,1550.7,4802.2,1296,4545.5z" />
-              <path d="M8117.3,4887.8L7995,4765.5l254.7-254.7l254.7-254.7H7275.8H6049.3V4083v-173.2H7286h1238.7l-264.9-264.9L7995,3380.1l122.3-122.2l122.2-122.3l462.5,462.5c256.7,254.7,464.5,472.7,464.5,484.9c0,20.4-896.5,927-916.8,927C8243.6,5010,8184.5,4955,8117.3,4887.8z" />
-              <path d="M4653.6,3003.1l-326-189.5l-6.1-1361l-6.1-1363l-690.7-489l-690.7-489l-2-853.7v-851.6l686.6-1098.2L4305.2-4790h199.7c110,0,199.7,4.1,199.7,8.2c0,4.1-319.9,521.6-713.1,1149.1l-713.1,1141v709v711.1l501.2,356.6c275,195.6,509.4,360.6,519.5,362.7c10.2,4.1,18.3-328,18.3-819.1v-827.2h173.2h173.2V309.7V2616l173.2,97.8l173.2,95.8l173.2-95.8l173.2-97.8V1175.6V-266.9h173.2h173.2V85.6V436l173.2,97.8c95.8,55,181.3,95.8,189.5,91.7c8.2-4.1,85.6-44.8,173.2-93.7l156.9-87.6V87.6v-354.5h171.1h171.1l12.2,63.1c6.1,34.6,12.2,144.7,12.2,242.5V218l165,97.8c91.7,53,177.3,95.8,191.5,95.8s97.8-40.7,185.4-93.7l161-93.7l-10.2-244.5l-10.2-246.5h179.3h177.3v179.3V89.6l167.1,91.7c91.7,50.9,175.2,89.6,185.4,85.6c10.2-2,91.7-46.9,179.3-97.8l161-93.7V-971.9v-1045.2l-346.4-925L7801.5-3865v-462.5V-4790h173.2h173.2v431.9v429.9l346.4,925l346.4,922.9v1177.6V273l-350.4,201.7l-350.4,201.7l-93.7-55c-50.9-30.6-130.4-73.3-175.2-97.8l-83.5-42.8l-334.1,169.1L7118.9,819l-71.3-38.7c-38.7-22.4-118.2-67.2-175.2-99.8l-103.9-57l-358.6,203.7l-358.6,205.8l-169.1-97.8l-169.1-99.8l-10.2,990.2l-10.2,988.1l-332.1,191.5c-181.3,105.9-342.3,191.5-356.5,189.5C4991.9,3194.7,4832.9,3109.1,4653.6,3003.1z" />
-            </g>
-          </g>
-        </svg>
-      </div>
-      <!-- HACK -->
-      <div class="hotspots__switches">
-        <button class="btn btn-white btn-full" onclick="document.querySelector('.hotspots__content--1').removeAttribute('hidden'); document.querySelector('.hotspots__content--2').setAttribute('hidden', ''); console.log(this);">Koupelna</button>
-        <button class="btn btn-black btn-full" onclick="document.querySelector('.hotspots__content--2').removeAttribute('hidden'); document.querySelector('.hotspots__content--1').setAttribute('hidden', ''); console.log(this);">Obývací pokoj</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="bg--tertiary">
-  <div class="container">
-    <!-- PLACEHOLDER: Texts and icons -->
-    <div class="highlights">
-      <div class="highlight">
-        <i class="fal fa-house"></i>
-        <em>Dům</em>
-        <span>Užívejte výhod rodinného domu jako je velký prostor a vlastní zahrada</span>
-      </div>
-      <div class="highlight">
-        <i class="fal fa-layer-group"></i>
-        <em>Provedení</em>
-        <span>Několik typů provedení za použití těch nejkvalitnějších materiálů</span>
-      </div>
-      <div class="highlight">
-        <i class="fal fa-couch"></i>
-        <em>Vybavení</em>
-        <span>Domy jsou plně zařízené nábytkem a všemi spotřebičemi</span>
-      </div>
-      <div class="highlight">
-        <i class="fal fa-shield"></i>
-        <em>Zabezpečení</em>
-        <span>Integrována ta nejmodernější bezpečnostní technologie</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- <section>
-  <div style="background-image: url('https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p3_3000.jpg')" class="strip">
-  </div>
-</section> -->
 
 <section id="cenik">
   <div class="container">
@@ -791,7 +661,7 @@
       </div>
       <!-- TEMP: Preview -->
       <div id="lv-waltrovka" class="container-br-full" hidden>
-        <img src="https://novawaltrovka.cz/images/street_v2.jpg" alt="">
+        <img src="https://novawaltrovka.cz/images/street_v2.jpg" alt="" loading="lazy">
       </div>
       <div class="price-table-wrapper" id="price-table-container">
         <!-- Here will be inserted price table, created from template, and filled by fetched data from Sheet -->
@@ -801,10 +671,151 @@
     </div>
     <div class="container-sm ta-c">
       <!-- <p>Vybrali jste si? Kontaktujte nás a rodinný dům může být Váš.</p> -->
-      <button class="btn btn-gray-dark btn-outline-fill" data-open-form>Mám zájem</button>
+      <button class="btn btn-secondary" data-open-form>Mám zájem</button>
     </div>
   </div>
 </section>
+
+<section id="typy">
+  <div class="container-sm ta-c">
+    <!-- PLACEHOLDER: Texts -->
+    <h2><a href="#typy">Vyberte si provedení, které je to pravé pro vás</a></h2>
+    <p>Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
+      morbi et fames eget aliquam augue aliquam.</p>
+  </div>
+</section>
+
+<section id="typ-domu-1">
+  <div class="">
+    <div class="two-col text-img">
+      <div>
+        <!-- PLACEHOLDER: Texts -->
+        <h3 data-text-behind="4+kk"><a href="#typ-domu-1">Typ A </a></h3>
+        <p>
+          Středový rodinný dům o dipozici 4+kk ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae.
+        </p>
+        <!-- TODO: Highlight points with different (you look and see their differences - cuz they are 90% same) -->
+        <a href="https://novawaltrovka.cz/cms/uploads/PRE_Katalog_vybaveni_interieru_1a4bf8a4be.pdf" target="_blank" rel="noopener" class="btn btn-gray-dark btn-outline-fill">Provedení</a>
+      </div>
+      <div>
+        <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p1_1600.jpg" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="typ-domu-2">
+  <div class="">
+    <div class="two-col img-text">
+      <div>
+        <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p4_1600.jpg" loading="lazy">
+      </div>
+      <div>
+        <!-- PLACEHOLDER: Texts -->
+        <h3 data-text-behind="5+kk"><a href="#typ-domu-2">Typ B</a></h3>
+        <p>
+          Krajový rodinný dům o dipozici 4+kk diam adipiscing nam porttitor
+          facilisi morbi ullamcorper tincidunt turpis. Ut blandit ut condimentum diam.
+        </p>
+        <a href="https://c.victoria-palace.cz/files/dokumenty/Standardni-provedeni-Platinum.pdf" target="_blank" rel="noopener" class="btn btn-gray-dark btn-outline-fill">Provedení</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="hotspots">
+    <!-- HACK: Multiple images -->
+    <div class="hotspots__content hotspots__content--1" id="hotspots-content-1">
+      <img src="./temp/Ukazkac-UHP-46.jpg" alt="" srcset="">
+      <!-- PLACEHOLDER: Texts -->
+      <div class="hotspots__items">
+        <div class="hotspots__item" tabindex="0" style="left: 47%; top: 33%;">
+          <div class="hotspots__point"></div>
+          <div class="hotspots__textbox">Keramické dlaždice a obklady do výše sádrokartonového podhledu</div>
+        </div>
+        <div class="hotspots__item" tabindex="0" style="left: 67%; top: 71%;">
+          <div class="hotspots__point"></div>
+          <div class="hotspots__textbox">Podomítkové provedení baterií pro sprchové kouty a vanu</div>
+        </div>
+      </div>
+    </div>
+    <div class="hotspots__content hotspots__content--2" id="hotspots-content-2" hidden>
+      <img src="./temp/Ukazkac-Parkovka-45.jpg" alt="" srcset="">
+      <!-- PLACEHOLDER: Texts -->
+      <div class="hotspots__items">
+        <div class="hotspots__item" tabindex="0" style="left: 46%; top: 14%;">
+          <div class="hotspots__point"></div>
+          <div class="hotspots__textbox">Stropní vytápění a chlazení v železobetonové konstrukci</div>
+        </div>
+        <div class="hotspots__item" tabindex="0" style="left: 78%; top: 42%;">
+          <div class="hotspots__point"></div>
+          <div class="hotspots__textbox">Dřevěná okna otevíravá a sklopná zasklená izolačním trojsklem</div>
+        </div>
+        <div class="hotspots__item" tabindex="0" style="left: 51%; top: 73%;">
+          <div class="hotspots__point"></div>
+          <div class="hotspots__textbox">Vinylová nebo dřevěná dýhovaná podlaha</div>
+        </div>
+      </div>
+    </div>
+    <div class="hotspots__controls">
+      <div class="hotspots__swipe">
+        <svg fill="currentColor" width="50" viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 1000 1000" xml:space="preserve">
+          <g>
+            <g transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)">
+              <path d="M1296,4545.5L833.5,4083l474.7-474.7l472.7-472.7l122.2,122.3l122.2,122.2l-264.9,264.9l-264.9,264.9h1238.7h1236.7V4083v173.2H2744.6H1516l254.7,254.7l254.7,254.7l-122.2,122.2c-67.2,67.2-126.3,122.2-132.4,122.2C1764.6,5010,1550.7,4802.2,1296,4545.5z" />
+              <path d="M8117.3,4887.8L7995,4765.5l254.7-254.7l254.7-254.7H7275.8H6049.3V4083v-173.2H7286h1238.7l-264.9-264.9L7995,3380.1l122.3-122.2l122.2-122.3l462.5,462.5c256.7,254.7,464.5,472.7,464.5,484.9c0,20.4-896.5,927-916.8,927C8243.6,5010,8184.5,4955,8117.3,4887.8z" />
+              <path d="M4653.6,3003.1l-326-189.5l-6.1-1361l-6.1-1363l-690.7-489l-690.7-489l-2-853.7v-851.6l686.6-1098.2L4305.2-4790h199.7c110,0,199.7,4.1,199.7,8.2c0,4.1-319.9,521.6-713.1,1149.1l-713.1,1141v709v711.1l501.2,356.6c275,195.6,509.4,360.6,519.5,362.7c10.2,4.1,18.3-328,18.3-819.1v-827.2h173.2h173.2V309.7V2616l173.2,97.8l173.2,95.8l173.2-95.8l173.2-97.8V1175.6V-266.9h173.2h173.2V85.6V436l173.2,97.8c95.8,55,181.3,95.8,189.5,91.7c8.2-4.1,85.6-44.8,173.2-93.7l156.9-87.6V87.6v-354.5h171.1h171.1l12.2,63.1c6.1,34.6,12.2,144.7,12.2,242.5V218l165,97.8c91.7,53,177.3,95.8,191.5,95.8s97.8-40.7,185.4-93.7l161-93.7l-10.2-244.5l-10.2-246.5h179.3h177.3v179.3V89.6l167.1,91.7c91.7,50.9,175.2,89.6,185.4,85.6c10.2-2,91.7-46.9,179.3-97.8l161-93.7V-971.9v-1045.2l-346.4-925L7801.5-3865v-462.5V-4790h173.2h173.2v431.9v429.9l346.4,925l346.4,922.9v1177.6V273l-350.4,201.7l-350.4,201.7l-93.7-55c-50.9-30.6-130.4-73.3-175.2-97.8l-83.5-42.8l-334.1,169.1L7118.9,819l-71.3-38.7c-38.7-22.4-118.2-67.2-175.2-99.8l-103.9-57l-358.6,203.7l-358.6,205.8l-169.1-97.8l-169.1-99.8l-10.2,990.2l-10.2,988.1l-332.1,191.5c-181.3,105.9-342.3,191.5-356.5,189.5C4991.9,3194.7,4832.9,3109.1,4653.6,3003.1z" />
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="hotspots__switches">
+        <button class="btn btn-secondary btn-full" data-hotspots-target="hotspots-content-1">Koupelna</button>
+        <button class="btn btn-white btn-full" data-hotspots-target="hotspots-content-2">Obývací pokoj</button>
+      </div>
+    </div>
+    <!-- TEMP: hidden (prepared) -->
+    <div class="hotspots__disclaimer" hidden>
+      <span>Obrázky jsou pouze ilustrativní</span>
+    </div>
+  </div>
+</section>
+
+<!-- TEMP: HIDDEN -->
+<section class="bg--tertiary" hidden>
+  <div class="container">
+    <!-- PLACEHOLDER: Texts and icons -->
+    <div class="highlights">
+      <div class="highlight">
+        <i class="fal fa-house"></i>
+        <em>Dům</em>
+        <span>Užívejte výhod rodinného domu jako je velký prostor a vlastní zahrada</span>
+      </div>
+      <div class="highlight">
+        <i class="fal fa-layer-group"></i>
+        <em>Provedení</em>
+        <span>Několik typů provedení za použití těch nejkvalitnějších materiálů</span>
+      </div>
+      <div class="highlight">
+        <i class="fal fa-couch"></i>
+        <em>Vybavení</em>
+        <span>Domy jsou plně zařízené nábytkem a všemi spotřebičemi</span>
+      </div>
+      <div class="highlight">
+        <i class="fal fa-shield"></i>
+        <em>Zabezpečení</em>
+        <span>Integrována ta nejmodernější bezpečnostní technologie</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section>
+  <div style="background-image: url('https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p3_3000.jpg')" class="strip">
+  </div>
+</section> -->
 
 <!-- WIP -->
 <!-- ! HIDDEN -->
@@ -874,7 +885,7 @@
       <div class="btn btn-outline btn-gray-dark btn-inline --outline">Exteriér</div>
       <div class="btn btn-outline btn-gray-dark btn-inline --outline">Okolí</div>
     </div> -->
-    <div class="gallery" id="gallery-1">
+    <div class="gallery gallery--grid" id="gallery-1">
       <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p1_1600.jpg" alt="" loading="lazy">
       <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p2_1600.jpg" alt="" loading="lazy">
       <img src="https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p0_1600.jpg" alt="" loading="lazy">
@@ -959,7 +970,7 @@
 
 <section id="financovani">
   <div class="container">
-    <h2 data-tippy-content="Wat"><a href="#financovani">Financování</a></h2>
+    <h2><a href="#financovani">Financování</a></h2>
     <p>
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. At natus, expedita commodi ipsa excepturi inventore
       nihil libero doloribus eos ducimus explicabo quasi et, accusantium soluta, voluptatibus quidem fugiat animi
@@ -1142,3 +1153,28 @@
   headerTransparency() // initial load
 </script>
 
+<script>
+  // TEMP: Generalize to tabs ??
+  document.querySelectorAll('.hotspots__switches .btn').forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-hotspots-target")
+      document.querySelectorAll('.hotspots__content').forEach((content) => {
+        if (content.id === target) {
+          content.removeAttribute('hidden')
+        }
+        else {
+          content.setAttribute('hidden', '')
+        }
+      })
+      // Toggle active class
+      document.querySelectorAll('.hotspots__switches .btn').forEach((b) => {
+        b.classList.remove('btn-secondary')
+        b.classList.add('btn-white')
+      })
+      btn.classList.remove('btn-white')
+      btn.classList.add('btn-secondary')
+    })
+  })
+
+
+</script>
