@@ -53,10 +53,9 @@
   --sections-spacing: 2.5rem;
   --container-padding: 15px;
   --container-sm: 800px;
-  /* --container-m: 1110px; */
-  /* ? consider */
+  /* --container-m: 1140px; */
   --container-m: 1320px;
-  --container-l: 1600px;
+  --container-l: 1920px;
   --content-half: calc(var(--container-m) / 2);
   --breakout-half: calc((var(--container-l) - var(--container-m)) / 2);
   --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end];
@@ -95,7 +94,6 @@
 }
 
 *:focus-visible {
-  /* ? maybe keep or remove !important */
   outline: 3px solid var(--color-focus-outline, -webkit-focus-ring-color) !important;
   outline-offset: 0px !important;
 }
@@ -162,8 +160,6 @@ ul,
 ol,
 menu {
   list-style-type: none;
-  /* ? maybe */
-  /* padding-left: 1.25rem; */
 }
 
 dl,
@@ -227,6 +223,7 @@ strong {
 
 em {
   font-style: normal;
+  font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-body-text-em);
 }
@@ -569,16 +566,13 @@ a.btn:hover {
 /* # TYPOGRAPHY */
 
 :where(main) :is(h1, h2, h3, h4, h5, h6) {
-  position: relative;
   color: var(--color-headings);
   font-weight: 500;
-  transform-origin: left center;
-
-  /* ? TEMP or MAYBE */
+  letter-spacing: -0.01em;
   margin-bottom: 0.5em;
   margin-top: 1.2em;
-  letter-spacing: -0.01em;
-  /* isolation: isolate; */
+  position: relative;
+  transform-origin: left center;
 }
 
 
@@ -664,13 +658,11 @@ h6 {
   transform: translate(0.2em, -0.65em);
   z-index: -1;
   white-space: nowrap;
-  /* wip */
-  /* transition: translate 200ms, opacity 200ms; */
 }
 
 
 
-/* * Styling of '#' * */
+/* * Styling of '#' -- UNUSED * */
 h2::before {
   content: '#';
   font-size: 0.85em;
@@ -688,7 +680,7 @@ h2::before {
   /* Visibility delayed to let opacity finish fading */
   transition: translate 200ms, opacity 200ms, visibility 0ms 200ms;
 
-  /* TEMP HIDE */
+  /* ! hidden */
   display: none;
 }
 
@@ -754,13 +746,9 @@ h2::before {
   translate: -50% 50%;
   max-width: calc(100% - var(--container-padding) - var(--container-padding));
   justify-content: center;
-
-  /* Centered */
-  /* align-items: center; */
-  /* text-align: center; */
 }
 
-/* WIP */
+
 .hero__logo {
   height: 32px;
   width: fit-content;
@@ -776,8 +764,6 @@ h2::before {
   font-size: 2.75rem;
   font-weight: 700;
   line-height: 0.95;
-  /* letter-spacing: -0.01em; */
-  /* scale: 99% 100%; */
   text-wrap: balance;
   color: white;
   margin: 0 0 0.333em;
@@ -790,7 +776,6 @@ h2::before {
 
 .hero hgroup p {
   text-wrap: pretty;
-  /* text-wrap: balance; */
   line-height: 1.2em;
   font-size: 1.0rem;
   max-width: 650px;
@@ -831,7 +816,7 @@ h2::before {
   }
 }
 
-/* Jump to content */
+/* * Jump to content */
 .hero__jump {
   position: absolute;
   bottom: 16px;
@@ -968,7 +953,7 @@ a.hero__jump,
 
   .page-nav {
     --page-nav-height: 42px;
-    /* ? maybe hide */
+    /* ? maybe hide on mobile ? */
     display: none;
   }
 
@@ -990,7 +975,6 @@ section {
   position: relative;
   margin-block: var(--sections-spacing);
   scroll-margin-top: var(--sections-spacing);
-  /* ? maybe ? */
   isolation: isolate;
 }
 
@@ -1010,7 +994,7 @@ section section {
 
 @media (min-width: 992px) {
   :root {
-    --sections-spacing: 5.5rem;
+    --sections-spacing: 6rem;
   }
 
   section section {
@@ -1023,9 +1007,6 @@ section section {
 .bg--primary {
   --section-bg-color: var(--color-primary);
   color: white;
-  /* TEMP? */
-  --color-headings: var(--color-secondary);
-  color: #cdcdcd;
 }
 
 .bg--secondary {
@@ -1047,13 +1028,16 @@ section section {
   --section-bg-color: var(--color-gray);
 }
 
+/* ? Dark "theme" */
+.bg--dark {
+  --section-bg-color: var(--color-primary);
+  --color-headings: var(--color-secondary);
+  color: #cdcdcd;
+}
+
 [class*="bg--"] :is(h1, h2, h3, h4, h5, h6):first-of-type {
   margin-top: 0;
 }
-
-/* section[class*="bg--"] :is(h1, h2, h3, h4, h5, h6) {
-  color: inherit;
-} */
 
 @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
 
@@ -1079,9 +1063,12 @@ section section {
 
 /* SECTION (end) */
 
+
 /* ? TODO: Rewrite to be less cumbersome and more flexible/explicit to use */
 /* ? Possibly/probably get rid of supergrid */
+
 /* TODO: Allow for headings above */
+
 /* # TWO-COL */
 /* * Mobile Single-column * */
 .two-col {
@@ -1103,13 +1090,17 @@ section section {
 
 .two-col img {
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center center;
+
+  /* TEMP: Two-col img fixed aspect ratio */
+  /* aspect-ratio: 5/3;
+  aspect-ratio: 16/9; */
 }
 
-/* ? Maybe jump straight to (min-width: 991px) ? */
+/* ? Maybe jump straight to 991px ? */
 /* * Two column layout * */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 991px) {
   .two-col {
     --two-col-gap: 10%;
     display: grid;
@@ -1134,21 +1125,12 @@ section section {
   .two-col.img-text > *:nth-child(odd) {
     grid-column: span 2 / content-middle;
     align-self: start;
+    padding-left: 0;
   }
 
   .two-col.text-img > *:nth-child(even) {
     grid-column: content-middle / span 2;
     align-self: start;
-  }
-}
-
-/* ? REMOVE ? */
-@media (min-width: 992px) {
-  .two-col.img-text > *:nth-child(odd) {
-    padding-left: 0;
-  }
-
-  .two-col.text-img > *:nth-child(even) {
     padding-right: 0;
   }
 }
@@ -1199,6 +1181,7 @@ section section {
   /* line-height: 1.25; */
   text-align: center;
   width: 250px;
+  text-wrap: balance;
 }
 
 .highlight > [class*="fa-"] {
@@ -1272,11 +1255,10 @@ section section {
 }
 
 .timeline__heading {
-  font-size: 1.125rem;
-  font-weight: 700;
+  display: block;
   margin-bottom: 0.5rem;
-  line-height: 1.0;
-  color: var(--color-body-text-em);
+  /* line-height: 1.0; */
+  /* color: var(--color-body-text-em); */
   order: 1;
 }
 
@@ -1413,13 +1395,10 @@ section section {
   align-items: center;
   text-align: center;
   line-height: 1.15;
-  /* ? idk */
-  /* max-width: 300px; */
-  /* flex: 0 0 150px; */
   /* Note: Yes, we really do need to specify all of the widths. And no, we can't just clamp() the width */
-  min-width: 150px;
-  width: 150px;
-  max-width: 150px;
+  min-width: 160px;
+  width: 160px;
+  max-width: 160px;
   flex: 0 1;
   scroll-snap-align: start;
   scroll-snap-stop: always;
@@ -1672,7 +1651,6 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 }
 
 
-/* WIP */
 /* # LAYOUT VIEWER */
 
 .layout-viewer-wrapper {
@@ -1698,7 +1676,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   height: 100%;
 }
 
-/* WIP */
+
 .layout-viewer-map [id^="rd-path"] {
   fill: rgb(255, 255, 255);
   fill-opacity: 0.5;
@@ -1706,7 +1684,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 
 .layout-viewer-map [id^="rd-path"]:hover {
   stroke: white;
-  stroke-width: 2px;
+  stroke-width: 4px;
 }
 
 .layout-viewer-map [id^="rd-path"].available {
@@ -2132,7 +2110,6 @@ a.apt-card,
 }
 
 
-/* WIP */
 .hotspots {
   overflow-x: auto;
   scrollbar-width: thin;
@@ -2154,7 +2131,7 @@ a.apt-card,
   object-position: center center;
 
   /* !!! SUPER TEMP !!! */
-  aspect-ratio: 18/9;
+  aspect-ratio: 18.5/9;
 }
 
 @media (min-width: 1200px) {
@@ -2169,10 +2146,7 @@ a.apt-card,
 
 @media (min-width: 992px) {
   .hotspots__content {
-    /* TEMP: Hotspots width */
-    /* HACK: Hard-coded values */
-    /* max-width: 2080px; */
-    margin-inline: auto;
+    /* margin-inline: auto; */
   }
 
   .hotspots__content > img {
@@ -2260,7 +2234,7 @@ a.apt-card,
 
 /* TODO: Price table apt-cards view */
 /* TODO: Improve gallery layout (grid, tabs/sections) */
-/* ? Refactor using SCSS? */
+/* TODO: Refactor using SCSS ?? */
 /* TODO: Optimize for PRINT */
 
 /* * Accessibility * */
@@ -2501,7 +2475,7 @@ section.bg--tertiary {
   --section-bg-color: url('https://c.victoria-palace.cz/images/pattern.png') no-repeat center center;
 } */
 
-/* WIP: Gray CG header */
+
 :root {
   --cg-header-bg-prim: hsl(236, 0%, 21%);
   --cg-header-bg-prim-hover: hsl(237, 0%, 33%);

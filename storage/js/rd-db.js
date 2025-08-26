@@ -136,7 +136,6 @@ function removeBox(box) {
 }
 
 
-// WIP
 // TODO: Move to a more sensible place ?
 /**
  * Layout Viewer map
@@ -241,7 +240,7 @@ async function LV(propertiesData) {
       if (closestPath && matchingProperty && !isSamePropertyAsOpenBox) {
         // console.debug("CREATING A NEW BOX FOR PROPERTY: ", matchingProperty.id);
         box = createFillAppendBox(matchingProperty);
-        // WIP: Position
+        // TODO: Avoid hard-coding positioning in JS?
         box.style.position = "fixed";
         box.style.left = 0 + "px";
         box.style.right = 0 + "px";
@@ -382,7 +381,7 @@ function initPanzoom(elemId = 'lv') {
 
   // When fully zoomed out, disable panning (allow scrolling the page)
   // FIXME: Buggy on iPad
-  // NOTE: touchAction is CSS property: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
+  // NOTE: touchAction is a CSS property: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
   // BUG: Minor - Behavior doesn't work on page init, only kicks in after a touch move
   elem.addEventListener('touchmove', function (event) {
     // Allow panning
