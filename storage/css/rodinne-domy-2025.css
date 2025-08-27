@@ -77,6 +77,7 @@
   scroll-behavior: smooth;
   accent-color: var(--color-secondary);
   interpolate-size: allow-keywords;
+  transition-behavior: allow-discrete;
 }
 
 @media (min-width: 992px) {
@@ -1226,7 +1227,7 @@ section section {
 
 /* Old iOS Safari bug fix Fix:  */
 /* NOTE: Safari versions prior to 15.4 had incorrect rendering of background-attachment 'fixed' and 'local'. We detect and limit to iOS, then versions older than 16, and then fallback to 'initial' */
-@supports (-webkit-touch-callout: none) and (not (display: subgrid; )) {
+@supports (-webkit-touch-callout: none) and (not (display: subgrid )) {
   .strip {
     background-attachment: initial;
   }
@@ -1679,7 +1680,8 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 
 .layout-viewer-map [id^="rd-path"] {
   fill: rgb(255, 255, 255);
-  fill-opacity: 0.5;
+  fill: transparent;
+  fill-opacity: 0.333;
 }
 
 .layout-viewer-map [id^="rd-path"]:hover {
@@ -1687,15 +1689,15 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   stroke-width: 4px;
 }
 
-.layout-viewer-map [id^="rd-path"].available {
+.layout-viewer-map [id^="rd-path"].available:hover {
   fill: var(--status-available-color);
 }
 
-.layout-viewer-map [id^="rd-path"].under-offer {
+.layout-viewer-map [id^="rd-path"].under-offer:hover {
   fill: var(--status-under-offer-color);
 }
 
-.layout-viewer-map [id^="rd-path"].sold {
+.layout-viewer-map [id^="rd-path"].sold:hover {
   fill: var(--status-sold-color);
 }
 
@@ -1780,20 +1782,23 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   gap: 4px;
   position: absolute;
   top: 10px;
-  left: 10px;
+  right: 10px;
   z-index: 1;
 }
 
 .pz-controls-group {
   display: flex;
   flex-direction: column;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .1);
 }
 
 .pz-control, .pz-controls button {
-  width: 2.0em;
-  height: 2.0em;
+  width: 29px;
+  height: 29px;
   border-radius: 4px;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
+  border: none;
   outline: none;
   color: black;
   background-color: rgb(255, 255, 255);
@@ -1802,6 +1807,10 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.pz-control, .pz-controls button+button {
+    border-top: 1px solid #ddd;
 }
 
 .pz-controls-group :is(.pz-control, .pz-controls button):not(:first-child) {
@@ -2111,9 +2120,11 @@ a.apt-card,
 
 
 .hotspots {
+  --hotspots-textbox-trans-dur: 250ms;
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--color-secondary) transparent;
+  overscroll-behavior-x: none;
 }
 
 /* ? MAYBE: Fit to screen width when screen in horizontal ? */
@@ -2129,6 +2140,7 @@ a.apt-card,
   height: 100%;
   object-fit: cover;
   object-position: center center;
+  -webkit-user-drag: none;
 
   /* !!! SUPER TEMP !!! */
   aspect-ratio: 18.5/9;
@@ -2172,6 +2184,7 @@ a.apt-card,
   background-color: black;
   box-shadow: 0 0 10px -2px hsla(0deg, 0%, 0%, 90%);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="white" d="M352 128L352 96L288 96L288 288L96 288L96 352L288 352L288 544L352 544L352 352L544 352L544 288L352 288L352 128z"/></svg>');
   background-size: 75%;
   background-repeat: no-repeat;
@@ -2189,13 +2202,22 @@ a.apt-card,
   line-height: 1.333;
 
   position: absolute;
-  top: 100%;
+  top: calc(100% - 10px);
   left: 50%;
   translate: -50% 0%;
+
+  transition: opacity var(--hotspots-textbox-trans-dur) 0ms, top var(--hotspots-textbox-trans-dur), visibility 0ms var(--hotspots-textbox-trans-dur);
+  transition-behavior: allow-discrete;
+
+  visibility: hidden;
+  opacity: 0;
 }
 
-.hotspots__item:not(:focus-within) .hotspots__textbox {
-  display: none;
+.hotspots__item:hover .hotspots__textbox {
+  transition: opacity var(--hotspots-textbox-trans-dur) 0ms, top var(--hotspots-textbox-trans-dur), visibility var(--hotspots-textbox-trans-dur) 0ms;
+  visibility: visible;
+  opacity: 1;
+  top: 100%;
 }
 
 
@@ -2213,7 +2235,7 @@ a.apt-card,
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  min-width: 10rem;
+  min-width: 8rem;
 }
 
 .hotspots__disclaimer {

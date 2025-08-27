@@ -408,7 +408,7 @@ export async function init(loc = 'cs-CZ') {
     console.error('Failed to fetch or parse data.');
     return
   }
-  console.debug('Fetched RAW data: ', propertiesData.tableData);
+  // console.debug('Fetched RAW data: ', propertiesData.tableData);
 
 
   $(document).ready(function () {

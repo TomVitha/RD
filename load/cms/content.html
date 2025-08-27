@@ -404,18 +404,22 @@
       <div class="layout-viewer-wrapper">
         <div class="pz-controls">
           <div class="pz-controls-group">
-            <button id="lv-pz-zoom-in" class="pz-control" title="Přiblížit" aria-label="Přiblížit">
-              <i class="fal fa-plus"></i>
+            <button id="lv-pz-zoom-in" class="pz-control-zoom-in" title="Přiblížit" aria-label="Přiblížit">
+              <svg xmlns='http://www.w3.org/2000/svg' fill='%23333' viewBox='0 0 29 29'>
+                <path d='M14.5 8.5c-.75 0-1.5.75-1.5 1.5v3h-3c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h3v3c0 .75.75 1.5 1.5 1.5S16 19.75 16 19v-3h3c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-3v-3c0-.75-.75-1.5-1.5-1.5z' />
+              </svg>
             </button>
-            <button id="lv-pz-zoom-out" class="pz-control" title="Oddálit" aria-label="Oddálit">
-              <i class="fal fa-minus"></i>
+            <button id="lv-pz-zoom-out" class="pz-control-zoom-out" title="Oddálit" aria-label="Oddálit">
+              <svg xmlns='http://www.w3.org/2000/svg' fill='%23333' viewBox='0 0 29 29'>
+                <path d='M10 13c-.75 0-1.5.75-1.5 1.5S9.25 16 10 16h9c.75 0 1.5-.75 1.5-1.5S19.75 13 19 13h-9z' />
+              </svg>
             </button>
           </div>
-          <div class="pz-controls-group">
-            <button id="lv-pz-reset" class="pz-control" title="Resetovat" aria-label="Resetovat">
+          <!-- <div class="pz-controls-group">
+            <button id="lv-pz-reset" class="pz-control-reset" title="Resetovat" aria-label="Resetovat">
               <i class="fal fa-sync"></i>
             </button>
-          </div>
+          </div> -->
         </div>
         <div class="layout-viewer" id="lv">
           <!-- * Layout viewer image -->
@@ -705,12 +709,17 @@
   </div>
 </section>
 
+<!-- ! HIDDEN -->
+<section hidden>
+  <div style="background-image: url('https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p3_3000.jpg')" class="strip">
+  </div>
+</section>
+
 <section id="typy">
   <div class="container-sm ta-c">
     <!-- PLACEHOLDER: Texts -->
-    <h2><a href="#typy">Vyberte si provedení, které je to pravé pro vás</a></h2>
-    <p>Lorem ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae. Quis condimentum tincidunt
-      morbi et fames eget aliquam augue aliquam.</p>
+    <h2><a href="#typy">Možnosti provedení</a></h2>
+    <p>V rámci projektu Rodinné domy Pitkovice postupně vznikne <strong>78 řadových rodinných domů</strong> provedených ve dvou variantách s dispozicemi 4+kk a 5+kk, užitnou plochou až X m² a terasou. Pozemky o rozloze až X m² zajistí dostatek místa pro pohodlný rodinný život/ s výměrou až X m² nabídnou dostatek prostoru pro celou rodinu. Všechny domy jsou řešeny v luxusním standardu provedení <strong>REZIDENCE</strong>, ve kterém nechybí dřevěné podlahy, designové koupelny, předokenní žaluzie nebo stropní vytápění a klimatizace pro zajištění maximálního komfortu bydlení.</p>
   </div>
 </section>
 
@@ -721,7 +730,7 @@
         <!-- PLACEHOLDER: Texts -->
         <h3 data-text-behind="4+kk"><a href="#typ-domu-1">Typ A </a></h3>
         <p>
-          Středový rodinný dům o dipozici 4+kk ipsum dolor sit amet consectetur. Morbi mauris diam tellus habitasse vitae.
+          <strong>Vnitřní dům</strong> nabízí promyšlenou dispozici 4+kk se čtyřmi pokoji, koupelnou a garáží. Díky efektivnímu řešení je ideální volbou pro rodiny, které hledají moderní bydlení s nízkými provozními náklady, snadnou zařiditelností a optimalizovaným venkovním prostorem pro relaxaci i rodinné chvíle.
         </p>
         <!-- TODO: Highlight points with different (you look and see their differences - cuz they are 90% same) -->
         <a href="https://novawaltrovka.cz/cms/uploads/PRE_Katalog_vybaveni_interieru_1a4bf8a4be.pdf" target="_blank" rel="noopener" class="btn btn-gray-dark btn-outline-fill">Provedení</a>
@@ -744,8 +753,7 @@
         <!-- PLACEHOLDER: Texts -->
         <h3 data-text-behind="5+kk"><a href="#typ-domu-2">Typ B</a></h3>
         <p>
-          Krajový rodinný dům o dipozici 4+kk diam adipiscing nam porttitor
-          facilisi morbi ullamcorper tincidunt turpis. Ut blandit ut condimentum diam.
+          <strong>Vnější dům</strong> s dispozicí 5+kk vyniká velkorysým prostorem pěti pokojů, garáží a dvěma koupelnami, které zajišťují maximální komfort a soukromí pro celou rodinu. Předností je také rozlehlá zahrada, která kromě širokých možností odpočinku a zábavy vytváří podmínky i pro pokročilé zahradní úpravy.
         </p>
         <a href="https://c.victoria-palace.cz/files/dokumenty/Standardni-provedeni-Platinum.pdf" target="_blank" rel="noopener" class="btn btn-gray-dark btn-outline-fill">Provedení</a>
       </div>
@@ -801,8 +809,8 @@
         </svg>
       </div>
       <div class="hotspots__switches">
-        <button class="btn btn-secondary btn-full" data-hotspots-target="hotspots-content-1">Koupelna</button>
-        <button class="btn btn-white btn-full" data-hotspots-target="hotspots-content-2">Obývací pokoj</button>
+        <button class="btn btn-sm btn-full btn-secondary" data-hotspots-target="hotspots-content-1">Koupelna</button>
+        <button class="btn btn-sm btn-full btn-white" data-hotspots-target="hotspots-content-2">Obývací pokoj</button>
       </div>
     </div>
     <!-- TEMP: hidden (prepared) -->
@@ -840,11 +848,6 @@
     </div>
   </div>
 </section>
-
-<!-- <section>
-  <div style="background-image: url('https://www.central-group.cz/storage/CG/test/rodinne-domy/img/vizualizace/RD-Pitkovice-p3_3000.jpg')" class="strip">
-  </div>
-</section> -->
 
 <!-- WIP -->
 <!-- ! HIDDEN -->
@@ -1036,6 +1039,13 @@
   </div>
 </section>
 
+<!-- TEMP: MAP -->
+<section id="mapa">
+  <article class="map lazy">
+    <div id="map"></div>
+  </article>
+</section>
+
 <!-- PRICE TABLE -->
 <template id="template-price-table">
   <table class="price-table">
@@ -1088,7 +1098,7 @@
     <div class="lv-details-box__content">
       <div class="lv-details-box__header">
         <span class="lv-details-box__name">{name}</span>
-        <button class="lv-details-box__close btn btn-icon">✕</button>
+        <button class="lv-details-box__close btn btn-icon btn-transparent">✕</button>
       </div>
       <div class="lv-details-box__body">
         <div class="lv-details-box__grid">
@@ -1155,12 +1165,12 @@
       <input type="checkbox" id="debug-map-dark" onclick="document.querySelector('#temp-map-1').toggleAttribute('hidden'); document.querySelector('#temp-map-2').toggleAttribute('hidden');">
     </label>
     <label>
-      Mapa ceníku Waltrovka
-      <input type="checkbox" id="debug-price-table-waltrovka" onclick="document.querySelector('#lv').toggleAttribute('hidden'); document.querySelector('#lv-waltrovka').toggleAttribute('hidden');">
-    </label>
-    <label>
       Široká mapa ceníku
       <input type="checkbox" id="debug-lv-wide" onclick="$('.layout-viewer-wrapper, #lv-waltrovka').toggleClass('container-br-full')">
+    </label>
+    <label>
+      Mapa ceníku Waltrovka
+      <input type="checkbox" id="debug-price-table-waltrovka" onclick="document.querySelector('#lv').toggleAttribute('hidden'); document.querySelector('#lv-waltrovka').toggleAttribute('hidden');">
     </label>
     <label>
       Skrýt průběh stavby a financování
@@ -1191,12 +1201,12 @@
   document.querySelectorAll('.hotspots__switches .btn').forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = btn.getAttribute("data-hotspots-target")
-      document.querySelectorAll('.hotspots__content').forEach((content) => {
-        if (content.id === target) {
-          content.removeAttribute('hidden')
+      document.querySelectorAll('.hotspots__content').forEach((element) => {
+        if (element.id === target) {
+          element.removeAttribute('hidden')
         }
         else {
-          content.setAttribute('hidden', '')
+          element.setAttribute('hidden', '')
         }
       })
       // Toggle active class
@@ -1211,3 +1221,5 @@
 
 
 </script>
+
+<script src="https://www.central-group.cz/storage/CG/test/rodinne-domy/js/mapbox.js" defer></script>
