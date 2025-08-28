@@ -282,10 +282,23 @@ address {
   max-width: var(--container-l) !important;
 }
 
-/* WIP */
-.container--breakout {
-  margin-left: calc((100vw - 100% - 0px)* -1 / 2);
-  width: calc(100vw - 0px);
+/* WIP: For elements INSIDE a .continer to break out of its max-width */
+
+.container-br-l,
+.container-br-full {
+  --br-width: var(--container-m);
+  width: var(--br-width);
+  max-width: 100vw;
+  --br-offset: calc( ( min( var(--container-m), 100vw ) - min( var(--br-width), 100vw ) ) / 2 );
+  margin-left: calc( var(--br-offset) - var(--container-padding) );
+}
+
+.container-br-l {
+  --br-width: var(--container-l);
+}
+
+.container-br-full {
+  --br-width: 100dvw;
 }
 
 hr,
@@ -318,7 +331,7 @@ hr[data-text]::before {
 
 /* RESET (end) */
 
-/* * Common Font awesome styling * */
+/* * All elements with common Font awesome styling * */
 .price-table .sortable::after {
   -webkit-font-smoothing: antialiased;
   display: var(--fa-display, inline-block);
@@ -1227,7 +1240,7 @@ section section {
 
 /* Old iOS Safari bug fix Fix:  */
 /* NOTE: Safari versions prior to 15.4 had incorrect rendering of background-attachment 'fixed' and 'local'. We detect and limit to iOS, then versions older than 16, and then fallback to 'initial' */
-@supports (-webkit-touch-callout: none) and (not (display: subgrid )) {
+@supports (-webkit-touch-callout: none) and (not (display: subgrid)) {
   .strip {
     background-attachment: initial;
   }
@@ -1294,7 +1307,7 @@ section section {
   background-color: var(--body-bg-color);
   position: absolute;
   left: calc(var(--tl-dot-size) / 2);
-  top: calc(0.75rem + 0.125rem);
+  top: calc(0.75rem + 0.4rem);
 }
 
 @media (min-width: 991px) {
@@ -1660,27 +1673,28 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 
 .layout-viewer {
   position: relative;
-}
-
-.layout-viewer > img {
-  width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center center;
 }
 
 
-.layout-viewer-map {
+/* svg.layout-viewer-map {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-}
+  object-fit: cover;
+  object-position: center center;
+} */
 
+.layout-viewer-map a:has(>path) {
+  -webkit-tap-highlight-color: transparent;
+}
 
 .layout-viewer-map [id^="rd-path"] {
   fill: rgb(255, 255, 255);
   fill: transparent;
+  /* temp */
+  /* fill: violet; */
   fill-opacity: 0.333;
 }
 
@@ -1809,8 +1823,8 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   cursor: pointer;
 }
 
-.pz-control, .pz-controls button+button {
-    border-top: 1px solid #ddd;
+.pz-control, .pz-controls button + button {
+  border-top: 1px solid #ddd;
 }
 
 .pz-controls-group :is(.pz-control, .pz-controls button):not(:first-child) {
@@ -1826,28 +1840,28 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 
 
 /* TEMP: preview only - already part of map box styling */
+/*
 article.map {
   position: relative;
   min-height: 450px;
   height: 60vh;
   max-width: 100%;
-  /* margin-bottom: 3.5rem; */
+  margin-bottom: 0;
   overflow: hidden;
 }
 
-/* TEMP: ditto */
 .map iframe {
   height: calc(100% + 100px);
   margin-top: -100px;
 }
 
-/* TEMP: ditto */
 .map > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
 }
+*/
 
 /* # CARDS */
 .apt-cards {
@@ -2558,29 +2572,3 @@ header.head.gray {
 }
 
 
-/* WIP: For elements INSIDE a .continer to break out of its max-width */
-
-/* ? Do we want to include padding?? Or go edge-to-edge ? */
-.container-br-l,
-.container-br-full {
-  --br-w: var(--container-m);
-  width: var(--br-w);
-  /* * no padding (edge-to-edge) */
-  max-width: 100vw;
-  /* * with padding */
-  /* max-width: calc(100vw - (var(--container-padding) * 2)); */
-  margin-inline: auto;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.container-br-l {
-  --br-w: var(--container-l);
-}
-
-.container-br-full {
-  --br-w: 100dvw;
-}
-
-/* TODO: Rewite two-col to make use of container-out */
