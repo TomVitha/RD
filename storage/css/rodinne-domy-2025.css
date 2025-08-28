@@ -329,6 +329,13 @@ hr[data-text]::before {
   border-bottom: 1px solid;
 }
 
+.footnote {
+  font-size: 0.75rem;
+  margin-top: 0.5em;
+  line-height: 1.2;
+  opacity: 0.5;
+}
+
 /* RESET (end) */
 
 /* * All elements with common Font awesome styling * */
@@ -1196,6 +1203,8 @@ section section {
   text-align: center;
   width: 250px;
   text-wrap: balance;
+  /* ? maybe ? */
+  max-width: 320px;
 }
 
 .highlight > [class*="fa-"] {
@@ -1517,9 +1526,7 @@ section section {
 .price-table {
   width: 100%;
   font-size: 0.875rem;
-  margin: 0;
   background-color: white;
-  /* text-align: left; */
   line-height: 1.2;
   cursor: default;
 }
@@ -1533,7 +1540,7 @@ div.dt-container.dt-empty-footer tbody > tr:last-child > * {
 }
 
 .price-table tbody tr:nth-child(odd) {
-  background-color: #fbfbfb;
+  background-color: var(--color-tertiary);
 }
 
 th {
@@ -1562,12 +1569,14 @@ th {
 }
 
 table.price-table > thead > tr > :is(th, td) {
+  background-color: var(--color-secondary);
   border-bottom: 1px solid #ededed;
 }
 
 .price-table th[class*="dt-ordering"] {
-  color: #0576DE;
-  border-color: currentColor;
+  /* color: #0576DE; */
+  /* border-color: currentColor; */
+  filter: brightness(95%)
 }
 
 .price-table tbody td {
@@ -1661,7 +1670,8 @@ table.price-table > thead > tr > :is(th, td) {
 /* Hover on orderable cells */
 table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-desc):hover {
   outline: none;
-  background-color: rgba(0, 0, 0, 0.020);
+  /* background-color: rgba(0, 0, 0, 0.020); */
+  filter: brightness(97%);
 }
 
 
@@ -1696,6 +1706,8 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   /* temp */
   /* fill: violet; */
   fill-opacity: 0.333;
+  transition-property: fill, stroke, stroke-width;
+  transition-duration: 100ms;
 }
 
 .layout-viewer-map [id^="rd-path"]:hover {
@@ -1894,7 +1906,7 @@ article.map {
 @media (pointer: coarse), not (hover: hover) {
   .apt-card:active {
     /* background-color: #f9f9f9; */
-    filter: brightness(95%);
+    filter: brightness(96%);
   }
 }
 

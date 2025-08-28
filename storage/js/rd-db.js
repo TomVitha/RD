@@ -1,5 +1,5 @@
 // UNUSED
-// import * as databind from './data-binding.js'
+import * as databind from './data-binding.js'
 
 // GLOBAL variable for locale
 let locale = 'cs-CZ' 
@@ -152,6 +152,7 @@ async function LV(propertiesData) {
   })
 
   let box = null;
+  let dialogBox = null;
 
   /**
    * Create box, fill with data, append
@@ -230,6 +231,10 @@ async function LV(propertiesData) {
 
       // Remove box
       box = removeBox(box);
+
+      // TODO: BOX AS DIALOG (on mobile)
+      // WIP: BOX AS DIALOG (on mobile)
+
 
       /**
        * Conditions to create a new box:
