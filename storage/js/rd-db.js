@@ -162,7 +162,9 @@ async function LV(propertiesData) {
   function createFillAppendBox(property) {
     box = document.querySelector("#lv-details-box").content.cloneNode(true).querySelector(".lv-details-box");
     box.setAttribute('id', `lv-details-box-${property.id}`);
-    box.innerHTML = mustacheReplace(box.innerHTML, property)
+    box.innerHTML = mustacheReplace(box.innerHTML, property);
+    box.style.position = "fixed";
+    box.style.zIndex = 10;
     document.querySelector('.layout-viewer-wrapper').appendChild(box);
     return box;
   }
