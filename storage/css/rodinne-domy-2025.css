@@ -157,6 +157,19 @@ dialog {
   border: none;
 }
 
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.3333);
+}
+
+dialog:focus-visible {
+  outline: none !important;
+  outline-offset: inherit !important;
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
 ul,
 ol,
 menu {
@@ -1728,8 +1741,8 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 }
 
 .lv-details-box {
-  position: fixed;
-  z-index: 100;
+  /* position: fixed; */
+  /* z-index: 100; */
 }
 
 .lv-details-box__content {
@@ -2147,6 +2160,7 @@ a.apt-card,
 
 .hotspots {
   --hotspots-textbox-trans-dur: 250ms;
+  position: relative;
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--color-secondary) transparent;
