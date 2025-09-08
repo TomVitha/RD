@@ -7,6 +7,15 @@ let locale = 'cs-CZ'
 // fetch Google Sheets data
 const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
 
+document.querySelectorAll("dialog").forEach((dialog) => {
+  dialog.addEventListener("click", function (event) {
+     if (event.target === dialog) {
+      //  closeDialog();
+      console.log("DIALOOOG: ", event);
+     }
+  });
+});
+
 /**
  * Fetch data from Google Sheets and parse it as JSON
  * @param {string} url URL of the Google Sheet
@@ -153,6 +162,8 @@ async function LV(propertiesData) {
 
   let box = null;
   let dialogBox = null;
+  // ?
+  let matchingProperty = null;
 
   /**
    * Create box, fill with data, append
@@ -207,24 +218,28 @@ async function LV(propertiesData) {
   // Box shows on click; clicking again or outside closes box
   else {
 
+    // TEMP DISABLED
     document.addEventListener("click", (e) => {
 
+      // TEMP !!!
+      return
+
+      let matchingProperty = null;
       const closestPath = e.target.closest(`path[id^="rd-path"]`) // NOTE: .closest() requires a selector
       const boxExists = box ? true : false
       let isSamePropertyAsOpenBox = false
-      let matchingProperty = null;
+
 
       /// If click on a path, or inside it
       if (closestPath) {
-        const path = closestPath;
-        // console.debug("Clicked on this path: ", path);
+        // console.debug("Clicked on this path: ", closestPath);
 
         /// Get matching property (and validate)
         matchingProperty = propertiesDataFormatted.find(
-          (property) => `rd-path-${property.id}` === path.getAttribute('id')
+          (property) => `rd-path-${property.id}` === closestPath.getAttribute('id')
         );
         if (!matchingProperty) {
-          console.log("No matching property for path this path:", path.id);
+          console.log("No matching property for path this path:", closestPath.id);
         } else {
           isSamePropertyAsOpenBox = (box?.id === `lv-details-box-${matchingProperty.id}`) ? true : false;
           // console.debug("Matching property: ", matchingProperty);
@@ -234,10 +249,8 @@ async function LV(propertiesData) {
       // Remove box
       box = removeBox(box);
 
-      // TODO: BOX AS DIALOG (on mobile)
-      // WIP: BOX AS DIALOG (on mobile)
 
-
+      // TODO: DEPRECATE (in favor of dialog)
       /**
        * Conditions to create a new box:
        * - We clicked on, or inside a path
@@ -247,7 +260,6 @@ async function LV(propertiesData) {
       if (closestPath && matchingProperty && !isSamePropertyAsOpenBox) {
         // console.debug("CREATING A NEW BOX FOR PROPERTY: ", matchingProperty.id);
         box = createFillAppendBox(matchingProperty);
-        // TODO: Avoid hard-coding positioning in JS?
         box.style.position = "fixed";
         box.style.left = 0 + "px";
         box.style.right = 0 + "px";
@@ -256,18 +268,40 @@ async function LV(propertiesData) {
       }
 
     });
+    
     // End of document click handler
 
     // Prevent redirecting (opening link) on click
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
       path.addEventListener("click", (event) => {
+
+        console.log(event);
+        
         event.preventDefault();
+
+        
+
+        // WIP: BOX AS DIALOG (on mobile)
+
+        /// Get matching property (and validate)
+        matchingProperty = propertiesDataFormatted.find(
+          (property) => `rd-path-${property.id}` === path.getAttribute('id')
+        );
+
+        /// Two possible ways to set the value
+        // databind.setNestedObjValue('selectedproperty', matchingProperty);
+        databind.state.selectedproperty = matchingProperty;
+
+        document.querySelector("#lv-details-box-dialog").showModal();
       });
 
     });
 
   }
 }
+
+
+
 
 function initDataTables() {
 

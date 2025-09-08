@@ -24,7 +24,7 @@ export const getNestedObjValue = (obj, path) => {
  * @param {String} path 
  * @param {*} value 
  */
-export const setNestedObjValue = (obj, path, value) => {
+export const setNestedObjValue = (path, value, obj = state) => {
   const keys = path.split('.');
   const lastKey = keys.pop();
   const lastObj = keys.reduce((acc, key) => acc && acc[key], obj);
@@ -48,6 +48,9 @@ export const updateElement = (element, propPath) => {
     element.innerText = value;
   }
 }
+
+// NOTE: Setting data-bind value to an object breaks things
+// Example: data-bind="obj" -- obj is an object, not a string
 
 /**
  * Renders all elements with the given property path
@@ -74,9 +77,39 @@ function createDeepProxy(obj, path = '') {
       return value;
     },
     set(target, property, value) {
+      /// Store old value to check if it's an object (for cleanup)
+      /// - Compare with the new value to detect what changed
+      /// - Handle cleanup of any references or listeners attached to properties of the old object
+      /// - Potentially optimize updates by only updating paths that actually changed
+      // const oldValue = target[property];
+      
+      // Set the new value
       target[property] = value;
+      
+      // Calculate the property path
       const propPath = path ? `${path}.${property}` : property;
+      
+      // Update elements with this exact property path
       updateElementsByProperty(propPath);
+      
+      // If the new value is an object, we need to update all its nested properties
+      if (typeof value === 'object' && value !== null) {
+        // Recursively find all nested properties and update them
+        const updateNestedProps = (obj, objPath) => {
+          Object.keys(obj).forEach(key => {
+            const nestedPath = `${objPath}.${key}`;
+            updateElementsByProperty(nestedPath);
+            
+            // Recursively update nested objects
+            if (typeof obj[key] === 'object' && obj[key] !== null) {
+              updateNestedProps(obj[key], nestedPath);
+            }
+          });
+        };
+        
+        updateNestedProps(value, propPath);
+      }
+      
       return true;
     }
   });
@@ -84,6 +117,7 @@ function createDeepProxy(obj, path = '') {
 
 const setState = (state) => createDeepProxy(state);
 
+// State pre-populated with some data of various tyles for testing
 export const state = setState({
   meals: {
     'pizza': 'with pepperoni and pineapple',
@@ -97,8 +131,9 @@ export const state = setState({
   quote1: 'You either die a hero or live long enough to see yourself become the villain.',
   quote2: 'It’s not who I am underneath, but what I do that defines me.',
   quote3: 'Sometimes the truth isn’t good enough, sometimes people deserve more. Sometimes people deserve to have their faith rewarded.',
-  // Debug data type values
   s: 'Something stringy',
+  f: 3.14159,
+  i: 69,
   e: '',
   n: null,
   u: undefined,

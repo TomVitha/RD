@@ -275,6 +275,99 @@ address {
   white-space: nowrap;
 }
 
+
+/* TEXT ALIGNMENT */
+.text-start {
+  text-align: left !important;
+}
+
+.text-end {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+@media (min-width: 576px) {
+  .text-sm-start {
+    text-align: left !important;
+  }
+  .text-sm-end {
+    text-align: right !important;
+  }
+  .text-sm-center {
+    text-align: center !important;
+  }
+  .text-sm-justify {
+    text-align: justify !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .text-md-start {
+    text-align: left !important;
+  }
+  .text-md-end {
+    text-align: right !important;
+  }
+  .text-md-center {
+    text-align: center !important;
+  }
+  .text-md-justify {
+    text-align: justify !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .text-lg-start {
+    text-align: left !important;
+  }
+  .text-lg-end {
+    text-align: right !important;
+  }
+  .text-lg-center {
+    text-align: center !important;
+  }
+  .text-lg-justify {
+    text-align: justify !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .text-xl-start {
+    text-align: left !important;
+  }
+  .text-xl-end {
+    text-align: right !important;
+  }
+  .text-xl-center {
+    text-align: center !important;
+  }
+  .text-xl-justify {
+    text-align: justify !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .text-xxl-start {
+    text-align: left !important;
+  }
+  .text-xxl-end {
+    text-align: right !important;
+  }
+  .text-xxl-center {
+    text-align: center !important;
+  }
+  .text-xxl-justify {
+    text-align: justify !important;
+  }
+}
+
 /* Common styling for containers */
 :where(main) :is(.container, .container-sm, .container-m, .container-l) {
   padding-inline: var(--container-padding);
@@ -1743,6 +1836,11 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 .lv-details-box {
   /* position: fixed; */
   /* z-index: 100; */
+  max-width: 450px;
+}
+
+dialog .lv-details-box {
+  width: 90vw;
 }
 
 .lv-details-box__content {
@@ -1753,7 +1851,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   background-color: var(--color-tertiary);
   color: var(--color-primary);
   box-shadow: 0 0.625rem 1.875rem rgba(2, 2, 3, 0.28);
-  max-width: 450px;
+
   /* ? maybe ? */
   font-family: "Plus Jakarta Sans", "Roboto", "Exo 2", sans-serif;
 }
