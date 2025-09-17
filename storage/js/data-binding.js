@@ -1,6 +1,7 @@
 /// LINK: https://dev.to/phoinixi/one-way-data-binding-in-vanilla-js-poc-4dj7
 
 const bindAttr = 'data-bind' // attribute for binding data
+const bindAttrPrefix = 'data-bind-' // prefix for attribute binding
 
 /**
  * 
@@ -32,33 +33,60 @@ export const setNestedObjValue = (path, value, obj = state) => {
 }
 
 /**
- * Updates element text or value and (re)renders it
- * @param {Node} element 
- * @param {string} propPath 
+ * Updates an element's content or attribute based on state data
+ * @param {Node} element - The element to update
+ * @param {string} propPath - The property path in state
+ * @param {string|null} attrName - Optional attribute name to update (if null, updates element content)
  */
-export const updateElement = (element, propPath) => {
-  // console.debug("updateElement propPath:", propPath);
+export const updateElement = (element, propPath, attrName = null) => {
   const value = getNestedObjValue(state, propPath);
-  /// Set value - mainly for <input> elements + <textarea>
+  
+  // If attrName is provided, update that attribute
+  if (attrName) {
+    element.setAttribute(attrName, value);
+    return;
+  }
+  
+  // Otherwise update element content (original behavior)
   if ("value" in element || element.tagName === 'TEXTAREA') {
     element.value = value;
-  }
-  /// Set inner text
-  else {
+  } else {
     element.innerText = value;
   }
 }
 
-// NOTE: Setting data-bind value to an object breaks things
-// Example: data-bind="obj" -- obj is an object, not a string
+/**
+ * Gets all elements with attributes that start with the given prefix
+ * @param {string} prefix - The attribute name prefix to search for
+ * @param {Document|Element} scope - The root element to search in
+ * @returns {Element[]} Array of matching elements
+ */
+const getElementsWithAttrPrefix = (prefix, scope = document) => {
+  return Array.from(scope.querySelectorAll('*')).filter(el => {
+    return Array.from(el.attributes).some(attr => attr.name.startsWith(prefix));
+  });
+};
 
 /**
  * Renders all elements with the given property path
  * @param {string} propertyPath 
+ * @param {Document|Element} scope 
  */
 export const updateElementsByProperty = (propertyPath, scope = document) => {
+  // Update regular data-bind elements
   scope.querySelectorAll(`[${bindAttr}="${propertyPath}"]`)?.forEach((element) => {
     updateElement(element, propertyPath);
+  });
+
+  // Update attribute bindings - find all elements with our prefix
+  getElementsWithAttrPrefix(bindAttrPrefix, scope).forEach(element => {
+    // Check each attribute to see if it matches our prefix and propertyPath
+    Array.from(element.attributes).forEach(attr => {
+      if (attr.name.startsWith(bindAttrPrefix) && attr.value === propertyPath) {
+        const attrName = attr.name.substring(bindAttrPrefix.length);
+        updateElement(element, propertyPath, attrName);
+      }
+    });
   });
 }
 
@@ -99,17 +127,14 @@ function createDeepProxy(obj, path = '') {
           Object.keys(obj).forEach(key => {
             const nestedPath = `${objPath}.${key}`;
             updateElementsByProperty(nestedPath);
-            
             // Recursively update nested objects
             if (typeof obj[key] === 'object' && obj[key] !== null) {
               updateNestedProps(obj[key], nestedPath);
             }
           });
         };
-        
         updateNestedProps(value, propPath);
       }
-      
       return true;
     }
   });
@@ -159,26 +184,47 @@ export const state = setState({
 /// Observe DOM changes
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
-    /// Child node was Added (or removed)
+    // * Child node was Added (or removed)
     if (mutation.type === 'childList') {
       mutation.addedNodes.forEach((node) => {
         // console.debug("MUTATION added node: ", node);
         if (node.nodeType === Node.ELEMENT_NODE) {
           /// Update node itself if it has bindAttr
           node.hasAttribute(bindAttr) ? updateElement(node, node.getAttribute(bindAttr)) : null;
+          
+          /// Update node attribute bindings
+          for (const attr of node.attributes) {
+            if (attr.name.startsWith(bindAttrPrefix)) {
+              const attrName = attr.name.substring(bindAttrPrefix.length);
+              updateElement(node, attr.value, attrName);
+            }
+          }
+          
           /// Update all descendants with bindAttr
           node.querySelectorAll(`[${bindAttr}]`).forEach((child) => {
             updateElement(child, child.getAttribute(bindAttr));
           });
+          
+          /// Update all descendants with attribute bindings
+          getElementsWithAttrPrefix(bindAttrPrefix, node).forEach(child => {
+            Array.from(child.attributes).forEach(attr => {
+              if (attr.name.startsWith(bindAttrPrefix)) {
+                const attrName = attr.name.substring(bindAttrPrefix.length);
+                updateElement(child, attr.value, attrName);
+              }
+            });
+          });
         }
       });
     }
-    // Attribute was modified
+    // * Attribute was modified
     else if (mutation.type === 'attributes') {
       const target = mutation.target;
       if (target.hasAttribute(bindAttr)) {
-        console.debug("target", target);
         updateElement(target, target.getAttribute(bindAttr));
+      } else if (mutation.attributeName.startsWith(bindAttrPrefix)) {
+        const attrName = mutation.attributeName.substring(bindAttrPrefix.length);
+        updateElement(target, target.getAttribute(mutation.attributeName), attrName);
       }
     }
   });
