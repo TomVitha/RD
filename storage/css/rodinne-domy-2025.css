@@ -166,8 +166,8 @@ dialog:focus-visible {
   outline-offset: inherit !important;
 }
 
-body:has(dialog[open]) {
-  overflow: hidden;
+body:has(dialog[open]:not([class*="cookie"])){
+  overflow-y: hidden;
 }
 
 ul,
@@ -1030,7 +1030,6 @@ a.hero__jump,
 
 /* Hero (end) */
 
-/* WIP: REWRITE */
 /* # Page Nav */
 .page-nav {
   height: var(--page-nav-height, 48px);
@@ -1807,10 +1806,8 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 }
 
 .layout-viewer-map [id^="rd-path"] {
-  fill: rgb(255, 255, 255);
+  /* fill: rgb(255, 255, 255); */
   fill: transparent;
-  /* temp */
-  /* fill: violet; */
   fill-opacity: 0.333;
   transition-property: fill, stroke, stroke-width;
   transition-duration: 100ms;
@@ -1986,256 +1983,10 @@ article.map {
 }
 */
 
-/* # CARDS */
-.apt-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
-  gap: 12px;
-  height: 100%;
-  margin-bottom: 1rem;
-}
-
-.apt-card {
-  background-color: white;
-  border-radius: 16px;
-  border-radius: 10px;
-  color: var(--color-gray-dark);
-  /* NOTE: for some reason to na prod stránce hází na display: block, proto important */
-  display: flex !important;
-  flex-direction: column;
-  font-size: 0.875rem;
-  line-height: 1.15;
-  gap: 0.5rem;
-  box-shadow: 0px 0px 0px 1px #f1f1f1;
-  overflow: hidden;
-  padding: 1.0rem 1.25rem;
-  position: relative;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  transition: box-shadow 150ms, background-color 150ms, filter 150ms;
-}
-
-@media (pointer: coarse), not (hover: hover) {
-  .apt-card:active {
-    /* background-color: #f9f9f9; */
-    filter: brightness(96%);
-  }
-}
-
-.apt-card__big-info {
-  font-size: 1.25rem;
-  color: var(--color-blue);
-  font-weight: 700;
-  line-height: 1.15;
-}
-
-a.apt-card,
-.apt-card a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.apt-card a:hover {
-  text-decoration: underline;
-}
-
-.apt-card h4 {
-  font-size: 1.125rem;
-  color: var(--color-blue);
-  margin-bottom: 0.0em;
-  font-weight: 700;
-  line-height: 1.15;
-}
-
-.apt-card h5 {
-  font-size: 1rem;
-  color: var(--color-blue);
-  margin: 0;
-  font-weight: 400;
-}
-
-.apt-card .apt-card__specs {
-  flex-grow: 1;
-}
-
-.apt-card__thumbnail-img {
-  width: auto;
-  height: 9rem;
-  aspect-ratio: 4/3;
-  object-fit: contain;
-  object-position: center;
-  padding: 0.25rem 0 0.625rem;
-  margin: 0 auto;
-}
-
-@supports not (aspect-ratio: 4/3) {
-  .apt-card__thumbnail-img {
-    max-width: min(12rem, 100%);
-  }
-}
-
-/* Růžice */
-.apt-card__compass {
-  position: absolute;
-  display: block;
-  width: 1.5rem;
-  mix-blend-mode: multiply;
-  object-fit: contain;
-}
-
-.apt-card__heading {
-  color: var(--color-blue, #20234c);
-  display: flex;
-  align-items: center;
-  gap: 0.25em 0.5em;
-  justify-content: left;
-  flex-wrap: wrap-reverse;
-}
-
-.apt-card__heading [class*="fa-"] {
-  font-size: 1rem;
-  margin-bottom: -0.1em;
-}
-
-.apt-card dl.dl-grid {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  align-items: baseline;
-  margin: 0;
-  gap: 0.3em 0.6em;
-}
-
-.apt-card dt {
-  font-size: 0.875rem;
-  font-weight: 400;
-}
-
-.apt-card dd {
-  font-size: 1rem;
-  font-weight: 650;
-  line-height: 1;
-}
-
-.apt-card .label {
-  display: block;
-  line-height: 1.25;
-}
-
-.apt-card .apt-card__fav {
-  position: absolute;
-  top: 0rem;
-  right: 0rem;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-}
-
-/* If browser supports :has() selector */
-@supports selector(:has(*)) {
-  /* and if device is capable of hover and uses mouse */
-  @media (hover: hover) and (pointer: fine) {
-
-    /* hide heart by default */
-    .apt-card .apt-card__fav {
-      display: none;
-    }
-
-    /* show heart on hover */
-    .apt-card:hover .apt-card__fav {
-      display: block;
-    }
-
-    /* heart stays visible if active */
-    .apt-card .apt-card__fav:has(.fa-heart.fas) {
-      display: block;
-    }
-  }
-}
-
-/* Heart icon general */
-.apt-card__fav .fa-heart {
-  cursor: pointer;
-  color: var(--color-gray-dark);
-  transition: color 75ms, scale 150ms;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  font-size: 1.25rem;
-  padding: 16px 18px;
-  border-radius: 0 16px 0 16px;
-}
-
-
-/* When primary pointer is fine (cursor, pen) */
-@media (pointer: fine) {
-
-  /* Smaller hitbox for heart icon */
-  .apt-card__fav .fa-heart {
-    margin: 12px 14px;
-    padding: 4px;
-  }
-
-  .apt-card__fav i.fal:hover {
-    color: var(--color-heart);
-  }
-}
-
-.apt-card__fav .fa-heart:hover:active {
-  scale: 75%;
-  color: var(--color-heart);
-}
-
-/* Add to fav - heart fill */
-.apt-card__fav .fa-heart.fas {
-  color: var(--color-heart);
-  animation-name: heart-fill;
-  animation-duration: 125ms;
-}
-
-/* Remove from fav - heart pop */
-.apt-card__fav .fa-heart.fal {
-  animation-name: heart-pop;
-  animation-duration: 100ms;
-}
-
-
-@keyframes heart-fill {
-  0% {
-    scale: 100%;
-  }
-
-  50% {
-    scale: 75%;
-  }
-
-  75% {
-    scale: 110%;
-  }
-
-  100% {
-    scale: 100%;
-  }
-}
-
-@keyframes heart-pop {
-  0% {
-    scale: 100%;
-  }
-
-  50% {
-    scale: 90%;
-  }
-
-  100% {
-    scale: 100%;
-  }
-}
 
 .gallery {
   --gallery-columns: 2;
 }
-
-/* @media (min-width: 575px) {
-  .gallery {
-    --gallery-columns: 2;
-  }
-} */
 
 @media (min-width: 992px) {
   .gallery {
@@ -2280,7 +2031,7 @@ a.apt-card,
   object-position: center center;
   -webkit-user-drag: none;
 
-  /* !!! SUPER TEMP !!! */
+  /* TEMP ? */
   aspect-ratio: 18.5/9;
 }
 
@@ -2295,10 +2046,6 @@ a.apt-card,
 }
 
 @media (min-width: 992px) {
-  .hotspots__content {
-    /* margin-inline: auto; */
-  }
-
   .hotspots__content > img {
     max-width: 100%;
     width: 100%;
@@ -2376,25 +2123,7 @@ a.apt-card,
   min-width: 8rem;
 }
 
-.hotspots__disclaimer {
-  position: absolute;
-  right: 20px;
-  bottom: 32px;
-  font-size: 0.75rem;
-  font-style: italic;
-  color: #f3f3f3;
-  opacity: 75%;
-  text-align: right;
-  max-width: 200px;
-  line-height: 1.25;
-  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
-  user-select: none;
-}
-
-
-/* TODO: Price table apt-cards view */
 /* TODO: Improve gallery layout (grid, tabs/sections) */
-/* TODO: Refactor using SCSS ?? */
 /* TODO: Optimize for PRINT */
 
 /* * Accessibility * */
@@ -2412,9 +2141,6 @@ a.apt-card,
     animation: none;
   }
 }
-
-
-
 
 
 
@@ -2493,7 +2219,7 @@ a.apt-card,
   }
 }
 
-/* FIXME: Anchor navigation - header overlaps page content */
+/* BUG: Anchor navigation - header overlaps page content */
 /* BUG: Opening mobile nav when header has .transparent then header is, well, transparent */
 .rd-header {
   --rd-header-bg-color: white;
@@ -2622,20 +2348,8 @@ main .font-jakarta {
   font-family: "Plus Jakarta Sans" !important;
 }
 
-
-/* TEMP: DARK THEME */
-/* :root {
-  --color-primary: #101010;
-  --color-headings: var(--color-secondary);
-  --body-bg-color: var(--color-primary);
-  --color-body-text: hsl(0, 0%, 85%);
-  --color-body-text-complimentary: var(--section-bg-color);
-}
-section.bg--tertiary {
-  --section-bg-color: url('https://c.victoria-palace.cz/images/pattern.png') no-repeat center center;
-} */
-
-
+/* TODO: Implement for real */
+/* * GRAY CG HEADER */
 :root {
   --cg-header-bg-prim: hsl(236, 0%, 21%);
   --cg-header-bg-prim-hover: hsl(237, 0%, 33%);

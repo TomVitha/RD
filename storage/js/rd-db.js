@@ -7,11 +7,11 @@ let locale = 'cs-CZ'
 // fetch Google Sheets data
 const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
 
+// Close dialog when clicking outside of it
 document.querySelectorAll("dialog").forEach((dialog) => {
   dialog.addEventListener("click", function (event) {
      if (event.target === dialog) {
-      //  closeDialog();
-      console.log("DIALOOOG: ", event);
+      dialog.close();
      }
   });
 });
@@ -161,8 +161,6 @@ async function LV(propertiesData) {
   })
 
   let box = null;
-  let dialogBox = null;
-  // ?
   let matchingProperty = null;
 
   /**
@@ -184,9 +182,7 @@ async function LV(propertiesData) {
   // ? Use mobile behavior for desktop as well ?
   // Box shows while hovering over a path
   if (window.matchMedia("(pointer: fine)").matches) {
-
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
-
       // Mouse enter (create box)
       path.addEventListener("mouseenter", (e) => {
         const matchingProperty = propertiesDataFormatted.find(
@@ -215,88 +211,30 @@ async function LV(propertiesData) {
 
   }
   // * TOUCH SCREENS
-  // Box shows on click; clicking again or outside closes box
+  // Box as <dialog>
   else {
-
-    // TEMP DISABLED
-    document.addEventListener("click", (e) => {
-
-      // TEMP !!!
-      return
-
-      let matchingProperty = null;
-      const closestPath = e.target.closest(`path[id^="rd-path"]`) // NOTE: .closest() requires a selector
-      const boxExists = box ? true : false
-      let isSamePropertyAsOpenBox = false
-
-
-      /// If click on a path, or inside it
-      if (closestPath) {
-        // console.debug("Clicked on this path: ", closestPath);
-
-        /// Get matching property (and validate)
-        matchingProperty = propertiesDataFormatted.find(
-          (property) => `rd-path-${property.id}` === closestPath.getAttribute('id')
-        );
-        if (!matchingProperty) {
-          console.log("No matching property for path this path:", closestPath.id);
-        } else {
-          isSamePropertyAsOpenBox = (box?.id === `lv-details-box-${matchingProperty.id}`) ? true : false;
-          // console.debug("Matching property: ", matchingProperty);
-        }
-      }
-
-      // Remove box
-      box = removeBox(box);
-
-
-      // TODO: DEPRECATE (in favor of dialog)
-      /**
-       * Conditions to create a new box:
-       * - We clicked on, or inside a path
-       * - Clicked path has a matching property
-       * - Matching property is not the same as the open box's property
-       */
-      if (closestPath && matchingProperty && !isSamePropertyAsOpenBox) {
-        // console.debug("CREATING A NEW BOX FOR PROPERTY: ", matchingProperty.id);
-        box = createFillAppendBox(matchingProperty);
-        box.style.position = "fixed";
-        box.style.left = 0 + "px";
-        box.style.right = 0 + "px";
-        box.style.bottom = 0 + "px";
-        // console.debug("BOX CREATED: ", box);
-      }
-
-    });
-    
-    // End of document click handler
-
-    // Prevent redirecting (opening link) on click
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
       path.addEventListener("click", (event) => {
 
         console.log(event);
-        
-        event.preventDefault();
+        // Prevent redirecting (opening link) on click
+        event.preventDefault();    
 
-        
-
-        // WIP: BOX AS DIALOG (on mobile)
-
-        /// Get matching property (and validate)
+        /// Get matching property
         matchingProperty = propertiesDataFormatted.find(
           (property) => `rd-path-${property.id}` === path.getAttribute('id')
         );
 
-        /// Two possible ways to set the value
-        // databind.setNestedObjValue('selectedproperty', matchingProperty);
+        if (!matchingProperty) 
+          return;
+
         databind.state.selectedproperty = matchingProperty;
+        /// Alt method of setting the value:
+        // databind.setNestedObjValue('selectedproperty', matchingProperty);
 
         document.querySelector("#lv-details-box-dialog").showModal();
       });
-
     });
-
   }
 }
 
@@ -459,3 +397,5 @@ export async function init(loc = 'cs-CZ') {
     initPanzoom();
   });
 }
+
+// TODO: Implement Fancybox !!
