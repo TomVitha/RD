@@ -894,7 +894,7 @@ h2::before {
   text-wrap: balance;
   color: white;
   margin: 0 0 0.333em;
-  max-width: 21ch;
+  max-width: 23ch;
 }
 
 .hero hgroup {

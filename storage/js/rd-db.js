@@ -98,16 +98,19 @@ function mustacheReplace(html, object) {
 function formatData(properties, locale) {
   properties.forEach(property => {
 
-    // Price => CZK currency
-    property.price = new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: 'CZK',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(property['price']);
+    // * Price => CZK currency
+    const prices = ['price_house', 'price_extras', 'price_total'];
+    prices.forEach(price => {
+      property[price] = new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: 'CZK',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }).format(property[price]);
+    })
 
     // TODO? Untangle this mess
-    // Completion date => [long month] [year] 
+    // * Completion date => [long month] [year] 
     if (property.date_completion) {
       // Convert to ISO string if possible, then create new Date from it
       let dateObj;
@@ -129,7 +132,8 @@ function formatData(properties, locale) {
       }
     }
     // Other
-    property.area += ' m²';
+    property.area_int += ' m²';
+    property.area_ext += ' m²';
     property.layout = property.layout + (locale.startsWith('en') ? '+kt' : '+kk');
 
   })
@@ -179,7 +183,6 @@ async function LV(propertiesData) {
   }
 
   // * MOUSE POINTERS
-  // ? Use mobile behavior for desktop as well ?
   // Box shows while hovering over a path
   if (window.matchMedia("(pointer: fine)").matches) {
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
@@ -231,6 +234,8 @@ async function LV(propertiesData) {
         databind.state.selectedproperty = matchingProperty;
         /// Alt method of setting the value:
         // databind.setNestedObjValue('selectedproperty', matchingProperty);
+        databind.state.selectedproperty.url = `./temp/F3.103.pdf?id=${matchingProperty.id}`;
+        console.warn('Selected property:', databind.state.selectedproperty);
 
         document.querySelector("#lv-details-box-dialog").showModal();
       });
@@ -267,23 +272,23 @@ function initDataTables() {
   DataTable.defaults.column.orderSequence = ['asc', 'desc'];
 
   $('.price-table').DataTable({
-    order: [[6, 'asc']],       // Sort by Price on init
-    paging: false,
-    searching: false,
-    info: false,
+    order: [[10, 'asc']],       // Default column to sort by
+    columnDefs: [
+      { orderable: false, targets: [6, 11] },
+      { type: 'natural', target: '_all' },
+      { className: "dt-center", targets: [11] },
+      { className: "dt-right", targets: [8, 9, 10] },
+    ],
     // BUG: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
     // NOTE: Likely happens when not https (like localhost)
     // language: {
     //     url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
     // },
-    columnDefs: [
-      { orderable: false, targets: [3, 7] },
-      { type: 'natural', target: '_all' },
-      { className: "dt-center", targets: [0, 7] },
-      { className: "dt-right", targets: [6] },
-    ],
     responsive: false,
     autoWidth: false,    // Fix: Corrects weird column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
+    paging: false,
+    searching: false,
+    info: false,
   });
 }
 
@@ -387,7 +392,7 @@ export async function init(loc = 'cs-CZ') {
     console.error('Failed to fetch or parse data.');
     return
   }
-  // console.debug('Fetched RAW data: ', propertiesData.tableData);
+  console.debug('Fetched RAW data: ', propertiesData.tableData);
 
 
   $(document).ready(function () {
