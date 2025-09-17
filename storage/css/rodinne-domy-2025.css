@@ -2123,6 +2123,10 @@ article.map {
   min-width: 8rem;
 }
 
+img[data-fancybox] {
+  cursor: pointer;
+}
+
 /* TODO: Improve gallery layout (grid, tabs/sections) */
 /* TODO: Optimize for PRINT */
 
