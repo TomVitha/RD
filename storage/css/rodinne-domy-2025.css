@@ -2019,7 +2019,7 @@ article.map {
 /* ? MAYBE: Fit to screen width when screen in horizontal ? */
 
 .hotspots__content {
-  width: 1200px;
+  width: 900px;
   overscroll-behavior: none;
   position: relative;
 }
