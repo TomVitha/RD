@@ -1,8 +1,7 @@
-// UNUSED
 import * as databind from './data-binding.js'
 
 // GLOBAL variable for locale
-let locale = 'cs-CZ' 
+let locale = 'cs-CZ'
 
 // fetch Google Sheets data
 const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
@@ -10,9 +9,9 @@ const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9L
 // Close dialog when clicking outside of it
 document.querySelectorAll("dialog").forEach((dialog) => {
   dialog.addEventListener("click", function (event) {
-     if (event.target === dialog) {
+    if (event.target === dialog) {
       dialog.close();
-     }
+    }
   });
 });
 
@@ -53,14 +52,43 @@ export async function fetchSheetData(url) {
       });
       return obj;
     });
-
-    // console.debug("Headers:", headers)
-    // console.debug("Data sample:", tableData.slice(0, 2))
     return { headers, tableData };
   } catch (error) {
     console.error('Error fetching data:', error);
     return null;
   }
+}
+
+export function amendPropertiesData(properties) {
+
+    const statusMapping = {
+      "available": {
+        "cs-CZ": "Volný",
+        "en-US": "Available"
+      },
+      "under-offer": {
+        "cs-CZ": "V jednání",
+        "en-US": "Under offer"
+      },
+      "sold": {
+        "cs-CZ": "Prodaný",
+        "en-US": "Sold"
+      },
+      "unknown": {
+        "cs-CZ": "Neznámý",
+        "en-US": "Unknown"
+      },
+    };
+
+    properties.forEach(property => {
+      // status_text - Human-readable text of Status
+      property.status_text = statusMapping[property.status]?.[locale] ?? statusMapping.unknown[locale];
+      // card_url - URL to property card (PDF)
+      // TEMP URL to PDF
+      property.card_url = `./temp/F3.103.pdf?id=${property.id}`;
+    });
+
+    console.debug('Amended data:', properties);
 }
 
 export function populatePriceTableWithData(propertiesData, displaySold = false) {
@@ -78,7 +106,129 @@ export function populatePriceTableWithData(propertiesData, displaySold = false) 
       return;
 
     const row = document.querySelector('#template-price-table-tr').content.cloneNode(true).querySelector('tr');
+
+
+    // * MAPPING for raw data
+    const amenitiesConfig = {
+      "B": {
+        icon: "fa-solid fa-square-b",
+        name: {
+          "cs-CZ": "Balkón",
+          "en-US": "Balcony"
+        },
+        tooltip: {
+          "cs-CZ": "Nemovitost zahrnuje balkón",
+          "en-US": "Property includes a balcony"
+        }
+      },
+      "P": {
+        icon: "fa-solid fa-square-p",
+        name: {
+          "cs-CZ": "Parkování",
+          "en-US": "Parking"
+        },
+        tooltip: {
+          "cs-CZ": "Nemovitost zahrnuje uzavřené garážové stání",
+          "en-US": "Property includes garage"
+        }
+      },
+      "S": {
+        icon: "fa-solid fa-square-s",
+        name: {
+          "cs-CZ": "Sklep",
+          "en-US": "Cellar"
+        },
+        tooltip: {
+          "cs-CZ": "Nemovitost zahrnuje sklep",
+          "en-US": "Property includes a cellar"
+        }
+      },
+      "T": {
+        icon: "fa-solid fa-square-t",
+        name: {
+          "cs-CZ": "Terasa",
+          "en-US": "Terrace"
+        },
+        tooltip: {
+          "cs-CZ": "Nemovitost zahrnuje terasu",
+          "en-US": "Property includes a terrace"
+        }
+      },
+      "Z": {
+        icon: "fa-solid fa-square-z",
+        name: {
+          "cs-CZ": "Zahrada",
+          "en-US": "Garden"
+        },
+        tooltip: {
+          "cs-CZ": "Nemovitost zahrnuje zahradu",
+          "en-US": "Property includes a garden"
+        }
+      },
+    };
+
+    property.amenities.forEach(acc => {
+      if (property.amenities.includes(acc)) {
+        const icon = document.createElement('i');
+        icon.className = amenitiesConfig[acc].icon;
+        // icon.setAttribute('title', amenitiesConfig[acc].tooltip[locale]);  // Tooltip text
+        icon.setAttribute('title', amenitiesConfig[acc].name[locale]);        // Amenity name
+        row.querySelector('[data-icons="amenities"]').appendChild(icon);
+      }
+    });
+
+    const specialEquipmentConfig = {
+      "klima": {
+        filename: "klima",
+        tooltip: {
+          "cs-CZ": "V ceně je klimatizace.",
+          "en-US": "Air conditioning included."
+        }
+      },
+      "rekuperace": {
+        filename: "rekuperace",
+        tooltip: {
+          "cs-CZ": "V ceně je rekuperace bez dochlazování.",
+          "en-US": "Price includes heat recovery without after cooling."
+        }
+      },
+      "rolety": {
+        filename: "zaluzie",
+        tooltip: {
+          "cs-CZ": "V ceně jsou předokenní rolety.",
+          "en-US": "Price includes external blinds."
+        }
+      },
+      "rolety-priprava": {
+        filename: "zaluzie-priprava",
+        tooltip: {
+          "cs-CZ": "V ceně je elektropříprava pro venkovní rolety.",
+          "en-US": "Price includes wiring for external roller shutters."
+        }
+      },
+      "rolety-priprava-cast": {
+        filename: "zaluzie-priprava-cast",
+        tooltip: {
+          "cs-CZ": "V ceně je elektropříprava pro venkovní rolety u části oken.",
+          "en-US": "Price includes wiring for external roller shutters for some windows."
+        }
+      },
+    }
+
+    property.special_equipment.forEach(eq => {
+      if (property.special_equipment.includes(eq)) {
+        const img = document.createElement('img');
+        // icon.className = amenitiesConfig[acc].icon;
+        img.setAttribute('src', `./img/icons/${specialEquipmentConfig[eq].filename}.svg`);
+        img.setAttribute('height', '12');
+        img.setAttribute('title', specialEquipmentConfig[eq].tooltip[locale]);
+        img.classList.add('price-table__icon');
+        row.querySelector('[data-icons="special_equipment"]').appendChild(img);
+      }
+    });
+
     row.innerHTML = mustacheReplace(row.innerHTML, property)
+
     tableBody.appendChild(row)
   });
 
@@ -97,6 +247,12 @@ function mustacheReplace(html, object) {
 
 function formatData(properties, locale) {
   properties.forEach(property => {
+
+    // * Multiple options into array
+    const multiOptions = ['amenities', 'orientation', 'special_equipment']
+    multiOptions.forEach(option => {
+      property[option] = property[option] ? property[option].split(',').map(o => o.trim()).sort() : [];
+    })
 
     // * Price => CZK currency
     const prices = ['price_house', 'price_extras', 'price_total'];
@@ -219,23 +375,21 @@ async function LV(propertiesData) {
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
       path.addEventListener("click", (event) => {
 
-        console.log(event);
-        // Prevent redirecting (opening link) on click
-        event.preventDefault();    
+        // console.debug(event);
+        /// Prevent redirecting (opening link) on click
+        event.preventDefault();
 
         /// Get matching property
         matchingProperty = propertiesDataFormatted.find(
           (property) => `rd-path-${property.id}` === path.getAttribute('id')
         );
 
-        if (!matchingProperty) 
+        if (!matchingProperty)
           return;
 
         databind.state.selectedproperty = matchingProperty;
-        /// Alt method of setting the value:
-        // databind.setNestedObjValue('selectedproperty', matchingProperty);
-        databind.state.selectedproperty.url = `./temp/F3.103.pdf?id=${matchingProperty.id}`;
-        console.warn('Selected property:', databind.state.selectedproperty);
+        // databind.state.selectedproperty.url = `./temp/F3.103.pdf?id=${matchingProperty.id}`;
+        // console.warn('Selected property:', databind.state.selectedproperty);
 
         document.querySelector("#lv-details-box-dialog").showModal();
       });
@@ -272,12 +426,12 @@ function initDataTables() {
   DataTable.defaults.column.orderSequence = ['asc', 'desc'];
 
   $('.price-table').DataTable({
-    order: [[10, 'asc']],       // Default column to sort by
+    order: [[0, 'asc']],       // Default column to sort by
     columnDefs: [
       { orderable: false, targets: [6, 11] },
       { type: 'natural', target: '_all' },
-      { className: "dt-center", targets: [11] },
-      { className: "dt-right", targets: [8, 9, 10] },
+      // { className: "dt-center", targets: [2, 5, 6, 11] },
+      // { className: "dt-right", targets: [8, 9, 10] },
     ],
     // BUG: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
     // NOTE: Likely happens when not https (like localhost)
@@ -294,7 +448,6 @@ function initDataTables() {
 
 // TODO: REPLACE WITH FANCYAPPS PANZOOM ?
 // LINK: https://fancyapps.com/panzoom/guides/custom-controls/
-
 // Panzoom
 function initPanzoom(elemId = 'lv') {
   const elem = document.getElementById(elemId)
@@ -318,8 +471,6 @@ function initPanzoom(elemId = 'lv') {
   btnZoomOut?.addEventListener('click', panzoom.zoomOut)
   btnReset?.addEventListener('click', panzoom.reset)
 
-
-  const mapLinks = document.querySelectorAll('.layout-viewer-map a')
 
   // Helper function to update UI based on zoom level
   function updateZoomUI(scale) {
@@ -355,7 +506,7 @@ function initPanzoom(elemId = 'lv') {
 
   // BUG: When panning with cursor over link, link is activated on click up
   elem.parentElement.addEventListener('wheel', function (event) {
-    console.log(event);
+    console.debug(event);
     // Enables zoom with mouse wheen while holding Ctrl
     if (event.ctrlKey) {
       panzoom.zoomWithWheel(event)
@@ -396,11 +547,10 @@ export async function init(loc = 'cs-CZ') {
 
 
   $(document).ready(function () {
+    amendPropertiesData(propertiesData.tableData);
     populatePriceTableWithData(propertiesData, false);
     initDataTables()
     LV(propertiesData)
     initPanzoom();
   });
 }
-
-// TODO: Implement Fancybox !!

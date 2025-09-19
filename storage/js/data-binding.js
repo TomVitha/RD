@@ -170,7 +170,7 @@ export const state = setState({
     "status": "available",
     "layout": 3,
     "floors": 2,
-    "accessories": {
+    "amenities": {
       1: "Air conditioner",
       2: "Water heater",
       3: "Smart home system",

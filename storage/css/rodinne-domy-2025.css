@@ -31,6 +31,8 @@
   --color-primary: oklch(0.3 0 0);
   /* --color-secondary: oklch(0.79 0.062 80); */
   --color-secondary: oklch(0.84 0.05 79.99);
+  /* temp ? */
+  --color-secondary: hsl(41 61% 76% / 1);
   --color-tertiary: oklch(0.985 0.006 80);
 
   /* Sections */
@@ -52,8 +54,7 @@
   /* * Layout * */
   --sections-spacing: 2.5rem;
   --container-padding: 15px;
-  --container-sm: 800px;
-  /* --container-m: 1140px; */
+  --container-s: 800px;
   --container-m: 1320px;
   --container-l: 1920px;
   --content-half: calc(var(--container-m) / 2);
@@ -62,6 +63,8 @@
   --two-col-gap: 5rem;
 
   /* * Property availability status * */
+  --status-neutral-color: #999999;
+  --status-neutral-color-lt: #f8f8f8;
   --status-available-color: #66cc66;
   --status-available-color-lt: #f8fff9;
   --status-under-offer-color: #cc9933;
@@ -369,7 +372,7 @@ address {
 }
 
 /* Common styling for containers */
-:where(main) :is(.container, .container-sm, .container-m, .container-l) {
+:where(main) :is(.container, .container-s, .container-m, .container-l) {
   padding-inline: var(--container-padding);
   margin-inline: auto;
   height: 100%;
@@ -380,8 +383,8 @@ address {
   max-width: var(--container-m) !important;
 }
 
-.container-sm {
-  max-width: var(--container-sm) !important;
+.container-s {
+  max-width: var(--container-s) !important;
 }
 
 .container-l {
@@ -435,7 +438,7 @@ hr[data-text]::before {
   border-bottom: 1px solid;
 }
 
-.footnote {
+.stealth {
   font-size: 0.75rem;
   margin-top: 0.5em;
   line-height: 1.2;
@@ -787,43 +790,11 @@ h6 {
   white-space: nowrap;
 }
 
-
-
-/* * Styling of '#' -- UNUSED * */
-h2::before {
-  content: '#';
-  font-size: 0.85em;
-  width: 0px;
-  display: inline-block;
-  translate: -0.5em 0;
-  color: #ddd;
-  font-weight: 550;
-  user-select: none;
-  /* Default hidden styling */
-  visibility: hidden;
-  opacity: 0;
-  position: relative;
-  z-index: -1;
-  /* Visibility delayed to let opacity finish fading */
-  transition: translate 200ms, opacity 200ms, visibility 0ms 200ms;
-
-  /* ! hidden */
-  display: none;
-}
-
-/* States when anchor "#" is visible */
-:is(:target h2:first-of-type, h2:target, h2:has(a:hover))::before {
-  visibility: visible;
-  opacity: 1;
-  translate: -0.85em 0;
-  transition: translate 200ms, opacity 200ms, visibility 0ms 0ms;
-}
-
 /* # HERO */
 .hero {
   position: relative;
   isolation: isolate;
-  min-height: 350px;
+  min-height: 500px;
   height: calc(100svh - var(--header-height));
   color: white;
 }
@@ -1169,9 +1140,9 @@ section section {
 
   /* Frosted glass effect */
   .bg--frost {
-    background: hsla(0deg, 0%, 100%, 87%);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
+    background: hsla(0deg, 0%, 100%, 87%);
     box-shadow: inset 0px -1px 0px 0px rgb(246 246 246 / 75%);
     /* NOTE: Fixes performance issue with backdrop-filter in Safari (forces browser to use GPU acceleration instead of CPU) */
     transform: translate3d(0, 0, 0);
@@ -1283,10 +1254,6 @@ section section {
   grid-column: content-middle / span 2;
   /* background-color: cyan; */
 }
-
-
-
-
 
 /* TWO-COL (end) */
 
@@ -1598,11 +1565,6 @@ section section {
   fill: var(--body-bg-color);
 }
 
-/* Arrows preceeding .current */
-/* :where(.done, .phase:has(~.current)) + .phase__arrow {
-  color: var(--phase-icon-color);
-  fill: var(--phase-icon-color);
-} */
 
 /* * Current State * */
 .current .phase__icon {
@@ -1620,7 +1582,7 @@ section section {
 /* # CENÍK TABULKA */
 .price-table-wrapper:not(:has(.dt-layout-table)),
 .dt-layout-table {
-  border: 1px solid #ededed;
+  /* border: 1px solid #ededed; */
   /* border-radius: 10px; */
   overflow: auto;
   scrollbar-color: #c5c5c5 transparent;
@@ -1644,7 +1606,7 @@ div.dt-container.dt-empty-footer tbody > tr:last-child > * {
   border-bottom: none;
 }
 
-.price-table tbody tr:nth-child(odd) {
+.price-table tbody tr:nth-child(even) {
   background-color: var(--color-tertiary);
 }
 
@@ -1692,10 +1654,13 @@ table.price-table > thead > tr > :is(th, td) {
 /* # STATUS */
 
 .property-status {
+  --status-color-primary: var(--status-neutral-color);
+  --status-color-secondary: var(--status-neutral-color-lt);
   border-radius: 999px;
   line-height: 1;
   text-align: center;
-  background-color: #ffffff;
+  color: var(--status-color-primary);
+  background-color: var(--status-color-secondary);
   display: block;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -1703,10 +1668,15 @@ table.price-table > thead > tr > :is(th, td) {
   user-select: none;
   max-width: 9em;
   padding: 0.25em 0.75em;
-  color: #696969;
   font-weight: 600;
   border: 1px solid currentColor;
   font-size: 0.625rem;
+}
+
+.property-status.filled {
+  background-color: var(--status-color-primary);
+  color: var(--status-color-secondary);
+  border: none;
 }
 
 .property-status.dot {
@@ -1716,22 +1686,23 @@ table.price-table > thead > tr > :is(th, td) {
   overflow: hidden;
   aspect-ratio: 1;
   padding: 0;
-  background-color: currentColor !important;
+  background-color: var(--status-color-primary);
+  color: transparent;
 }
 
 .property-status.available {
-  color: #66cc66;
-  background-color: #f8fff9;
+  --status-color-primary: var(--status-available-color);
+  --status-color-secondary: var(--status-available-color-lt);
 }
 
 .property-status.under-offer {
-  color: #cc9933;
-  background-color: #fffdf8;
+  --status-color-primary: var(--status-under-offer-color);
+  --status-color-secondary: var(--status-under-offer-color-lt);
 }
 
 .property-status.sold {
-  color: #993333;
-  background-color: #fffbfb;
+  --status-color-primary: var(--status-sold-color);
+  --status-color-secondary: var(--status-sold-color-lt);
 }
 
 .price-table tbody td.active,
@@ -1772,6 +1743,18 @@ table.price-table > thead > tr > :is(th, td) {
   opacity: 1;
 }
 
+.price-table [class*="fa-"] {
+  font-size: 1rem;
+  margin-inline: 0.125rem;
+}
+
+.price-table__icon {
+  height: 12px;
+  width: 12px;
+  display: inline-block;
+  margin-inline: 0.125rem;
+}
+
 /* Hover on orderable cells */
 table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-desc):hover {
   outline: none;
@@ -1790,16 +1773,6 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   position: relative;
   height: 100%;
 }
-
-
-/* svg.layout-viewer-map {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-} */
 
 .layout-viewer-map a:has(>path) {
   -webkit-tap-highlight-color: transparent;
@@ -1857,6 +1830,9 @@ dialog .lv-details-box {
   background-color: var(--color-secondary);
   padding: 0.5rem 1.25rem;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0 0.5em;
 }
 
 .lv-details-box__close {
@@ -1958,32 +1934,6 @@ dialog .lv-details-box {
   border-bottom: none;
 }
 
-
-/* TEMP: preview only - already part of map box styling */
-/*
-article.map {
-  position: relative;
-  min-height: 450px;
-  height: 60vh;
-  max-width: 100%;
-  margin-bottom: 0;
-  overflow: hidden;
-}
-
-.map iframe {
-  height: calc(100% + 100px);
-  margin-top: -100px;
-}
-
-.map > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-}
-*/
-
-
 .gallery {
   --gallery-columns: 2;
 }
@@ -2004,8 +1954,8 @@ article.map {
   display: grid;
   grid-template-columns: repeat(var(--gallery-columns), 1fr);
   gap: 12px;
+  transition: height 200ms;
 }
-
 
 .hotspots {
   --hotspots-textbox-trans-dur: 250ms;
@@ -2016,12 +1966,21 @@ article.map {
   overscroll-behavior-x: none;
 }
 
-/* ? MAYBE: Fit to screen width when screen in horizontal ? */
-
 .hotspots__content {
-  width: 900px;
+  min-width: 992px;
   overscroll-behavior: none;
   position: relative;
+  overflow: hidden;
+}
+
+/* Fit to screen width when screen in horizontal ? */
+@media (orientation: landscape) and (max-width: 991.98px) {
+  .hotspots__content {
+    min-width: unset;
+  }
+  .hotspots__swipe {
+    display: none;
+  }
 }
 
 .hotspots__content > img {
@@ -2062,47 +2021,76 @@ article.map {
 
 .hotspots__point {
   display: block;
-  width: 30px;
-  height: 30px;
+  width:  26px;
+  height: 26px;
   border-radius: 999px;
-  /* background-color: var(--color-secondary); */
-  background-color: black;
-  box-shadow: 0 0 10px -2px hsla(0deg, 0%, 0%, 90%);
+  background-color: white;
+  border: 4px solid var(--color-secondary);
+  box-shadow: 0 0 12px -4px hsla(0deg, 0%, 0%, 90%);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="white" d="M352 128L352 96L288 96L288 288L96 288L96 352L288 352L288 544L352 544L352 352L544 352L544 288L352 288L352 128z"/></svg>');
+  /* background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path fill="white" d="M352 128L352 96L288 96L288 288L96 288L96 352L288 352L288 544L352 544L352 352L544 352L544 288L352 288L352 128z"/></svg>'); */
   background-size: 75%;
   background-repeat: no-repeat;
   background-position: center center;
+  transition: transform 100ms;
 }
 
 .hotspots__textbox {
-  width: 200px;
+  width: max-content;
+  max-width: 200px;
   cursor: default;
   font-size: 0.75rem;
-  background-color: white;
-  padding: 0.75em 1.25em;
-  margin-top: 6px;
-  text-transform: uppercase;
+  color: white;
+  background-color: rgb(0, 0, 0, 0.75);
+  padding: 0.6em 0.75em;
+  margin-block: 6px;
+  /* text-transform: uppercase; */
   line-height: 1.333;
+  backdrop-filter: blur(8px);
+
+  transition: opacity var(--hotspots-textbox-trans-dur) 0ms, top var(--hotspots-textbox-trans-dur), bottom var(--hotspots-textbox-trans-dur), visibility 0ms var(--hotspots-textbox-trans-dur);
+  transition-behavior: allow-discrete;
+
+  visibility: hidden;
+  opacity: 0;
 
   position: absolute;
   top: calc(100% - 10px);
   left: 50%;
   translate: -50% 0%;
+}
 
-  transition: opacity var(--hotspots-textbox-trans-dur) 0ms, top var(--hotspots-textbox-trans-dur), visibility 0ms var(--hotspots-textbox-trans-dur);
-  transition-behavior: allow-discrete;
+.hotspots__textbox.left {
+  left: 0%;
+  translate: 0% 0%;
+}
 
-  visibility: hidden;
-  opacity: 0;
+.hotspots__textbox.right {
+  left: 100%;
+  translate: -100% 0%;
+}
+
+.hotspots__textbox.top {
+  top: auto;
+  bottom: calc(100% - 10px);
+}
+
+.hotspots__item:hover .hotspots__point {
+  transform: scale(1.05);
 }
 
 .hotspots__item:hover .hotspots__textbox {
-  transition: opacity var(--hotspots-textbox-trans-dur) 0ms, top var(--hotspots-textbox-trans-dur), visibility var(--hotspots-textbox-trans-dur) 0ms;
+  transition: opacity var(--hotspots-textbox-trans-dur) 0ms, top var(--hotspots-textbox-trans-dur), bottom var(--hotspots-textbox-trans-dur), visibility var(--hotspots-textbox-trans-dur) 0ms;
   visibility: visible;
   opacity: 1;
   top: 100%;
+  bottom: auto;
+}
+
+.hotspots__item:hover .hotspots__textbox.top {
+  top: auto;
+  bottom: 100%;
 }
 
 
@@ -2395,6 +2383,33 @@ header.head.gray {
 
   .head-bottom .mm-menu-bottom li:hover {
     background-color: var(--header-bg-sec-hover);
+  }
+
+  .mm-main-item:hover .mm-main-item-link {
+    color: inherit;
+    margin: 0;
+    padding: 10px 15px;  
+  }
+
+  .mm-main-item-link:hover {
+    color: inherit
+  }
+
+  .mm-main-item-link {
+    border-color: #bbb;
+  }
+
+  @media (max-width: 991.98px) {
+    .main-menu,
+    .mm-submenu-item-big-dark-link,
+    .mm-main-item-link,
+    .mm-separator-full-link {
+      background-color: var(--cg-header-bg-prim);
+    }
+    .mm-product-link,
+    .mm-submenu-item-link {
+      color: var(--cg-header-text-color);
+    }
   }
 }
 
