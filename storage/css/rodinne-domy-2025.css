@@ -1603,6 +1603,7 @@ section section {
 
 .price-table tr:not(:last-child) {
   /* border-bottom: 1px solid #f5f5f5; */
+  /* border-bottom: 1px solid #f5f5f5; */
 }
 
 div.dt-container.dt-empty-footer tbody > tr:last-child > * {
@@ -2080,6 +2081,21 @@ dialog .lv-details-box {
   background-repeat: no-repeat;
   background-position: center center;
   transition: transform 100ms;
+
+  box-shadow: 0 0 0 rgba(204,169,44, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(204,169,44, 0.5);
+  }
+  70% {
+      box-shadow: 0 0 0 10px rgba(204,169,44, 0);
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
 
   box-shadow: 0 0 0 rgba(204,169,44, 0.4);
   animation: pulse 2s infinite;
