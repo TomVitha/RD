@@ -430,7 +430,7 @@ function initDataTables() {
     columnDefs: [
       { orderable: false, targets: [6, 11] },
       { type: 'natural', target: '_all' },
-      // { className: "dt-center", targets: [2, 5, 6, 11] },
+      { className: "dt-center", targets: [2, 5, 6, 11] },
       // { className: "dt-right", targets: [8, 9, 10] },
     ],
     // BUG: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
