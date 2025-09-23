@@ -61,34 +61,34 @@ export async function fetchSheetData(url) {
 
 export function amendPropertiesData(properties) {
 
-    const statusMapping = {
-      "available": {
-        "cs-CZ": "Volný",
-        "en-US": "Available"
-      },
-      "under-offer": {
-        "cs-CZ": "V jednání",
-        "en-US": "Under offer"
-      },
-      "sold": {
-        "cs-CZ": "Prodaný",
-        "en-US": "Sold"
-      },
-      "unknown": {
-        "cs-CZ": "Neznámý",
-        "en-US": "Unknown"
-      },
-    };
+  const statusMapping = {
+    "available": {
+      "cs-CZ": "Volný",
+      "en-US": "Available"
+    },
+    "under-offer": {
+      "cs-CZ": "V jednání",
+      "en-US": "Under offer"
+    },
+    "sold": {
+      "cs-CZ": "Prodaný",
+      "en-US": "Sold"
+    },
+    "unknown": {
+      "cs-CZ": "Neznámý",
+      "en-US": "Unknown"
+    },
+  };
 
-    properties.forEach(property => {
-      // status_text - Human-readable text of Status
-      property.status_text = statusMapping[property.status]?.[locale] ?? statusMapping.unknown[locale];
-      // card_url - URL to property card (PDF)
-      // TEMP URL to PDF
-      property.card_url = `./temp/F3.103.pdf?id=${property.id}`;
-    });
+  properties.forEach(property => {
+    // status_text - Human-readable text of Status
+    property.status_text = statusMapping[property.status]?.[locale] ?? statusMapping.unknown[locale];
+    // card_url - URL to property card (PDF)
+    // TEMP URL to PDF
+    property.card_url = `./temp/F3.103.pdf?id=${property.id}`;
+  });
 
-    console.debug('Amended data:', properties);
+  console.debug('Amended data:', properties);
 }
 
 export function populatePriceTableWithData(propertiesData, displaySold = false) {
@@ -171,8 +171,9 @@ export function populatePriceTableWithData(propertiesData, displaySold = false) 
       if (property.amenities.includes(acc)) {
         const icon = document.createElement('i');
         icon.className = amenitiesConfig[acc].icon;
-        // icon.setAttribute('title', amenitiesConfig[acc].tooltip[locale]);  // Tooltip text
-        icon.setAttribute('title', amenitiesConfig[acc].name[locale]);        // Amenity name
+        // icon.setAttribute('title', amenitiesConfig[acc].tooltip[locale]);                // Tooltip text
+        icon.setAttribute('title', amenitiesConfig[acc].name[locale]);                      // Amenity name
+        icon.setAttribute('data-tippy-content', amenitiesConfig[acc].name[locale]);         // Amenity name
         row.querySelector('[data-icons="amenities"]').appendChild(icon);
       }
     });
@@ -428,10 +429,10 @@ function initDataTables() {
   $('.price-table').DataTable({
     order: [[0, 'asc']],       // Default column to sort by
     columnDefs: [
-      { orderable: false, targets: [6, 11] },
       { type: 'natural', target: '_all' },
-      { className: "dt-center", targets: [2, 5, 6, 11] },
-      // { className: "dt-right", targets: [8, 9, 10] },
+      { orderable: false, targets: [6, 11] },
+      { className: "dt-center", targets: [0, 1, 2, 5, 6, 11] },
+      { className: "dt-right", targets: [3, 4, 7, 8, 9, 10] },
     ],
     // BUG: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
     // NOTE: Likely happens when not https (like localhost)
@@ -544,7 +545,6 @@ export async function init(loc = 'cs-CZ') {
     return
   }
   console.debug('Fetched RAW data: ', propertiesData.tableData);
-
 
   $(document).ready(function () {
     amendPropertiesData(propertiesData.tableData);
