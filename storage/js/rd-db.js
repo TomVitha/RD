@@ -464,6 +464,7 @@ function initPanzoom(elemId = 'lv') {
   })
 
   // * CONTROLS
+  const controls = document.getElementById('lv-pz-controls');
   const btnZoomIn = document.getElementById('lv-pz-zoom-in');
   const btnZoomOut = document.getElementById('lv-pz-zoom-out');
   const btnReset = document.getElementById('lv-pz-reset');
@@ -472,6 +473,8 @@ function initPanzoom(elemId = 'lv') {
   btnZoomOut?.addEventListener('click', panzoom.zoomOut)
   btnReset?.addEventListener('click', panzoom.reset)
 
+  // Unhide controls
+  controls.removeAttribute('hidden')
 
   // Helper function to update UI based on zoom level
   function updateZoomUI(scale) {
@@ -530,7 +533,6 @@ function initPanzoom(elemId = 'lv') {
     }
   })
 
-
 }
 
 
@@ -551,6 +553,6 @@ export async function init(loc = 'cs-CZ') {
     populatePriceTableWithData(propertiesData, false);
     initDataTables()
     LV(propertiesData)
-    initPanzoom();
+    // initPanzoom();
   });
 }

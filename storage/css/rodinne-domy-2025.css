@@ -1603,7 +1603,7 @@ section section {
   /* border: 1px solid #ededed; */
   /* border-radius: 10px; */
   overflow: auto;
-  scrollbar-color: #c5c5c5 transparent;
+  scrollbar-color: var(--color-secondary) transparent;
   scrollbar-width: thin;
   margin-block: 24px;
 }
