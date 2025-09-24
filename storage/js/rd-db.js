@@ -4,7 +4,7 @@ import * as databind from './data-binding.js'
 let locale = 'cs-CZ'
 
 // fetch Google Sheets data
-const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=RD_DB';
+const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=Etapa_1';
 
 // Close dialog when clicking outside of it
 document.querySelectorAll("dialog").forEach((dialog) => {
@@ -14,6 +14,8 @@ document.querySelectorAll("dialog").forEach((dialog) => {
     }
   });
 });
+
+
 
 /**
  * Fetch data from Google Sheets and parse it as JSON
@@ -26,8 +28,7 @@ export async function fetchSheetData(url) {
     const responseText = await response.text();
 
     // Extract the JSON part from the response (Google's response has a prefix we need to remove)
-    const jsonString = responseText.substring(responseText.indexOf('{'), responseText.lastIndexOf('}') + 1);
-    const data = JSON.parse(jsonString);
+    const data = JSON.parse(responseText.substring(responseText.indexOf('{'), responseText.lastIndexOf('}') + 1));
 
     // Extract headers from column labels
     const headers = data.table.cols.map(col => col.label);
@@ -91,24 +92,46 @@ export function amendPropertiesData(properties) {
   console.debug('Amended data:', properties);
 }
 
-export function populatePriceTableWithData(propertiesData, displaySold = false) {
-  // Format data to human-readable for display
-  const properties = formatData(JSON.parse(JSON.stringify(propertiesData.tableData)), locale);
+/**
+ * Primitive DYI Templating
+ * (Similar to Mustache, Handlebars, Vue...)
+ * @param {string} html 
+ * @param {object} object 
+ * @returns 
+ */
+function mustacheReplace(html, object) {
+  Object.entries(object).forEach(([key, value]) => {
+    const regex = new RegExp(`{\\s*${key}\\s*}`, 'g');
+    html = html.replace(regex, value);
+  });
+  return html;
+}
 
+/**
+ * Generates a table row for each property
+ * @param {object} data 
+ * @param {boolean} displaySold 
+ */
+export function populatePriceTableWithData(data, displaySold = false) {
+
+  // Elements
+  const properties = formatData(JSON.parse(JSON.stringify(data)), locale);
   const table = document.querySelector('#template-price-table').content.cloneNode(true).querySelector('table');
   const tableBody = table.querySelector('tbody');
   const tableContainer = document.querySelector('#price-table-container')
 
+  // Row for each property
   properties.forEach(property => {
 
-    // Sold properties are not displayed
+    // ! Sold properties are not displayed
     if (!displaySold && property['status'] === 'sold')
       return;
 
     const row = document.querySelector('#template-price-table-tr').content.cloneNode(true).querySelector('tr');
 
+    // * Mapping for raw data
 
-    // * MAPPING for raw data
+    // Amenities (Příslušenství)
     const amenitiesConfig = {
       "B": {
         icon: "fa-solid fa-square-b",
@@ -178,6 +201,7 @@ export function populatePriceTableWithData(propertiesData, displaySold = false) 
       }
     });
 
+    // Special equipment (Speciální vybavení)
     const specialEquipmentConfig = {
       "klima": {
         filename: "klima",
@@ -228,8 +252,7 @@ export function populatePriceTableWithData(propertiesData, displaySold = false) 
       }
     });
 
-    row.innerHTML = mustacheReplace(row.innerHTML, property)
-
+    row.innerHTML = mustacheReplace(row.innerHTML, property)  // Replace template
     tableBody.appendChild(row)
   });
 
@@ -237,15 +260,12 @@ export function populatePriceTableWithData(propertiesData, displaySold = false) 
   tableContainer.replaceChildren(table);
 }
 
-// Mustache
-function mustacheReplace(html, object) {
-  Object.entries(object).forEach(([key, value]) => {
-    const regex = new RegExp(`{\\s*${key}\\s*}`, 'g');
-    html = html.replace(regex, value);
-  });
-  return html;
-}
-
+/**
+ * Formats raw data into human-readable like: Adding currency symbols, units
+ * @param {*} properties 
+ * @param {*} locale 
+ * @returns 
+ */
 function formatData(properties, locale) {
   properties.forEach(property => {
 
@@ -266,7 +286,7 @@ function formatData(properties, locale) {
       }).format(property[price]);
     })
 
-    // TODO? Untangle this mess
+
     // * Completion date => [long month] [year] 
     if (property.date_completion) {
       // Convert to ISO string if possible, then create new Date from it
@@ -288,7 +308,8 @@ function formatData(properties, locale) {
         });
       }
     }
-    // Other
+
+    // * Other - suffix with units
     property.area_int += ' m²';
     property.area_ext += ' m²';
     property.layout = property.layout + (locale.startsWith('en') ? '+kt' : '+kk');
@@ -297,39 +318,29 @@ function formatData(properties, locale) {
   return properties
 }
 
-function removeBox(box) {
-  if (box) {
-    box.remove();
-    box = null;
-  }
-  return box;
-}
 
 
-// TODO: Move to a more sensible place ?
 /**
  * Layout Viewer map
  */
-async function LV(propertiesData) {
+async function LV(data) {
 
-  // ! Pass as a DEEP COPY !
-  const propertiesDataFormatted = formatData(JSON.parse(JSON.stringify(propertiesData.tableData)), locale);
+  const propertiesDataFormatted = formatData(JSON.parse(JSON.stringify(data)), locale);   // ! Must be passed as a DEEP COPY !
 
-  // Assign status classes to property paths
-  propertiesData.tableData.forEach((property) => {
-    const ele = document.getElementById(`rd-path-${property.id}`)
-    ele.classList.add(`${property.status}`)
+  // Assign status class to paths
+  data.forEach((property) => {
+    document.getElementById(`rd-path-${property.id}`).classList.add(`${property.status}`)
   })
 
   let box = null;
   let matchingProperty = null;
 
   /**
-   * Create box, fill with data, append
+   * Create box from <template>, fill with data, and append
    * @param {Object} property 
    * @returns {Element} box
    */
-  function createFillAppendBox(property) {
+  function createBox(property) {
     box = document.querySelector("#lv-details-box").content.cloneNode(true).querySelector(".lv-details-box");
     box.setAttribute('id', `lv-details-box-${property.id}`);
     box.innerHTML = mustacheReplace(box.innerHTML, property);
@@ -339,10 +350,18 @@ async function LV(propertiesData) {
     return box;
   }
 
-  // * MOUSE POINTERS
-  // Box shows while hovering over a path
+  function removeBox(box) {
+    if (box) {
+      box.remove();
+      box = null;
+    }
+    return box;
+  }
+
+  // * MOUSE POINTERS -- Box shows while hovering over a path
   if (window.matchMedia("(pointer: fine)").matches) {
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
+
       // Mouse enter (create box)
       path.addEventListener("mouseenter", (e) => {
         const matchingProperty = propertiesDataFormatted.find(
@@ -351,7 +370,7 @@ async function LV(propertiesData) {
         if (!matchingProperty) {
           return;
         }
-        box = createFillAppendBox(matchingProperty);
+        box = createBox(matchingProperty);
       });
 
       // Mouse move (reposition box)
@@ -370,13 +389,11 @@ async function LV(propertiesData) {
     })
 
   }
-  // * TOUCH SCREENS
-  // Box as <dialog>
+  // * TOUCH SCREENS -- Box as <dialog>
   else {
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
       path.addEventListener("click", (event) => {
 
-        // console.debug(event);
         /// Prevent redirecting (opening link) on click
         event.preventDefault();
 
@@ -388,10 +405,8 @@ async function LV(propertiesData) {
         if (!matchingProperty)
           return;
 
+        // Bind elements
         databind.state.selectedproperty = matchingProperty;
-        // databind.state.selectedproperty.url = `./temp/F3.103.pdf?id=${matchingProperty.id}`;
-        // console.warn('Selected property:', databind.state.selectedproperty);
-
         document.querySelector("#lv-details-box-dialog").showModal();
       });
     });
@@ -400,47 +415,50 @@ async function LV(propertiesData) {
 
 
 
-
+/**
+ * Initializes DataTables on the Price Table
+ * @see {@link https://datatables.net/}
+ */
 function initDataTables() {
 
+  // Helper function to remove HTML tags (and replace non-breaking space with regular space)
   function stripHTMLTags(string) {
     return string.replaceAll(/<[^>]*>/g, '').replaceAll('&nbsp;', ' ');
   }
 
+  // Custom sort function
   function naturalSort(a, b, m = 1) {
     a = stripHTMLTags(a)
     b = stripHTMLTags(b)
     const out = a.localeCompare(b, locale, { numeric: true, ignorePunctuation: true });
     return out * m;
   }
-
   $.extend(DataTable.ext.type.order, {
     "natural-asc": function (a, b) {
       return naturalSort(a, b);
     },
-
     "natural-desc": function (a, b) {
       return naturalSort(a, b, -1);
     }
   });
-
   DataTable.defaults.column.orderSequence = ['asc', 'desc'];
 
-  $('.price-table').DataTable({
+  // Initialization
+  $('#price-table').DataTable({
     order: [[0, 'asc']],       // Default column to sort by
     columnDefs: [
-      { type: 'natural', target: '_all' },
-      { orderable: false, targets: [6, 11] },
-      { className: "dt-center", targets: [0, 1, 2, 5, 6, 11] },
-      { className: "dt-right", targets: [3, 4, 7, 8, 9, 10] },
+      { type: 'natural', target: '_all' },                              // Sorty by Natural sort
+      { orderable: false, targets: [6, 11] },                           // Disable ordering
+      { className: "dt-center", targets: [0, 1, 2, 5, 6, 11] },         // Center align text
+      { className: "dt-right", targets: [3, 4, 7, 8, 9, 10] },          // Right align text
     ],
     // BUG: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
-    // NOTE: Likely happens when not https (like localhost)
+    // NOTE: Likely happens when not using https (like on localhost)
     // language: {
     //     url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
     // },
     responsive: false,
-    autoWidth: false,    // Fix: Corrects weird column widths, namely Price - although apparently "not recommended - can cause a problem with columns layout"
+    autoWidth: false,    // Fix: Corrects weird column widths
     paging: false,
     searching: false,
     info: false,
@@ -463,7 +481,7 @@ function initPanzoom(elemId = 'lv') {
     // touchAction: 'pan-y',
   })
 
-  // * CONTROLS
+  // Controls
   const controls = document.getElementById('lv-pz-controls');
   const btnZoomIn = document.getElementById('lv-pz-zoom-in');
   const btnZoomOut = document.getElementById('lv-pz-zoom-out');
@@ -472,6 +490,7 @@ function initPanzoom(elemId = 'lv') {
   btnZoomIn?.addEventListener('click', panzoom.zoomIn)
   btnZoomOut?.addEventListener('click', panzoom.zoomOut)
   btnReset?.addEventListener('click', panzoom.reset)
+
 
   // Unhide controls
   controls.removeAttribute('hidden')
@@ -510,8 +529,7 @@ function initPanzoom(elemId = 'lv') {
 
   // BUG: When panning with cursor over link, link is activated on click up
   elem.parentElement.addEventListener('wheel', function (event) {
-    console.debug(event);
-    // Enables zoom with mouse wheen while holding Ctrl
+    // Enables zoom with mouse wheen (only) while holding Ctrl
     if (event.ctrlKey) {
       panzoom.zoomWithWheel(event)
     }
@@ -539,8 +557,10 @@ function initPanzoom(elemId = 'lv') {
 // # INITIALIZATION
 export async function init(loc = 'cs-CZ') {
 
-  locale = loc; // Set global locale value
+  // Set global locale value
+  locale = loc; 
 
+  // Fetch data
   const propertiesData = await fetchSheetData(sheetURL);
   if (!propertiesData) {
     console.error('Failed to fetch or parse data.');
@@ -548,11 +568,12 @@ export async function init(loc = 'cs-CZ') {
   }
   console.debug('Fetched RAW data: ', propertiesData.tableData);
 
+  // Init the rest
   $(document).ready(function () {
     amendPropertiesData(propertiesData.tableData);
-    populatePriceTableWithData(propertiesData, false);
+    populatePriceTableWithData(propertiesData.tableData, false);
     initDataTables()
-    LV(propertiesData)
-    // initPanzoom();
+    LV(propertiesData.tableData)
+    // initPanzoom();     // We won't be using Panzoom
   });
 }

@@ -7,7 +7,7 @@
   font-style: normal;
   font-weight: 100 900;
   /* NOTE: .ttf and .eot don't seem to work */
-  src: url('https://www.central-group.cz/storage/CG/test/rodinne-domy/fonts/helvetica-now-var-display/HelveticaNowVar.woff2') format('woff2');
+  src: url('https://www.central-group.cz/storage/CG/194-RD/fonts/helvetica-now-var-display/HelveticaNowVar.woff2') format('woff2');
 }
 
 
@@ -30,12 +30,11 @@
   /* * Palette * */
   --color-primary: oklch(0.3 0 0);
   /* --color-secondary: oklch(0.79 0.062 80); */
-  --color-secondary: oklch(0.84 0.05 79.99);
-  /* temp ? */
+  /* --color-secondary: oklch(0.84 0.05 79.99); */
   --color-secondary: hsl(41 61% 76% / 1);
   --color-tertiary: oklch(0.985 0.006 80);
 
-  /* Sections */
+  /* * Page backgrounds * */
   --body-bg-color: white;
   --section-bg-color: var(--body-bg-color);
 
@@ -50,9 +49,8 @@
   --header-height: var(--header-height-top);
   --page-nav-height: 52px;
 
-  /* TODO: Fix this mess with containers */
   /* * Layout * */
-  --sections-spacing: 2.5rem;
+  --sections-spacing: 3.5rem;
   --container-padding: 15px;
   --container-s: 850px;
   --container-m: 1320px;
@@ -277,9 +275,9 @@ address {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+/* RESET (end) */
 
-
-/* TEXT ALIGNMENT */
+/* TEXT ALIGNMENT (from Bootstrap) */
 .text-start {
   text-align: left !important;
 }
@@ -406,8 +404,7 @@ address {
   max-width: var(--container-l) !important;
 }
 
-/* WIP: For elements INSIDE a .continer to break out of its max-width */
-
+/* For elements INSIDE a .container to break out of its max-width */
 .container-br-l,
 .container-br-full {
   --br-width: var(--container-m);
@@ -416,6 +413,8 @@ address {
   --br-offset: calc((min(var(--container-m), 100vw) - min(var(--br-width), 100vw)) / 2);
   margin-left: calc(var(--br-offset) - var(--container-padding));
 }
+
+/* TODO: Support breaking out of other container sizes */
 
 .container-br-l {
   --br-width: var(--container-l);
@@ -458,8 +457,6 @@ hr[data-text]::before {
   line-height: 1.2;
   opacity: 0.5;
 }
-
-/* RESET (end) */
 
 /* * All elements with common Font awesome styling * */
 .price-table .sortable::after {
