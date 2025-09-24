@@ -806,6 +806,14 @@ h6 {
   white-space: nowrap;
 }
 
+p > a, .link {
+  text-decoration: underline;
+}
+
+:is(p > a, .link):hover {
+  text-decoration: none;
+}
+
 /* # HERO */
 .hero {
   position: relative;

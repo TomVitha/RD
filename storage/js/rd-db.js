@@ -143,6 +143,17 @@ export function populatePriceTableWithData(data, displaySold = false) {
           "en-US": "Property includes a balcony"
         }
       },
+      "G": {
+        icon: "fa-solid fa-square-g",
+        name: {
+          "cs-CZ": "Garáž",
+          "en-US": "Garage"
+        },
+        tooltip: {
+          "cs-CZ": "Nemovitost zahrnuje uzavřené garážové stání",
+          "en-US": "Property includes a garage"
+        }
+      },
       "P": {
         icon: "fa-solid fa-square-p",
         name: {
@@ -150,8 +161,8 @@ export function populatePriceTableWithData(data, displaySold = false) {
           "en-US": "Parking"
         },
         tooltip: {
-          "cs-CZ": "Nemovitost zahrnuje uzavřené garážové stání",
-          "en-US": "Property includes garage"
+          "cs-CZ": "Nemovitost zahrnuje parkovací stání",
+          "en-US": "Property includes parking space"
         }
       },
       "S": {
@@ -193,9 +204,8 @@ export function populatePriceTableWithData(data, displaySold = false) {
       if (property.amenities.includes(acc)) {
         const icon = document.createElement('i');
         icon.className = amenitiesConfig[acc].icon;
-        // icon.setAttribute('title', amenitiesConfig[acc].tooltip[locale]);                // Tooltip text
-        icon.setAttribute('title', amenitiesConfig[acc].name[locale]);                      // Amenity name
-        icon.setAttribute('data-tippy-content', amenitiesConfig[acc].name[locale]);         // Amenity name
+        icon.setAttribute('title', amenitiesConfig[acc].tooltip[locale]);                // Tooltip text
+        icon.setAttribute('data-tippy-content', amenitiesConfig[acc].tooltip[locale]);         // Amenity name
         row.querySelector('[data-icons="amenities"]').appendChild(icon);
       }
     });
