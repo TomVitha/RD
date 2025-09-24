@@ -85,8 +85,7 @@ export function amendPropertiesData(properties) {
     // status_text - Human-readable text of Status
     property.status_text = statusMapping[property.status]?.[locale] ?? statusMapping.unknown[locale];
     // card_url - URL to property card (PDF)
-    // FIXME!!
-    property.card_url = `./temp/F3.103.pdf?id=${property.id}`;
+    property.card_url = `https://www.central-group.cz/storage/CG/194-RD/karty-domu/194-RD-${property.name}.pdf`;
   });
 
   console.debug('Amended data:', properties);
@@ -94,7 +93,7 @@ export function amendPropertiesData(properties) {
 
 /**
  * Primitive DYI Templating
- * (Similar to Mustache, Handlebars, Vue...)
+ * (Imitating template syntax in Vue.js, Mustache.js, Handlebars.js etc.)
  * @param {string} html 
  * @param {object} object 
  * @returns 
@@ -329,9 +328,7 @@ async function LV(data) {
 
   // Assign status class to paths
   data.forEach((property) => {
-    // FIXME
-    // const ele = document.getElementById(`rd-path-${property.id}`)
-    // ele.classList.add(`${property.status}`)
+    document.getElementById(`rd-path-${property.id}`)?.classList.add(`${property.status}`)
   })
 
   let box = null;
