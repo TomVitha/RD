@@ -6,12 +6,12 @@
   <meta http-equiv=X-UA-Compatible content="IE=edge">
   <meta http-equiv=Content-Language content=cs>
   <title>DEV - RD Pitkovice</title>
-  <!-- ! Jquery - Outdated version from 2013 -->
+  <!-- * Jquery - Outdated version from 2013 -->
   <script src=https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js></script>
-  <!-- ! Fancybox - Outdated version from 2019, deprecated and replaced by Fancyapps UI -->
+  <!-- * Fancybox - Outdated version from 2019, deprecated and replaced by Fancyapps UI -->
   <link rel=stylesheet href=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css>
   <script src=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js async defer></script>
-  <!-- ! Styles linked and loaded twice (scripts as well) -->
+  <!-- * Styles linked and loaded twice (scripts as well) -->
   <link as=style href=https://www.central-group.cz//wms3/css/app.2e912a36.css rel=preload>
   <link as=style href=https://www.central-group.cz//wms3/css/chunk-vendors.9afe8511.css rel=preload>
   <link href=https://www.central-group.cz//wms3/css/chunk-vendors.9afe8511.css rel=stylesheet>
@@ -45,13 +45,13 @@
       </footer>
     </div>
   </div>
-  <!-- ! Tippy - Web uses Tippy.js v2.6.0 from 2017 and vue-tippy v2.1.0 from 2019  -->
+  <!-- * Tippy - Web uses Tippy.js v2.6.0 from 2017 and vue-tippy v2.1.0 from 2019  -->
   <script src="https://unpkg.com/@popperjs/core@2"></script>
   <script src="https://unpkg.com/tippy.js@6"></script>
   <div id="dev-font-awesome">
     <!-- Font Awesome styles -->
   </div>
-  <!-- * Loading external files - for local dev only -->
+
   <script>
     // Load content from external files
     // (Target element, then source)
@@ -63,10 +63,9 @@
     $("#dev-font-awesome").load("./load/template/font-awesome.html");
   </script>
 
-  <!-- * Mapbox -->
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.11.1/mapbox-gl.js"></script>
-
   <script src="./storage/js/rd-main.js" type="module"></script>
+  <script src="https://www.central-group.cz/storage/CG/194-RD/js/mapbox.js" defer></script>
 </body>
 
 </html>

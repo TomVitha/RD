@@ -275,6 +275,7 @@ address {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
 /* RESET (end) */
 
 /* TEXT ALIGNMENT (from Bootstrap) */
@@ -820,9 +821,7 @@ h6 {
   display: block;
   position: absolute;
   inset: 0;
-
   background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .6)), linear-gradient(180deg, rgba(0, 0, 0, .4), transparent);
-  /* background-color: rgba(0, 0, 0, 0.4); */
 }
 
 .hero > :is(video, picture, img) {
@@ -851,7 +850,6 @@ h6 {
 .hero__content {
   display: flex;
   flex-direction: column;
-  /* gap: 30px; */
   width: 100%;
   position: absolute;
   left: 50%;
@@ -1568,28 +1566,26 @@ section section {
   font-size: 24px;
 }
 
-/* * Done State (if has class .done OR precedes .current) * */
+/* * Done state (if state has class '.done' OR precedes state with class '.current') * */
 :where(.done, .phase:has(~.current)) .phase__icon {
-  background-color: var(--phase-icon-color);
-}
-
-:where(.done, .phase:has(~.current)) .phase__icon > * {
-  /* color: white; */
-  /* fill: white; */
-  color: var(--body-bg-color);
-  fill: var(--body-bg-color);
-}
-
-
-/* * Current State * */
-.current .phase__icon {
   background-color: var(--body-bg-color);
   box-shadow: inset 0px 0px 0px 1.5px var(--phase-icon-color);
 }
 
-.current .phase__icon > * {
+:where(.done, .phase:has(~.current)) .phase__icon > * {
   color: var(--phase-icon-color);
   fill: var(--phase-icon-color);
+}
+
+/* * Current state * */
+.current .phase__icon {
+  background-color: var(--phase-icon-color);
+
+}
+
+.current .phase__icon > * {
+  color: var(--body-bg-color);
+  fill: var(--body-bg-color);
 }
 
 /* PHASES (end) */
@@ -1771,7 +1767,7 @@ table.price-table > thead > tr > :is(th, td) {
   margin-inline: 0.125rem;
 }
 
-/* WIP / TEMP (responsive price-table) */
+/* Mobile friendly card-like display -- UNUSED */
 .price-table.as-cards {
   display: block;
   font-size: 1rem;
@@ -1823,7 +1819,6 @@ table.price-table > thead > tr > :is(th, td) {
 /* Hover on orderable cells */
 table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-desc):hover {
   outline: none;
-  /* background-color: rgba(0, 0, 0, 0.020); */
   filter: brightness(97%);
 }
 
@@ -1951,6 +1946,7 @@ dialog .lv-details-box {
   }
 }
 
+/* # PANZOOM CONTROLS */
 .pz-controls {
   display: flex;
   flex-direction: column;
@@ -2055,8 +2051,7 @@ dialog .lv-details-box {
   object-fit: cover;
   object-position: center center;
   -webkit-user-drag: none;
-
-  /* TEMP ? */
+  /* TEMP ? -- was temp, now it's permanent */
   aspect-ratio: 18.5/9;
 }
 
@@ -2129,16 +2124,12 @@ dialog .lv-details-box {
   background-color: rgb(0, 0, 0, 0.75);
   padding: 0.6em 0.75em;
   margin-block: 6px;
-  /* text-transform: uppercase; */
   line-height: 1.333;
   backdrop-filter: blur(8px);
-
   transition: opacity var(--hotspots-textbox-trans-dur) 0ms, top var(--hotspots-textbox-trans-dur), bottom var(--hotspots-textbox-trans-dur), visibility 0ms var(--hotspots-textbox-trans-dur);
   transition-behavior: allow-discrete;
-
   visibility: hidden;
   opacity: 0;
-
   position: absolute;
   top: calc(100% - 10px);
   left: 50%;
@@ -2199,7 +2190,6 @@ img[data-fancybox] {
   cursor: pointer;
 }
 
-/* TODO: Improve gallery layout (grid, tabs/sections) */
 /* TODO: Optimize for PRINT */
 
 /* * Accessibility * */
@@ -2219,212 +2209,6 @@ img[data-fancybox] {
 }
 
 
-
-/* # DEBUG MENU */
-/* * Custom Header vs CG header */
-/* * custom header light/dark */
-/* * CG logo v custom headeru */
-/* * FONT Plus Jakarta Sans */
-/* * wider container (100vw) */
-/* * CENÍK současný vs cinematic waltrovka */
-
-/* TEMP: DEBUG MENU */
-.debug {
-  position: fixed;
-  z-index: 999;
-  right: 12px;
-  bottom: 24px;
-  user-select: none;
-}
-
-.debug__icon {
-  color: white;
-  background-color: var(--color-blue);
-  cursor: pointer;
-  appearance: none;
-  border: none;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 999px;
-}
-
-.debug__items {
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-  margin-bottom: 6px;
-  color: white;
-  background-color: var(--color-blue);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: max-content;
-  padding: 0.75rem 1.25rem;
-  border-radius: 6px;
-}
-
-.debug__items label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  cursor: pointer;
-  font-size: 0.875rem;
-}
-
-
-/* * ALT: Custom header */
-:root:has(.alt-custom-header) {
-  --header-height: 0px;
-  scroll-margin-top: var(--rd-header-height);
-
-  .rd-header {
-    display: block;
-  }
-
-  header, #page-nav {
-    display: none;
-  }
-
-  .hero__logo {
-    display: none;
-  }
-}
-
-/* BUG: Anchor navigation - header overlaps page content */
-/* BUG: Opening mobile nav when header has .transparent then header is, well, transparent */
-.rd-header {
-  --rd-header-bg-color: white;
-  --rd-header-color: var(--color-primary);
-  --rd-header-height: 72px;
-  color: var(--rd-header-color);
-  background-color: var(--rd-header-bg-color);
-  height: var(--rd-header-height);
-  box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
-  inset: 0px 0px auto 0px;
-  position: fixed;
-  transition-duration: 300ms;
-  transition-property: background, color, box-shadow, height;
-  width: 100%;
-  z-index: 50;
-  /* NOTE: Hidden by default */
-  display: none;
-}
-
-
-.rd-header.dark {
-  --rd-header-bg-color: var(--color-primary);
-  --rd-header-color: white;
-}
-
-/* NOTE: Transparent overrides .dark */
-.rd-header.transparent {
-  --rd-header-height: 120px;
-  --rd-header-bg-color: transparent;
-  --rd-header-color: white;
-  box-shadow: none;
-}
-
-.rd-header__content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* TEMP */
-@media (min-width: 2000px) and (min-height: 1000px) {
-  .rd-header__content {
-    max-width: var(--container-l) !important;
-  }
-}
-
-.rd-header__links {
-  align-items: center;
-  display: flex;
-  gap: 2.75rem;
-  justify-content: space-between;
-  letter-spacing: 0.01em;
-}
-
-/* ? Gold hover links ? */
-.rd-header .rd-header__links a:hover {
-  color: var(--color-secondary);
-}
-
-.rd-header__logo {
-  height: 32px;
-}
-
-.rd-header__burger {
-  display: none;
-}
-
-/* HACK */
-@media (min-width: 992px) {
-  .rd-header nav {
-    display: contents !important;
-  }
-}
-
-/* MOBILE */
-@media (max-width: 991.98px) {
-  .rd-header__burger {
-    appearance: none;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: block;
-    display: flex;
-    font-size: 20px;
-    outline: none;
-  }
-
-  .rd-header,
-  .rd-header.transparent {
-    --rd-header-height: 62px;
-  }
-
-  .rd-header nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-  }
-
-  .rd-header__links {
-    background-color: var(--rd-header-bg-color);
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-block: 1rem;
-    max-height: calc(100dvh - var(--rd-header-height));
-    overflow: auto;
-    scrollbar-width: none;
-  }
-
-  .rd-header__logo {
-    width: 120px;
-  }
-}
-
-/* * ALT: wider breakout */
-:root:has(.wider) {
-  --breakout-half: calc((100% - var(--container-m)) / 2);
-}
-
-.font-jakarta main,
-main .font-jakarta {
-  /* !! ALT FONT */
-  /* font-family: 'Helvetica Now' !important; */
-  font-family: "Plus Jakarta Sans" !important;
-}
-
-/* TODO: Implement for real */
 /* * GRAY CG HEADER */
 :root {
   --cg-header-bg-prim: hsl(236, 0%, 21%);
@@ -2434,7 +2218,7 @@ main .font-jakarta {
   --cg-header-text-color: hsl(234, 0%, 14%);
 }
 
-header.head.gray {
+header.head {
 
   &,
   .hd-container, .hd-container2,
@@ -2498,7 +2282,6 @@ header.head.gray {
     }
   }
 }
-
 
 /* Contact form fix */
 .v--modal-overlay .v--modal-background-click {
