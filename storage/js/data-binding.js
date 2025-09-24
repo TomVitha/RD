@@ -142,43 +142,43 @@ function createDeepProxy(obj, path = '') {
 
 const setState = (state) => createDeepProxy(state);
 
-// State pre-populated with some data of various tyles for testing
+// * State * //
 export const state = setState({
-  meals: {
-    'pizza': 'with pepperoni and pineapple',
-    meat: {
-      1: 'Chicken',
-      2: 'Beef',
-      3: 'Pork',
-    },
-    'vegetarian': 'go away',
-  },
-  quote1: 'You either die a hero or live long enough to see yourself become the villain.',
-  quote2: 'It’s not who I am underneath, but what I do that defines me.',
-  quote3: 'Sometimes the truth isn’t good enough, sometimes people deserve more. Sometimes people deserve to have their faith rewarded.',
-  s: 'Something stringy',
-  f: 3.14159,
-  i: 69,
-  e: '',
-  n: null,
-  u: undefined,
-  a: ['one', 'two', 'three'],
-  obj: {
-    "id": 1,
-    "name": "A1",
-    "price": 3500000,
-    "status": "available",
-    "layout": 3,
-    "floors": 2,
-    "amenities": {
-      1: "Air conditioner",
-      2: "Water heater",
-      3: "Smart home system",
-    },
-    "area": 405,
-    "date_completion": "2026-11-30"
-  },
-
+  //// Testing data of various types
+  // meals: {
+  //   'pizza': 'with pepperoni and pineapple',
+  //   meat: {
+  //     1: 'Chicken',
+  //     2: 'Beef',
+  //     3: 'Pork',
+  //   },
+  //   'vegetarian': 'go away',
+  // },
+  // quote1: 'You either die a hero or live long enough to see yourself become the villain.',
+  // quote2: 'It’s not who I am underneath, but what I do that defines me.',
+  // quote3: 'Sometimes the truth isn’t good enough, sometimes people deserve more. Sometimes people deserve to have their faith rewarded.',
+  // s: 'Something stringy',
+  // f: 3.14159,
+  // i: 69,
+  // e: '',
+  // n: null,
+  // u: undefined,
+  // a: ['one', 'two', 'three'],
+  // obj: {
+  //   "id": 1,
+  //   "name": "A1",
+  //   "price": 3500000,
+  //   "status": "available",
+  //   "layout": 3,
+  //   "floors": 2,
+  //   "amenities": {
+  //     1: "Air conditioner",
+  //     2: "Water heater",
+  //     3: "Smart home system",
+  //   },
+  //   "area": 405,
+  //   "date_completion": "2026-11-30"
+  // },
 })
 
 /// Observe DOM changes

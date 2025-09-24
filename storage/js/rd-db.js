@@ -1,12 +1,14 @@
+// DIY two-way data binding
 import * as databind from './data-binding.js'
 
 // GLOBAL variable for locale
 let locale = 'cs-CZ'
 
-// fetch Google Sheets data
+// URL to Google Sheets data as JSON
 const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=Etapa_1';
 
-// Close dialog when clicking outside of it
+
+// Close dialog by clicking outside of it
 document.querySelectorAll("dialog").forEach((dialog) => {
   dialog.addEventListener("click", function (event) {
     if (event.target === dialog) {
@@ -19,6 +21,7 @@ document.querySelectorAll("dialog").forEach((dialog) => {
 
 /**
  * Fetch data from Google Sheets and parse it as JSON
+ * 
  * @param {string} url URL of the Google Sheet
  * @returns {Object|null} Parsed JSON data
  */
@@ -60,8 +63,14 @@ export async function fetchSheetData(url) {
   }
 }
 
+/**
+ * Amends the original data with additional data not present in the original sheet
+ * 
+ * @param {Array} properties
+ */
 export function amendPropertiesData(properties) {
 
+  // Text corresponding to status codes
   const statusMapping = {
     "available": {
       "cs-CZ": "Volný",
@@ -81,10 +90,11 @@ export function amendPropertiesData(properties) {
     },
   };
 
+  // Amend each property
   properties.forEach(property => {
-    // status_text - Human-readable text of Status
+    // New property: status_text - Human-readable text of Status
     property.status_text = statusMapping[property.status]?.[locale] ?? statusMapping.unknown[locale];
-    // card_url - URL to property card (PDF)
+    // New property: card_url - URL to property card (PDF)
     property.card_url = `https://www.central-group.cz/storage/CG/194-RD/karty-domu/194-RD-${property.name}.pdf`;
   });
 
@@ -94,6 +104,7 @@ export function amendPropertiesData(properties) {
 /**
  * Primitive DYI Templating
  * (Imitating template syntax in Vue.js, Mustache.js, Handlebars.js etc.)
+ * 
  * @param {string} html 
  * @param {object} object 
  * @returns 
@@ -107,13 +118,14 @@ function mustacheReplace(html, object) {
 }
 
 /**
- * Generates a table row for each property
+ * Creates a table row for each property
+ * Replaces template variables in the row and creates icons for amenities and special equipment
+ * 
  * @param {object} data 
  * @param {boolean} displaySold 
  */
 export function populatePriceTableWithData(data, displaySold = false) {
 
-  // Elements
   const properties = formatData(JSON.parse(JSON.stringify(data)), locale);
   const table = document.querySelector('#template-price-table').content.cloneNode(true).querySelector('table');
   const tableBody = table.querySelector('tbody');
@@ -128,9 +140,9 @@ export function populatePriceTableWithData(data, displaySold = false) {
 
     const row = document.querySelector('#template-price-table-tr').content.cloneNode(true).querySelector('tr');
 
-    // * Mapping for raw data
 
-    // Amenities (Příslušenství)
+    // * Amenities (Příslušenství)
+    // Associates font awesome icon class, and name with tooltip text in both locales
     const amenitiesConfig = {
       "B": {
         icon: "fa-solid fa-square-b",
@@ -200,17 +212,20 @@ export function populatePriceTableWithData(data, displaySold = false) {
       },
     };
 
+    // Creates and displays icons for amenities (instead of text)
     property.amenities.forEach(acc => {
       if (property.amenities.includes(acc)) {
         const icon = document.createElement('i');
         icon.className = amenitiesConfig[acc].icon;
-        icon.setAttribute('title', amenitiesConfig[acc].tooltip[locale]);                // Tooltip text
-        icon.setAttribute('data-tippy-content', amenitiesConfig[acc].tooltip[locale]);         // Amenity name
+        icon.setAttribute('title', amenitiesConfig[acc].tooltip[locale]);
+        icon.setAttribute('data-tippy-content', amenitiesConfig[acc].tooltip[locale]);
         row.querySelector('[data-icons="amenities"]').appendChild(icon);
       }
     });
 
-    // Special equipment (Speciální vybavení)
+
+    // * Special equipment (Speciální vybavení)
+    // Associates with icon's filename, and tooltip text in both locales
     const specialEquipmentConfig = {
       "klima": {
         filename: "klima",
@@ -249,11 +264,11 @@ export function populatePriceTableWithData(data, displaySold = false) {
       },
     }
 
+    // Creates and displays icons for special equipment (instead of text)
     property.special_equipment.forEach(eq => {
       if (property.special_equipment.includes(eq)) {
         const img = document.createElement('img');
-        // icon.className = amenitiesConfig[acc].icon;
-        img.setAttribute('src', `./img/icons/${specialEquipmentConfig[eq].filename}.svg`);
+        img.setAttribute('src', `https://www.central-group.cz/storage/CG/194-RD/img/icons/${specialEquipmentConfig[eq].filename}.svg`);
         img.setAttribute('height', '12');
         img.setAttribute('title', specialEquipmentConfig[eq].tooltip[locale]);
         img.classList.add('price-table__icon');
@@ -261,8 +276,8 @@ export function populatePriceTableWithData(data, displaySold = false) {
       }
     });
 
-    row.innerHTML = mustacheReplace(row.innerHTML, property)  // Replace template
-    tableBody.appendChild(row)
+    row.innerHTML = mustacheReplace(row.innerHTML, property)  // Replace template variables
+    tableBody.appendChild(row)                                // Append row to table body
   });
 
   // Append table to container (while replacing any existing content)
@@ -271,9 +286,10 @@ export function populatePriceTableWithData(data, displaySold = false) {
 
 /**
  * Formats raw data into human-readable like: Adding currency symbols, units
+ * 
  * @param {*} properties 
  * @param {*} locale 
- * @returns 
+ * @returns {Object} properties
  */
 function formatData(properties, locale) {
   properties.forEach(property => {
@@ -330,7 +346,10 @@ function formatData(properties, locale) {
 
 
 /**
- * Layout Viewer map
+ * Layout Viewer
+ * Handles displaying details box. On desktop: 
+ * 
+ * @param {Object} data - Properties data
  */
 async function LV(data) {
 
@@ -344,11 +363,7 @@ async function LV(data) {
   let box = null;
   let matchingProperty = null;
 
-  /**
-   * Create box from <template>, fill with data, and append
-   * @param {Object} property 
-   * @returns {Element} box
-   */
+  // Create box from <template>, fill with data, and append
   function createBox(property) {
     box = document.querySelector("#lv-details-box").content.cloneNode(true).querySelector(".lv-details-box");
     box.setAttribute('id', `lv-details-box-${property.id}`);
@@ -359,6 +374,7 @@ async function LV(data) {
     return box;
   }
 
+  // Remove existing box
   function removeBox(box) {
     if (box) {
       box.remove();
@@ -403,10 +419,10 @@ async function LV(data) {
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
       path.addEventListener("click", (event) => {
 
-        /// Prevent redirecting (opening link) on click
+        /// Prevent opening link on click
         event.preventDefault();
 
-        /// Get matching property
+        /// Get matching property (according to ID)
         matchingProperty = propertiesDataFormatted.find(
           (property) => `rd-path-${property.id}` === path.getAttribute('id')
         );
@@ -426,6 +442,7 @@ async function LV(data) {
 
 /**
  * Initializes DataTables on the Price Table
+ * 
  * @see {@link https://datatables.net/}
  */
 function initDataTables() {
@@ -474,9 +491,14 @@ function initDataTables() {
   });
 }
 
-// TODO: REPLACE WITH FANCYAPPS PANZOOM ?
-// LINK: https://fancyapps.com/panzoom/guides/custom-controls/
-// Panzoom
+
+// ! NOT USED
+/**
+ * Initializes Panzoom on Layout Viewer map
+ * 
+ * @see {@link https://github.com/timmywil/panzoom}
+ * @see {@link https://timmywil.com/panzoom/demo/}
+ */
 function initPanzoom(elemId = 'lv') {
   const elem = document.getElementById(elemId)
   const panzoom = Panzoom(elem, {
@@ -563,7 +585,12 @@ function initPanzoom(elemId = 'lv') {
 }
 
 
-// # INITIALIZATION
+// # PAGE LOAD INITIALIZATION
+/**
+ * Initializes the page
+ * 
+ * @param {string} loc - Locale 'cs-CZ' or 'en-US' (defaults to 'cs-CZ')
+ */
 export async function init(loc = 'cs-CZ') {
 
   // Set global locale value
@@ -577,7 +604,7 @@ export async function init(loc = 'cs-CZ') {
   }
   console.debug('Fetched RAW data: ', propertiesData.tableData);
 
-  // Init the rest
+  // * Initialize the rest
   $(document).ready(function () {
     amendPropertiesData(propertiesData.tableData);
     populatePriceTableWithData(propertiesData.tableData, false);
