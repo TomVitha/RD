@@ -1936,16 +1936,6 @@ dialog .lv-details-box {
   font-size: 1.0rem;
 }
 
-@media (pointer: fine) {
-  .lv-details-box__btn-open {
-    display: none;
-  }
-
-  .lv-details-box__close {
-    display: none;
-  }
-}
-
 /* # PANZOOM CONTROLS */
 .pz-controls {
   display: flex;

@@ -85,7 +85,7 @@ export function amendPropertiesData(properties) {
     // status_text - Human-readable text of Status
     property.status_text = statusMapping[property.status]?.[locale] ?? statusMapping.unknown[locale];
     // card_url - URL to property card (PDF)
-    // TEMP URL to PDF
+    // FIXME!!
     property.card_url = `./temp/F3.103.pdf?id=${property.id}`;
   });
 
@@ -329,7 +329,9 @@ async function LV(data) {
 
   // Assign status class to paths
   data.forEach((property) => {
-    document.getElementById(`rd-path-${property.id}`).classList.add(`${property.status}`)
+    // FIXME
+    // const ele = document.getElementById(`rd-path-${property.id}`)
+    // ele.classList.add(`${property.status}`)
   })
 
   let box = null;
