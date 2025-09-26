@@ -659,6 +659,10 @@ a.btn:hover {
   gap: 0.5rem;
 }
 
+.btn-list.centered {
+  justify-content: center;
+}
+
 .btn-group {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1633,6 +1637,10 @@ div.dt-container.dt-empty-footer tbody > tr:last-child > * {
 th {
   color: var(--color-body-text-em);
   user-select: none;
+}
+
+.subsection-column h2 {
+  color: var(--color-body-text-em);
 }
 
 .price-table :is(th, td) {
