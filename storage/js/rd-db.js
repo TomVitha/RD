@@ -477,6 +477,7 @@ function initDataTables() {
       { orderable: false, targets: [6, 11] },                           // Disable ordering
       { className: "dt-center", targets: [0, 1, 2, 5, 6, 11] },         // Center align text
       { className: "dt-right", targets: [3, 4, 7, 8, 9, 10] },          // Right align text
+      { className: "bold", targets: [10] },                             // Final price is always bold
     ],
     // BUG: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
     // NOTE: Likely happens when not using https (like on localhost)
