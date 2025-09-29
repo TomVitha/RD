@@ -1,6 +1,6 @@
 <div class="hero">
   <video playsinline muted autoplay loop disablepictureinpicture disableremoteplayback poster="https://www.central-group.cz/storage/CG/194-RD/videos/hero-edit/norbert-v2-poster.jpg">
-    <source src="https://www.central-group.cz/storage/CG/194-RD/videos/hero-edit/norbert-v2.mp4" type="video/mp4">
+    <source src="https://www.central-group.cz/storage/CG/194-RD/videos/hero-edit/norbert-v3.mp4" type="video/mp4">
   </video>
   <div class="hero__inside container">
     <div class="hero__content">
@@ -85,7 +85,7 @@
           Rodinné domy byly navrženy tak, aby naplnily očekávání i&nbsp;těch nejnáročnějších klientů. Precizní zpracování, pečlivě vybrané materiály a&nbsp;<strong>luxusní standardy provedení</strong> jsou zde doplněny efektivními dispozicemi a&nbsp;důrazem na funkční vnitřní prostředí. O&nbsp;tepelný komfort se stará <strong>stropní vytápění i&nbsp;chlazení</strong>, v&nbsp;koupelnách naopak nechybí podlahové topení ani praktické elektrické žebříky.
         </p>
         <p>
-          <strong>Velká dřevěná okna, balkony, terasy či prostorné zahrady</strong> dodávají interiérům vzdušnost a&nbsp;plynule je propojují s&nbsp;okolní zelení. Venkovní žaluzie zajišťují maximální soukromí a&nbsp;pohodlí i&nbsp;během horkých letních dnů. Samozřejmostí jsou datové rozvody ve všech pokojích, <strong>moderní zabezpečovací systém nebo prvky chytré domácnosti</strong>, které garantují maximální komfort pro současné i&nbsp;budoucí generace.
+          <strong>Velká dřevěná okna, balkony, terasy či prostorné zahrady</strong> dodávají interiérům vzdušnost a&nbsp;plynule je propojují s&nbsp;okolní zelení. Venkovní žaluzie zajišťují maximální soukromí a&nbsp;pohodlí i&nbsp;během horkých letních dnů. Samozřejmostí jsou datové rozvody ve všech pokojích, <strong>moderní zabezpečovací systém nebo prvky chytré domácnosti</strong>, které garantují vysoký komfort pro současné i&nbsp;budoucí generace.
         </p>
       </div>
       <div>
@@ -342,31 +342,43 @@
   </div>
 </section-->
 
-<!-- TEMP timeline - just for "print" purposes - to be replaced -->"
+<!-- TEMP timeline - just for "print" purposes - to be replaced -->
 <section id="terminove-sekce" class="bg--tertiary">
   <div class="container">
     <h2 class="text-center"><a href="#financovani">Termínové sekce</a></h2>
     <div class="timeline">
       <div class="timeline__point">
-        <em class="timeline__heading">1. termínová sekce</em>
+        <div class="timeline__heading">
+          <em>1. termínová sekce</em>
+          <i class="fa-solid fa-circle-info fa-xs" data-tippy-content="Dispoziční změny zasahující do nosných konstrukcí."></i>
+        </div>
         <div class="timeline__content">
           <span>Po termínu</span>
         </div>
       </div>
       <div class="timeline__point">
-        <em class="timeline__heading">2. termínová sekce</em>
+        <div class="timeline__heading">
+          <em>2. termínová sekce</em>
+          <i class="fa-solid fa-circle-info fa-xs" data-tippy-content="Drobné individuální změny jako např. dílčí změny příček, otočení otevírání dveří, změny v rozvodech (vodovod, kanalizace, vytápění a elektro), zabezpečovací zařízení, datové rozvody, sádrokartonové podhledy a další."></i>
+        </div>
         <div class="timeline__content">
           <span>Po termínu</span>
         </div>
       </div>
       <div class="timeline__point">
-        <em class="timeline__heading">3. termínová sekce</em>
+        <div class="timeline__heading">
+          <em>3. termínová sekce</em>
+          <i class="fa-solid fa-circle-info fa-xs" data-tippy-content="Výběr obkladů, dlažeb a zařizovacích sanitárních předmětů, výběr podlahových krytin standardní tloušťky, vnitřních dveří, kování a další."></i>
+        </div>
         <div class="timeline__content">
           <span>22. 10. 2025</span>
         </div>  
       </div>
       <div class="timeline__point">
-        <em class="timeline__heading">4. termínová sekce</em>
+        <div class="timeline__heading">
+          <em>4. termínová sekce</em>
+          <i class="fa-solid fa-circle-info fa-xs" data-tippy-content="Výběr kuchyňské linky včetně spotřebičů, vestavěných skříní, interiérových svítidel apod."></i>
+        </div>
         <div class="timeline__content">
           <span>4. 3. 2026</span>
         </div>
@@ -789,41 +801,3 @@
     </div>
   </div>
 </dialog>
-
-<script>
-  // TODO: Generalize to tabs ??
-  document.querySelectorAll('.hotspots__switches .btn').forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-hotspots-target")
-      document.querySelectorAll('.hotspots__content').forEach((element) => {
-        if (element.id === target) {
-          element.removeAttribute('hidden')
-        }
-        else {
-          element.setAttribute('hidden', '')
-        }
-      })
-      // Toggle active class
-      document.querySelectorAll('.hotspots__switches .btn').forEach((b) => {
-        b.classList.remove('btn-secondary')
-        b.classList.add('btn-white')
-      })
-      btn.classList.remove('btn-white')
-      btn.classList.add('btn-secondary')
-    })
-  })
-</script>
-
-<!-- Tippy.js-->
-<!-- TODO: Move elsewhere -->
-<script>
-
-  $(document).ready(function() {
-    tippy('[data-tippy-content]', {
-      // Remove title attribute from element to prevent conflict with default browser tooltip
-      onCreate(instance) {
-        instance.reference.removeAttribute('title');
-      },
-    });
-  });
-</script>

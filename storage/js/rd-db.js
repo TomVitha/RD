@@ -10,17 +10,6 @@ let locale = 'cs-CZ'
 const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=Etapa_1';
 
 
-// Close dialog by clicking outside of it
-document.querySelectorAll("dialog").forEach((dialog) => {
-  dialog.addEventListener("click", function (event) {
-    if (event.target === dialog) {
-      dialog.close();
-    }
-  });
-});
-
-
-
 /**
  * Fetch data from Google Sheets and parse it as JSON
  * 
@@ -592,13 +581,13 @@ function initPanzoom(elemId = 'lv') {
 }
 
 
-// # PAGE LOAD INITIALIZATION
+
 /**
- * Initializes the page
+ * Initializes
  * 
  * @param {string} loc - Locale 'cs-CZ' or 'en-US' (defaults to 'cs-CZ')
  */
-export async function init(loc = 'cs-CZ') {
+export async function initDb(loc = 'cs-CZ') {
 
   // Set global locale value
   locale = loc; 

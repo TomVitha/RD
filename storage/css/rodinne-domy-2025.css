@@ -1543,8 +1543,9 @@ section section {
   height: var(--phase-icon-size);
   aspect-ratio: 1;
   padding: calc(var(--phase-icon-size) / 4);
+  /* background-color: var(--color-tertiary); */
   border-radius: 999px;
-  background-color: var(--color-tertiary);
+  box-shadow: inset 0px 0px 0px 1.5px var(--phase-icon-color);
 }
 
 /* * Common styling for Phase icon & Arrow icon between phases * */
@@ -2201,6 +2202,20 @@ img[data-fancybox] {
   cursor: pointer;
 }
 
+[data-tippy-content] {
+  cursor: help;
+}
+
+/* ? Theme for Tippy */
+.tippy-box[data-theme~='tippy-main-theme']{
+  text-align: center;
+  /* background-color: #7281a3; */
+  /* color: white; */
+}
+/* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='top'] > .tippy-arrow::before {border-top-color: #7281a3;} */
+/* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='bottom'] > .tippy-arrow::before {border-bottom-color: #7281a3;} */
+/* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='left'] > .tippy-arrow::before {border-left-color: #7281a3;} */
+/* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='right'] > .tippy-arrow::before {border-top-color: #7281a3;} */
 
 
 /* TODO: Optimize for PRINT */
