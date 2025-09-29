@@ -1747,7 +1747,8 @@ table.price-table > thead > tr > :is(th, td) {
   cursor: pointer;
 }
 
-.price-table .sortable::after {
+/* Unused */
+/* .price-table .sortable::after {
   content: "\e60d";
   opacity: 0.25;
   margin-left: 0.6em;
@@ -1760,7 +1761,7 @@ table.price-table > thead > tr > :is(th, td) {
 
 .price-table .sortable.desc::after {
   content: "\f107";
-}
+} */
 
 .price-table .sortable:hover::after {
   opacity: 0.5;

@@ -1,3 +1,5 @@
+// // @ts-check
+
 // DIY two-way data binding
 import * as databind from './data-binding.js'
 
@@ -23,7 +25,7 @@ document.querySelectorAll("dialog").forEach((dialog) => {
  * Fetch data from Google Sheets and parse it as JSON
  * 
  * @param {string} url URL of the Google Sheet
- * @returns {Object|null} Parsed JSON data
+ * @returns {Promise<Object | null>} Parsed JSON data
  */
 export async function fetchSheetData(url) {
   try {
@@ -213,12 +215,12 @@ export function populatePriceTableWithData(data, displaySold = false) {
     };
 
     // Creates and displays icons for amenities (instead of text)
-    property.amenities.forEach(acc => {
-      if (property.amenities.includes(acc)) {
+    property.amenities.forEach(am => {
+      if (property.amenities.includes(am)) {
         const icon = document.createElement('i');
-        icon.className = amenitiesConfig[acc].icon;
-        icon.setAttribute('title', amenitiesConfig[acc].tooltip[locale]);
-        icon.setAttribute('data-tippy-content', amenitiesConfig[acc].tooltip[locale]);
+        icon.className = amenitiesConfig[am].icon;
+        icon.setAttribute('title', amenitiesConfig[am].tooltip[locale]);
+        icon.setAttribute('data-tippy-content', amenitiesConfig[am].tooltip[locale]);
         row.querySelector('[data-icons="amenities"]').appendChild(icon);
       }
     });
@@ -271,6 +273,7 @@ export function populatePriceTableWithData(data, displaySold = false) {
         img.setAttribute('src', `https://www.central-group.cz/storage/CG/194-RD/img/icons/${specialEquipmentConfig[eq].filename}.svg`);
         img.setAttribute('height', '12');
         img.setAttribute('title', specialEquipmentConfig[eq].tooltip[locale]);
+        img.setAttribute('data-tippy-content', specialEquipmentConfig[eq].tooltip[locale]);
         img.classList.add('price-table__icon');
         row.querySelector('[data-icons="special_equipment"]').appendChild(img);
       }
@@ -364,6 +367,9 @@ async function LV(data) {
   let matchingProperty = null;
 
   // Create box from <template>, fill with data, and append
+  /**
+   * @param {object} property
+   */
   function createBox(property) {
     box = document.querySelector("#lv-details-box").content.cloneNode(true).querySelector(".lv-details-box");
     box.setAttribute('id', `lv-details-box-${property.id}`);
@@ -525,7 +531,7 @@ function initPanzoom(elemId = 'lv') {
 
 
   // Unhide controls
-  controls.removeAttribute('hidden')
+  controls?.removeAttribute('hidden')
 
   // Helper function to update UI based on zoom level
   function updateZoomUI(scale) {
@@ -537,30 +543,30 @@ function initPanzoom(elemId = 'lv') {
   }
 
   // Handle zoom events
-  elem.addEventListener('panzoomzoom', (event) => {
+  elem?.addEventListener('panzoomzoom', (event) => {
     updateZoomUI(panzoom.getScale());
   });
 
   // Reset event
-  elem.addEventListener('panzoomreset', (event) => {
+  elem?.addEventListener('panzoomreset', (event) => {
     updateZoomUI(1); // After reset, scale is always 1
   });
 
   // Start grabbing
-  elem.addEventListener('panzoomstart', (event) => {
+  elem?.addEventListener('panzoomstart', (event) => {
     if (panzoom.getScale() > 1.01) {
       panzoom.setOptions({ cursor: 'grabbing' });
     }
   });
 
   // End grabbing
-  elem.addEventListener('panzoomend', (event) => {
+  elem?.addEventListener('panzoomend', (event) => {
     updateZoomUI(panzoom.getScale());
   });
 
 
   // BUG: When panning with cursor over link, link is activated on click up
-  elem.parentElement.addEventListener('wheel', function (event) {
+  elem?.parentElement?.addEventListener('wheel', function (event) {
     // Enables zoom with mouse wheen (only) while holding Ctrl
     if (event.ctrlKey) {
       panzoom.zoomWithWheel(event)
@@ -572,7 +578,7 @@ function initPanzoom(elemId = 'lv') {
   // FIXME: Buggy on iPad
   // NOTE: touchAction is a CSS property: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
   // BUG: Minor - Behavior doesn't work on page init, only kicks in after a touch move
-  elem.addEventListener('touchmove', function (event) {
+  elem?.addEventListener('touchmove', function (event) {
     // Allow panning
     if (panzoom.getScale() <= 1.01) {
       panzoom.setOptions({ disablePan: true, touchAction: 'pan-y' });

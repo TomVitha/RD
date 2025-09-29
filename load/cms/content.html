@@ -813,3 +813,17 @@
     })
   })
 </script>
+
+<!-- Tippy.js-->
+<!-- TODO: Move elsewhere -->
+<script>
+
+  $(document).ready(function() {
+    tippy('[data-tippy-content]', {
+      // Remove title attribute from element to prevent conflict with default browser tooltip
+      onCreate(instance) {
+        instance.reference.removeAttribute('title');
+      },
+    });
+  });
+</script>
