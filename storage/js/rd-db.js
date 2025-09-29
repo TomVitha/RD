@@ -142,8 +142,8 @@ export function populatePriceTableWithData(data, displaySold = false) {
           "en-US": "Balcony"
         },
         tooltip: {
-          "cs-CZ": "Nemovitost zahrnuje balkón",
-          "en-US": "Property includes a balcony"
+          "cs-CZ": "V ceně je balkón.",
+          "en-US": "Price includes a balcony."
         }
       },
       "G": {
@@ -153,8 +153,8 @@ export function populatePriceTableWithData(data, displaySold = false) {
           "en-US": "Garage"
         },
         tooltip: {
-          "cs-CZ": "Nemovitost zahrnuje uzavřené garážové stání",
-          "en-US": "Property includes a garage"
+          "cs-CZ": "V ceně je garáž.",
+          "en-US": "Price includes a garage."
         }
       },
       "P": {
@@ -186,8 +186,8 @@ export function populatePriceTableWithData(data, displaySold = false) {
           "en-US": "Terrace"
         },
         tooltip: {
-          "cs-CZ": "Nemovitost zahrnuje terasu",
-          "en-US": "Property includes a terrace"
+          "cs-CZ": "V ceně je terasa.",
+          "en-US": "Price includes a terrace"
         }
       },
       "Z": {
@@ -197,8 +197,8 @@ export function populatePriceTableWithData(data, displaySold = false) {
           "en-US": "Garden"
         },
         tooltip: {
-          "cs-CZ": "Nemovitost zahrnuje zahradu",
-          "en-US": "Property includes a garden"
+          "cs-CZ": "V ceně je zahrada a předzahrádka.",
+          "en-US": "Price includes a front yard."
         }
       },
     };

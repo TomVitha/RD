@@ -2218,7 +2218,7 @@ img[data-fancybox] {
 /* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='right'] > .tippy-arrow::before {border-top-color: #7281a3;} */
 /** Fixes off-center arrow **/
 .tippy-arrow::before{
-    /* margin-left: -7px; */
+    margin-left: -7px;
 }
 
 /* TODO: Optimize for PRINT */
