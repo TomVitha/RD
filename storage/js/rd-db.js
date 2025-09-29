@@ -198,7 +198,7 @@ export function populatePriceTableWithData(data, displaySold = false) {
         },
         tooltip: {
           "cs-CZ": "V ceně je zahrada a předzahrádka.",
-          "en-US": "Price includes a front yard."
+          "en-US": "Price includes a garden and a front yard."
         }
       },
     };
@@ -235,7 +235,7 @@ export function populatePriceTableWithData(data, displaySold = false) {
       "rolety": {
         filename: "zaluzie",
         tooltip: {
-          "cs-CZ": "V ceně jsou předokenní rolety.",
+          "cs-CZ": "V ceně jsou předokenní žaluzie.",
           "en-US": "Price includes external blinds."
         }
       },
