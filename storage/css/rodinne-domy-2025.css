@@ -1,16 +1,3 @@
-/* TEMP: Plus Jakarta Sans */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
-
-/* TEMP: Helvetica Now */
-@font-face {
-  font-family: 'Helvetica Now';
-  font-style: normal;
-  font-weight: 100 900;
-  /* NOTE: .ttf and .eot don't seem to work */
-  src: url('https://www.central-group.cz/storage/CG/194-RD/fonts/helvetica-now-var-display/HelveticaNowVar.woff2') format('woff2');
-}
-
-
 :root {
   /* * Brand * */
   --color-blue: #20234c;
@@ -41,7 +28,7 @@
   /* * Headings * */
   --color-headings: var(--color-primary);
   --text-behind-color: var(--color-secondary);
-  --text-behind-opacity: 40%;
+  --text-behind-opacity: 60%;
 
   /* * Header and nav * */
   --header-height-top: 55px;
@@ -878,7 +865,7 @@ p > a, .link {
 
 .hero__logo {
   height: 32px;
-  width: fit-content;
+  /* width: fit-content; */
 }
 
 .hero__logo :is(img, svg) {
@@ -1218,15 +1205,10 @@ section section {
   width: 100%;
   object-fit: cover;
   object-position: center center;
-
-  /* TEMP: Two-col img fixed aspect ratio */
-  /* aspect-ratio: 5/3;
-  aspect-ratio: 16/9; */
 }
 
-/* ? Maybe jump straight to 991px ? */
 /* * Two column layout * */
-@media screen and (min-width: 991px) {
+@media (min-width: 992px) {
   .two-col {
     --two-col-gap: 10%;
     display: grid;
@@ -1509,6 +1491,7 @@ section section {
   overflow-x: auto;
   isolation: isolate;
   scrollbar-width: thin;
+  /* ? maybe causes issues on Safari ? */
   scroll-snap-type: x mandatory;
 }
 
@@ -2014,7 +1997,7 @@ dialog .lv-details-box {
   object-fit: cover;
   object-position: center center;
   -webkit-user-drag: none;
-  /* TEMP ? -- was temp, now it's permanent */
+  /* was temp, now it's permanent */
   aspect-ratio: 18.5/9;
 }
 
@@ -2158,17 +2141,14 @@ img[data-fancybox] {
 }
 
 /* ? Theme for Tippy */
-.tippy-box[data-theme~='tippy-main-theme']{
+.tippy-box[data-theme ~='tippy-main-theme'] {
   text-align: center;
   /* background-color: #7281a3; */
   /* color: white; */
 }
-/* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='top'] > .tippy-arrow::before {border-top-color: #7281a3;} */
-/* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='bottom'] > .tippy-arrow::before {border-bottom-color: #7281a3;} */
-/* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='left'] > .tippy-arrow::before {border-left-color: #7281a3;} */
-/* .tippy-box[data-theme~='tippy-main-theme'][data-placement^='right'] > .tippy-arrow::before {border-top-color: #7281a3;} */
+
 /** Fixes off-center arrow **/
-.tippy-arrow::before{
+.tippy-arrow::before {
     margin-left: -7px;
 }
 

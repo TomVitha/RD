@@ -86,7 +86,7 @@ export function amendPropertiesData(properties) {
     // New property: status_text - Human-readable text of Status
     property.status_text = statusMapping[property.status]?.[locale] ?? statusMapping.unknown[locale];
     // New property: card_url - URL to property card (PDF)
-    property.card_url = `https://www.central-group.cz/storage/CG/194-RD/karty-domu/194-RD-${property.name}.pdf`;
+    property.card_url = `https://www.central-group.cz/storage/CG/194-RD/soubory/karty-domu/194-RD-${property.name}.pdf`;
   });
 
   console.debug('Amended data:', properties);

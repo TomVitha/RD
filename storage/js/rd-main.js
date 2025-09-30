@@ -1,8 +1,8 @@
 import { loadAllScripts } from './scripts-loader.js';
 import { initDb } from './rd-db.js';
 
-// * Initialize the table
-// init('cs-CZ');
+//// * Initialize the table
+//// init('cs-CZ');
 
 
 // WIP !!!
@@ -10,7 +10,7 @@ export async function initialize(locale) {
   await loadAllScripts();
   await initDb(locale);
 
-  // * === Other scripts === * //
+  // # === Other scripts === # //
 
   // * Close dialog by clicking outside of it
   document.querySelectorAll("dialog").forEach((dialog) => {

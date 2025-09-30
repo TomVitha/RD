@@ -25,7 +25,7 @@ export async function loadAllScripts() {
         await loadScript('https://api.mapbox.com/mapbox-gl-js/v3.11.1/mapbox-gl.js');       // Mapbox
         await loadScript('https://www.central-group.cz/storage/CG/194-RD/js/mapbox.js');    // Mapbox init
         await loadScript('https://www.central-group.cz/storage/CG/wms3/js/lokalitni-stranka-2024/anchor-navigation.js');    // Navigation fix
-        // await loadScript('https://www.central-group.cz/storage/CG/wms3/js/lokalitni-stranka-2024/open-form.js');            // Open contact form         // TEMP disabled
+        await loadScript('https://www.central-group.cz/storage/CG/wms3/js/lokalitni-stranka-2024/open-form.js');            // Open contact form         // TEMP disabled
         console.log('All scripts loaded.');
     } catch (error) {
         console.error('Error loading scripts:', error);
