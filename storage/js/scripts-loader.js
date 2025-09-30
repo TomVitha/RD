@@ -20,8 +20,6 @@ export async function loadAllScripts() {
     console.debug('Loading all scripts...');
     try {
         await loadScript('https://cdn.datatables.net/2.3.2/js/dataTables.js');              // DataTables
-        await loadScript('https://unpkg.com/@panzoom/panzoom@4.6.0/dist/panzoom.min.js');      // Panzoom
-        // await loadScript('//cdn.datatables.net/plug-ins/2.3.2/sorting/natural.js');      // DataTables natural sort
         await loadScript('https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js'); // Popper
         await loadScript('https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js');  // Tippy
         await loadScript('https://api.mapbox.com/mapbox-gl-js/v3.11.1/mapbox-gl.js');       // Mapbox

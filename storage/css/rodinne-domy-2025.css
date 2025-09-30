@@ -1958,55 +1958,6 @@ dialog .lv-details-box {
   font-size: 1.0rem;
 }
 
-/* # PANZOOM CONTROLS */
-.pz-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1;
-}
-
-.pz-controls-group {
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, .1);
-}
-
-.pz-control, .pz-controls button {
-  width: 29px;
-  height: 29px;
-  border-radius: 4px;
-  /* border: 1px solid lightgray; */
-  border: none;
-  outline: none;
-  color: black;
-  background-color: rgb(255, 255, 255);
-  font-size: 0.875rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.pz-control, .pz-controls button + button {
-  border-top: 1px solid #ddd;
-}
-
-.pz-controls-group :is(.pz-control, .pz-controls button):not(:first-child) {
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-}
-
-.pz-controls-group :is(.pz-control, .pz-controls button):not(:last-child) {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  border-bottom: none;
-}
-
 .gallery {
   --gallery-columns: 2;
 }

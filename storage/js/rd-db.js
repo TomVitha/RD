@@ -469,12 +469,12 @@ function initDataTables() {
     order: [[0, 'asc']],       // Default column to sort by
     columnDefs: [
       { type: 'natural', target: '_all' },                              // Sorty by Natural sort
-      { orderable: false, targets: [6, 11] },                           // Disable ordering
+      { orderable: false, targets: [2, 6, 11] },                           // Disable ordering
       { className: "dt-center", targets: [0, 1, 2, 5, 6, 11] },         // Center align text
       { className: "dt-right", targets: [3, 4, 7, 8, 9, 10] },          // Right align text
       { className: "bold", targets: [10] },                             // Final price is always bold
     ],
-    // BUG: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
+    // ERROR: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
     // NOTE: Likely happens when not using https (like on localhost)
     // language: {
     //     url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
@@ -485,99 +485,6 @@ function initDataTables() {
     searching: false,
     info: false,
   });
-}
-
-
-// ! NOT USED
-/**
- * Initializes Panzoom on Layout Viewer map
- * 
- * @see {@link https://github.com/timmywil/panzoom}
- * @see {@link https://timmywil.com/panzoom/demo/}
- */
-function initPanzoom(elemId = 'lv') {
-  const elem = document.getElementById(elemId)
-  const panzoom = Panzoom(elem, {
-    cursor: 'inherit',
-    pinchAndPan: true,
-    panOnlyWhenZoomed: true,
-    startScale: 1,
-    minScale: 1,
-    contain: 'outside',
-    // canvas: false,
-    // touchAction: 'pan-y',
-  })
-
-  // Controls
-  const controls = document.getElementById('lv-pz-controls');
-  const btnZoomIn = document.getElementById('lv-pz-zoom-in');
-  const btnZoomOut = document.getElementById('lv-pz-zoom-out');
-  const btnReset = document.getElementById('lv-pz-reset');
-
-  btnZoomIn?.addEventListener('click', panzoom.zoomIn)
-  btnZoomOut?.addEventListener('click', panzoom.zoomOut)
-  btnReset?.addEventListener('click', panzoom.reset)
-
-
-  // Unhide controls
-  controls?.removeAttribute('hidden')
-
-  // Helper function to update UI based on zoom level
-  function updateZoomUI(scale) {
-    const isZoomedIn = scale > 1.01;
-    panzoom.setOptions({ cursor: isZoomedIn ? 'grab' : 'default' });
-    if (btnReset) {
-      isZoomedIn ? btnReset.classList.remove('hidden') : btnReset.classList.add('hidden');
-    }
-  }
-
-  // Handle zoom events
-  elem?.addEventListener('panzoomzoom', (event) => {
-    updateZoomUI(panzoom.getScale());
-  });
-
-  // Reset event
-  elem?.addEventListener('panzoomreset', (event) => {
-    updateZoomUI(1); // After reset, scale is always 1
-  });
-
-  // Start grabbing
-  elem?.addEventListener('panzoomstart', (event) => {
-    if (panzoom.getScale() > 1.01) {
-      panzoom.setOptions({ cursor: 'grabbing' });
-    }
-  });
-
-  // End grabbing
-  elem?.addEventListener('panzoomend', (event) => {
-    updateZoomUI(panzoom.getScale());
-  });
-
-
-  // BUG: When panning with cursor over link, link is activated on click up
-  elem?.parentElement?.addEventListener('wheel', function (event) {
-    // Enables zoom with mouse wheen (only) while holding Ctrl
-    if (event.ctrlKey) {
-      panzoom.zoomWithWheel(event)
-    }
-    // Without Ctrl, we scroll can the page
-  })
-
-  // When fully zoomed out, disable panning (allow scrolling the page)
-  // FIXME: Buggy on iPad
-  // NOTE: touchAction is a CSS property: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
-  // BUG: Minor - Behavior doesn't work on page init, only kicks in after a touch move
-  elem?.addEventListener('touchmove', function (event) {
-    // Allow panning
-    if (panzoom.getScale() <= 1.01) {
-      panzoom.setOptions({ disablePan: true, touchAction: 'pan-y' });
-    }
-    // Disallow panning, allows page scroll
-    else {
-      panzoom.setOptions({ disablePan: false, touchAction: 'none' });
-    }
-  })
-
 }
 
 
@@ -606,6 +513,5 @@ export async function initDb(loc = 'cs-CZ') {
     populatePriceTableWithData(propertiesData.tableData, false);
     initDataTables()
     LV(propertiesData.tableData)
-    // initPanzoom();     // We won't be using Panzoom
   });
 }
