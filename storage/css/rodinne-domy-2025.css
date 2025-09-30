@@ -1340,7 +1340,7 @@ section section {
 
 /* # TIMELINE */
 .timeline {
-  --tl-dot-size: 16px;
+  --tl-dot-size: 44px;
   --tl-line-color: var(--color-secondary);
   --tl-line-thickness: 2px;
   --tl-dot-color: var(--color-secondary);
@@ -1348,72 +1348,102 @@ section section {
   display: flex;
   flex-direction: column;
   isolation: isolate;
-  padding-block: 12px;
+  padding-block: 12px 2.0rem;
   max-width: 100%;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   scrollbar-width: thin;
 }
 
-.timeline__point {
+.timeline__step {
   position: relative;
-  padding-left: calc(var(--tl-dot-size) * 2 + 0.5rem);
+  /* padding-left: 0.5rem; */
   padding-block: 0.75rem;
-}
-
-.timeline__heading {
-  display: block;
-  margin-bottom: 0.5rem;
-  /* line-height: 1.0; */
-  /* color: var(--color-body-text-em); */
-  order: 1;
-}
-
-.timeline__content {
-  margin-top: 0.5rem;
+  position: relative;
 }
 
 /* Line */
-.timeline__point::before {
+.timeline__step::before,
+.timeline__step::after {
   content: '';
   display: block;
   background-color: var(--tl-line-color);
-  height: 100%;
-  width: var(--tl-line-thickness);
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--tl-dot-size);
-  translate: -50% 0;
+  width: var(--tl-line-thickness);
+  height: 100%;
+  inset: 0 auto 0 calc(var(--tl-dot-size) / 2);
+  translate: -50% 50%;
   z-index: -1;
 }
 
+.timeline__step::before,
+.timeline__step:last-child::after {
+  content: none;
+}
+
 /* Dot */
-.timeline__point::after {
+.timeline__icon {
   content: '';
   display: block;
   width: var(--tl-dot-size);
   height: var(--tl-dot-size);
-  aspect-ratio: 1;
+  /* aspect-ratio: 1; */
   border-radius: 999px;
+  color: var(--tl-dot-color);
   border: var(--tl-dot-thickness) solid var(--tl-dot-color);
   background-color: var(--section-bg-color);
-  position: absolute;
-  left: calc(var(--tl-dot-size) / 2);
-  top: calc(0.75rem + 0.4rem);
+  /* position: absolute; */
+  /* left: calc(var(--tl-dot-size) / 2); */
+  /* top: calc(1.15rem); */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* right: calc(100% - 22px); */
+  /* translate: 50% 0; */
 }
 
-@media (min-width: 991px) {
+.timeline__icon > [class*="fa-"] {
+  --fa-display: flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--tl-dot-color);
+  fill:  var(--tl-dot-color);
+  user-select: none;
+  /* WIP */
+  font-size: 22px;
+}
+
+.timeline__step.now {
+  --tl-dot-color: violet;
+}
+.timeline__step.now .timeline__icon {
+  --tl-dot-size: 16px;
+  margin-inline: 14px 10px;
+  background-color: var(--tl-dot-color);
+}
+
+.timeline__step.now,
+.timeline__step.now ~.timeline__step {
+  --tl-dot-color: var(--color-primary);
+  --tl-line-color: var(--color-primary);
+}
+
+.timeline__steps-inside {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+@media (min-width: 991.98px) {
   .timeline {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
-    /* * Order: heading, line, dot, content * */
-    grid-template-rows: auto 0px var(--tl-dot-size) auto;
-    /* width: fit-content; */
+    flex-direction: row;
     margin-inline: auto;
   }
 
-  .timeline__point {
+  .timeline__step {
     display: grid;
     grid-template-rows: subgrid;
     grid-row: 1 / -1;
@@ -1422,55 +1452,43 @@ section section {
     text-align: center;
     line-height: 1.25;
     padding: 0;
+    flex: 1;
   }
 
-  .timeline__heading {
-    align-content: end;
-    order: 1;
+  .timeline__step.now {
+    flex: 0;
+    width: 0;
   }
 
-  .timeline__content {
-    order: 4;
+  .timeline__step.now .timeline__steps-inside {
+    position: absolute;
+    flex-direction: column;
+    top: calc(100% - 31px);
   }
 
-  /* Line */
-  .timeline__point::before {
+  .timeline__steps-inside {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+  }
+
+  /* WIP */
+  .timeline__step::before,
+  .timeline__step::after {
     width: 100%;
     height: var(--tl-line-thickness);
-    position: static;
-    translate: 0 calc((var(--tl-dot-size) / 2) - 50%);
-    order: 2;
+    inset: auto auto calc((var(--tl-dot-size) / 2)) 0px;
+    translate: 50% 0%;
   }
 
-  /* Dot */
-  .timeline__point::after {
+  .timeline__step.now +.timeline__step::before {
+    content: "";
+    translate: 0% 0%;
+    width: 50%;
+  }
+
+  .timeline__icon {
     position: static;
     translate: none;
-    order: 3;
-  }
-
-  /* Fallback for browsers that do not support subgrid. Line with dots will go above heading and content */
-  @supports not (grid-template-rows: subgrid) {
-    .timeline__point {
-      grid-template-rows: 0px var(--tl-dot-size) auto 1fr;
-    }
-
-    .timeline__point::before {
-      order: 1;
-    }
-
-    .timeline__point::after {
-      order: 2;
-    }
-
-    .timeline__heading {
-      order: 3;
-      margin: 0.75rem 0 0;
-    }
-
-    .timeline__content {
-      order: 4;
-    }
   }
 }
 
@@ -2149,7 +2167,7 @@ img[data-fancybox] {
 
 /** Fixes off-center arrow **/
 .tippy-arrow::before {
-    margin-left: -7px;
+  margin-left: -7px;
 }
 
 /* TODO: Optimize for PRINT */
