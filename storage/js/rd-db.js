@@ -242,15 +242,15 @@ export function populatePriceTableWithData(data, displaySold = false) {
       "rolety-priprava": {
         filename: "zaluzie-priprava",
         tooltip: {
-          "cs-CZ": "V ceně je elektropříprava pro venkovní rolety.",
-          "en-US": "Price includes wiring for external roller shutters."
+          "cs-CZ": "V ceně je elektropříprava pro předokenní žaluzie.",
+          "en-US": "Price includes wiring for external blinds."
         }
       },
       "rolety-priprava-cast": {
         filename: "zaluzie-priprava-cast",
         tooltip: {
-          "cs-CZ": "V ceně je elektropříprava pro venkovní rolety u části oken.",
-          "en-US": "Price includes wiring for external roller shutters for some windows."
+          "cs-CZ": "V ceně je elektropříprava pro předokenní žaluzie u části oken.",
+          "en-US": "Price includes wiring for external blinds for some windows."
         }
       },
     }
