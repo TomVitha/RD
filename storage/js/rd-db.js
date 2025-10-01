@@ -221,8 +221,8 @@ export function populatePriceTableWithData(data, displaySold = false) {
       "klima": {
         filename: "klima",
         tooltip: {
-          "cs-CZ": "V ceně je klimatizace.",
-          "en-US": "Air conditioning included."
+          "cs-CZ": "V ceně je stropní vytápění a chlazení.",
+          "en-US": "Price includes ceiling heating and cooling."
         }
       },
       "rekuperace": {
