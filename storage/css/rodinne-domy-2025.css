@@ -1,3 +1,7 @@
+/* Tippy */
+@import url('https://unpkg.com/tippy.js@6.3.7/dist/tippy.css'); /* We need to import manually, because for some reason it does not get injected automatically as it should */
+@import url('https://unpkg.com/tippy.js@6.3.7/animations/shift-away.css');
+
 :root {
   /* * Brand * */
   --color-blue: #20234c;
@@ -825,6 +829,7 @@ p > a, .link {
   position: absolute;
   inset: 0;
   background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .6)), linear-gradient(180deg, rgba(0, 0, 0, .4), transparent);
+  pointer-events: none;
 }
 
 .hero > :is(video, picture, img) {
@@ -848,6 +853,11 @@ p > a, .link {
 
 .hero__inside {
   position: relative;
+  pointer-events: none;
+}
+
+.hero__inside > * {
+  pointer-events: auto;
 }
 
 .hero__content {
@@ -1647,6 +1657,7 @@ th {
 /* HACK to increase specificity */
 .subsection-column.subsection-column > h2 {
   color: var(--color-body-text-em);
+  font-weight: 500;
 }
 
 .price-table :is(th, td) {
@@ -1878,11 +1889,11 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
   fill: var(--status-available-color);
 }
 
-.layout-viewer-map [id^="rd-path"].under-offer:hover {
+.layout-viewer-map [id^="rd-path"].under-offer {
   fill: var(--status-under-offer-color);
 }
 
-.layout-viewer-map [id^="rd-path"].sold:hover {
+.layout-viewer-map [id^="rd-path"].sold {
   fill: var(--status-sold-color);
 }
 
@@ -1993,7 +2004,6 @@ dialog .lv-details-box {
 
 .hotspots__content {
   min-width: 992px;
-  overscroll-behavior: none;
   position: relative;
   overflow: hidden;
 }
@@ -2036,6 +2046,8 @@ dialog .lv-details-box {
     height: auto;
   }
 }
+
+/* TODO: Refactor to use anchor positioning */
 
 .hotspots__item {
   position: absolute;
@@ -2188,6 +2200,8 @@ img[data-fancybox] {
   }
 }
 
+
+/* FIXME: Hovering over some header items causes shift */
 
 /* * GRAY CG HEADER */
 :root {
