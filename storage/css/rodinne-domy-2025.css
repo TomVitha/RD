@@ -60,6 +60,7 @@
   --status-under-offer-color-lt: #fffdf8;
   --status-sold-color: #993333;
   --status-sold-color-lt: #fffbfb;
+  /* TODO: Barvy pro ukázkáč? */
 
 
   /* * Accessibility * */
@@ -936,7 +937,7 @@ p > a, .link {
   }
 
   .hero h1 {
-    font-size: 5.5rem;
+    /* font-size: 5.5rem; */
   }
 }
 
@@ -1283,7 +1284,7 @@ section section {
   display: flex;
   justify-content: center;
   align-items: baseline;
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -1300,9 +1301,10 @@ section section {
   max-width: 320px;
 }
 
-.highlight > [class*="fa-"] {
+.highlight > :is([class*="fa-"], img, svg) {
   margin-bottom: 10px;
   font-size: 36px;
+  height: 36px;
   color: var(--hl-icon-color);
   user-select: none;
 }
@@ -1883,6 +1885,7 @@ table.dataTable thead > tr > :is(th, td):is(.dt-orderable-asc, .dt-orderable-des
 .layout-viewer-map [id^="rd-path"]:hover {
   stroke: white;
   stroke-width: 4px;
+  fill: white;
 }
 
 .layout-viewer-map [id^="rd-path"].available:hover {
@@ -2177,9 +2180,9 @@ img[data-fancybox] {
   /* color: white; */
 }
 
-/** Fixes off-center arrow **/
+/* FIX: off-center arrow */
 .tippy-arrow::before {
-  margin-left: -7px;
+  /* margin-left: -7px; */
 }
 
 /* TODO: Optimize for PRINT */
