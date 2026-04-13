@@ -1,4 +1,4 @@
-import { initialize } from "./rd-main.js";
+import { init } from "./rd-main.js";
 
 // * Initialize all scripts
-initialize("cs-CZ");
+init("cs-CZ");

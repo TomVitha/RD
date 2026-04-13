@@ -1,14 +1,17 @@
 // // @ts-check
 
+import DataTable from "https://esm.sh/datatables.net"
+
+// ? Refactor from two-way data binding - use reactive state management instead ?
 // DIY two-way data binding
 import * as databind from './data-binding.js'
 
+import { statusConfig, amenitiesConfig, specialEquipmentConfig } from './configs.js'
+
 // GLOBAL variable for locale
 let locale = 'cs-CZ'
-
 // URL to Google Sheets data as JSON
-const sheetURL = 'https://docs.google.com/spreadsheets/d/1C7FJ0qQUQHuUrgXZ9eyC9LPq12UmR3BUcL5uiRCPEic/gviz/tq?sheet=Etapa_1';
-
+const sheetURL = 'https://docs.google.com/spreadsheets/d/18gH8L3iCXtZgrqsGiRmtyctFtoxsOqVkLWT0ry4MUvo/gviz/tq?sheet=Etapa_1';
 
 /**
  * Fetch data from Google Sheets and parse it as JSON
@@ -35,11 +38,12 @@ export async function fetchSheetData(url) {
         let cellValue = cell ? cell.v : '';
         // Check if the cell value is a date string
         if (typeof cellValue === 'string' && cellValue.startsWith('Date(') && cellValue.endsWith(')')) {
-          const parts = cellValue.substring(5, cellValue.length - 1).split(',');
-          if (parts.length === 3) {
-            const year = parseInt(parts[0], 10);
-            const month = parseInt(parts[1], 10);           // Month from Sheets (1-12)
-            const day = parseInt(parts[2], 10);
+          // TODO: Refactor
+          const dateStringParts = cellValue.substring(5, cellValue.length - 1).split(',');
+          if (dateStringParts.length === 3) {
+            const year = parseInt(dateStringParts[0], 10);
+            const month = parseInt(dateStringParts[1], 10);           // Month from Sheets (1-12)
+            const day = parseInt(dateStringParts[2], 10);
             cellValue = new Date(year, month - 1, day);     // JavaScript months are 0-indexed (0-11), so subtract 1 from the month
           }
         }
@@ -61,30 +65,10 @@ export async function fetchSheetData(url) {
  */
 export function amendPropertiesData(properties) {
 
-  // Text corresponding to status codes
-  const statusMapping = {
-    "available": {
-      "cs-CZ": "Volný",
-      "en-US": "Available"
-    },
-    "under-offer": {
-      "cs-CZ": "V jednání",
-      "en-US": "Under offer"
-    },
-    "sold": {
-      "cs-CZ": "Prodaný",
-      "en-US": "Sold"
-    },
-    "unknown": {
-      "cs-CZ": "Neznámý",
-      "en-US": "Unknown"
-    },
-  };
-
   // Amend each property
   properties.forEach(property => {
     // New property: status_text - Human-readable text of Status
-    property.status_text = statusMapping[property.status]?.[locale] ?? statusMapping.unknown[locale];
+    property.status_text = statusConfig[property.status]?.[locale] ?? statusConfig.unknown[locale];
     // New property: card_url - URL to property card (PDF)
     property.card_url = `https://www.central-group.cz/storage/CG/194-RD/soubory/karty-domu/194-RD-${property.name}.pdf`;
   });
@@ -92,6 +76,7 @@ export function amendPropertiesData(properties) {
   console.debug('Amended data:', properties);
 }
 
+// TODO: Deprecate
 /**
  * Primitive DYI Templating
  * (Imitating template syntax in Vue.js, Mustache.js, Handlebars.js etc.)
@@ -132,77 +117,6 @@ export function populatePriceTableWithData(data, displaySold = false) {
     const row = document.querySelector('#template-price-table-tr').content.cloneNode(true).querySelector('tr');
 
 
-    // * Amenities (Příslušenství)
-    // Associates font awesome icon class, and name with tooltip text in both locales
-    const amenitiesConfig = {
-      "B": {
-        icon: "fa-solid fa-square-b",
-        name: {
-          "cs-CZ": "Balkón",
-          "en-US": "Balcony"
-        },
-        tooltip: {
-          "cs-CZ": "V ceně je balkón.",
-          "en-US": "Price includes a balcony."
-        }
-      },
-      "G": {
-        icon: "fa-solid fa-square-g",
-        name: {
-          "cs-CZ": "Garáž",
-          "en-US": "Garage"
-        },
-        tooltip: {
-          "cs-CZ": "V ceně je garáž.",
-          "en-US": "Price includes a garage."
-        }
-      },
-      "P": {
-        icon: "fa-solid fa-square-p",
-        name: {
-          "cs-CZ": "Parkování",
-          "en-US": "Parking"
-        },
-        tooltip: {
-          "cs-CZ": "Nemovitost zahrnuje parkovací stání",
-          "en-US": "Property includes parking space"
-        }
-      },
-      "S": {
-        icon: "fa-solid fa-square-s",
-        name: {
-          "cs-CZ": "Sklep",
-          "en-US": "Cellar"
-        },
-        tooltip: {
-          "cs-CZ": "Nemovitost zahrnuje sklep",
-          "en-US": "Property includes a cellar"
-        }
-      },
-      "T": {
-        icon: "fa-solid fa-square-t",
-        name: {
-          "cs-CZ": "Terasa",
-          "en-US": "Terrace"
-        },
-        tooltip: {
-          "cs-CZ": "V ceně je terasa.",
-          "en-US": "Price includes a terrace"
-        }
-      },
-      "Z": {
-        icon: "fa-solid fa-square-z",
-        name: {
-          "cs-CZ": "Zahrada",
-          "en-US": "Garden"
-        },
-        tooltip: {
-          "cs-CZ": "V ceně je zahrada a předzahrádka.",
-          "en-US": "Price includes a garden and a front yard."
-        }
-      },
-    };
-
     // Creates and displays icons for amenities (instead of text)
     property.amenities.forEach(am => {
       if (property.amenities.includes(am)) {
@@ -214,46 +128,6 @@ export function populatePriceTableWithData(data, displaySold = false) {
       }
     });
 
-
-    // * Special equipment (Speciální vybavení)
-    // Associates with icon's filename, and tooltip text in both locales
-    const specialEquipmentConfig = {
-      "klima": {
-        filename: "klima",
-        tooltip: {
-          "cs-CZ": "V ceně je stropní vytápění a chlazení.",
-          "en-US": "Price includes ceiling heating and cooling."
-        }
-      },
-      "rekuperace": {
-        filename: "rekuperace",
-        tooltip: {
-          "cs-CZ": "V ceně je rekuperace bez dochlazování.",
-          "en-US": "Price includes heat recovery without after cooling."
-        }
-      },
-      "rolety": {
-        filename: "zaluzie",
-        tooltip: {
-          "cs-CZ": "V ceně jsou předokenní žaluzie.",
-          "en-US": "Price includes external blinds."
-        }
-      },
-      "rolety-priprava": {
-        filename: "zaluzie-priprava",
-        tooltip: {
-          "cs-CZ": "V ceně je elektropříprava pro předokenní žaluzie.",
-          "en-US": "Price includes wiring for external blinds."
-        }
-      },
-      "rolety-priprava-cast": {
-        filename: "zaluzie-priprava-cast",
-        tooltip: {
-          "cs-CZ": "V ceně je elektropříprava pro předokenní žaluzie u části oken.",
-          "en-US": "Price includes wiring for external blinds for some windows."
-        }
-      },
-    }
 
     // Creates and displays icons for special equipment (instead of text)
     property.special_equipment.forEach(eq => {
@@ -295,13 +169,22 @@ function formatData(properties, locale) {
     // * Price => CZK currency
     const prices = ['price_house', 'price_extras', 'price_total'];
     prices.forEach(price => {
-      property[price] = new Intl.NumberFormat(locale, {
-        style: 'currency',
-        currency: 'CZK',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(property[price]);
+      if (!property[price] || property[price] === '' || property[price] === '0') {
+        property[price] = "-"
+      } else {
+        property[price] = new Intl.NumberFormat(locale, {
+          style: 'currency',
+          currency: 'CZK',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0,
+        }).format(property[price]);
+      }
     })
+
+    // HACK - Model homes show special text instead of price_total
+    if (property.status === "show") {
+      property.price_total = statusConfig.show[locale]
+    }
 
 
     // * Completion date => [long month] [year] 
@@ -345,7 +228,7 @@ function formatData(properties, locale) {
  */
 async function LV(data) {
 
-  const propertiesDataFormatted = formatData(JSON.parse(JSON.stringify(data)), locale);   // ! Must be passed as a DEEP COPY !
+  const propertiesDataFormatted = formatData(structuredClone(data), locale);   // Passing a deep copy
 
   // Assign status class to paths
   data.forEach((property) => {
@@ -440,7 +323,7 @@ async function LV(data) {
  * 
  * @see {@link https://datatables.net/}
  */
-function initDataTables() {
+function setupDataTables() {
 
   // Helper function to remove HTML tags (and replace non-breaking space with regular space)
   function stripHTMLTags(string) {
@@ -465,22 +348,22 @@ function initDataTables() {
   DataTable.defaults.column.orderSequence = ['asc', 'desc'];
 
   // Initialization
-  $('#price-table').DataTable({
-    order: [[0, 'asc']],       // Default column to sort by
-    columnDefs: [
+  const table = new DataTable('#price-table', {
+    order: [[0, 'asc']],                                              // Default column to sort by
+    columnDefs: [                                                     // Column-specific definitions
       { type: 'natural', target: '_all' },                              // Sorty by Natural sort
-      { orderable: false, targets: [2, 6, 11] },                           // Disable ordering
+      { orderable: false, targets: [2, 6, 11] },                        // Disable ordering
       { className: "dt-center", targets: [0, 1, 2, 5, 6, 11] },         // Center align text
       { className: "dt-right", targets: [3, 4, 7, 8, 9, 10] },          // Right align text
       { className: "bold", targets: [10] },                             // Final price is always bold
     ],
     // ERROR: Cross-origin redirection to https://cdn.datatables.net/plug-ins/2.3.0/i18n/cs.json denied by Cross-Origin Resource Sharing policy: Origin [IP ADDRESS:port] is not allowed by Access-Control-Allow-Origin. Status code: 301\
-    // NOTE: Likely happens when not using https (like on localhost)
+    // NOTE: Likely happens when not over https (like on localhost). Uncomment in PROD and it should work fine
     // language: {
     //     url: `//cdn.datatables.net/plug-ins/2.3.0/i18n/${locale == 'cs-CZ' ? 'cs' : 'en-GB'}.json`,
     // },
     responsive: false,
-    autoWidth: false,    // Fix: Corrects weird column widths
+    autoWidth: false,    // FIX: Corrects weird column widths
     paging: false,
     searching: false,
     info: false,
@@ -497,7 +380,7 @@ function initDataTables() {
 export async function initDb(loc = 'cs-CZ') {
 
   // Set global locale value
-  locale = loc; 
+  locale = loc;
 
   // Fetch data
   const propertiesData = await fetchSheetData(sheetURL);
@@ -508,10 +391,8 @@ export async function initDb(loc = 'cs-CZ') {
   console.debug('Fetched RAW data: ', propertiesData.tableData);
 
   // * Initialize the rest
-  $(document).ready(function () {
-    amendPropertiesData(propertiesData.tableData);
-    populatePriceTableWithData(propertiesData.tableData, false);
-    initDataTables()
-    LV(propertiesData.tableData)
-  });
+  amendPropertiesData(propertiesData.tableData);
+  populatePriceTableWithData(propertiesData.tableData, false);
+  setupDataTables()
+  LV(propertiesData.tableData)
 }
