@@ -1,15 +1,24 @@
-import { initDb } from './rd-db.js';
+import { Alpine } from './alpine.js';
+
+// import { initDb } from './rd-db.js';
+
+import {
+  fetchSheetData,
+  amendPropertiesData,
+  populatePriceTableWithData,
+  setupDataTables,
+  LV,
+  formatData
+} from './rd-db.js';
 
 // * Tippy (internally imports Popper) - Styling does not get injected, needs to be imported manually (in main style .css file)
 import tippy from 'https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/+esm'
 
-// * Open contact form
+// * Open contact form (side effect import)
 import 'https://www.central-group.cz/storage/CG/wms3/js/lokalitni-stranka-2024/open-form.js'
 
-
-// WIP !!!
-export async function init(locale) {
-  await initDb(locale);
+export async function init(loc) {
+  // await initDb(locale);
 
   // # === Other scripts === # //
 
@@ -69,16 +78,77 @@ export async function init(locale) {
     console.error('Error initializing Mapbox:', error);
   }
 
-
   // * Initialize Tippy for tooltips
-  // HACK: Delay init to ensure Tippy is fully loaded
-  setTimeout(() => {
-    tippy('[data-tippy-content]', {
-      animation: "shift-away",
-      theme: 'tippy-main-theme',
-      onCreate(instance) {
-        instance.reference.removeAttribute('title');  // Remove title attribute to prevent conflict with default browser tooltip
-      },
-    });
-  }, 1500);
+  tippy('[data-tippy-content]', {
+    animation: "shift-away",
+    theme: 'tippy-main-theme',
+    onCreate(instance) {
+      instance.reference.removeAttribute('title');  // Remove title attribute to prevent conflict with default browser tooltip
+    },
+  });
+
+  // WIP: DATA
+
+  let propertiesData = await fetchSheetData();
+  if (!propertiesData) {
+    console.error('Failed to fetch or parse data.');
+  }
+
+  document.addEventListener("alpine:init", () => {
+
+    console.warn("Alpine", Alpine);
+
+    Alpine.store("locale", {
+      code: loc,
+    })
+
+    amendPropertiesData(propertiesData.tableData);
+    console.log("propertiesData", propertiesData);
+    populatePriceTableWithData(propertiesData.tableData, false);
+    setupDataTables()
+    LV(propertiesData.tableData)
+    propertiesData.tableData = formatData(propertiesData.tableData, Alpine.store("locale").code)
+
+
+    Alpine.data("priceTable", () => ({
+      properties: propertiesData.tableData,
+    }))
+
+    Alpine.store("lvboxdata", {
+      propertyId: 1
+    })
+
+    document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
+      // * MOUSE POINTERS -- Box shows while hovering over a path
+      if (window.matchMedia("(pointer: fine)").matches) {
+        path.addEventListener("mouseenter", (e) => {
+          const pId = parseInt(path.id.replace("rd-path-", ""), 10) // 1-indexed ID of
+          console.log("path id", pId);
+          Alpine.store("lvboxdata").propertyId = pId
+        });
+      }
+      // * TOUCH SCREENS -- Box as <dialog>
+      else {
+        path.addEventListener("click", (event) => {
+          const pId = parseInt(path.id.replace("rd-path-", ""), 10) // 1-indexed ID of property
+          console.log("path id", pId);
+          Alpine.store("lvboxdata").propertyId = pId
+        });
+      }
+    })
+
+    Alpine.data("lvbox", () => ({
+      get selectedProperty() {
+        const pId = Alpine.store("lvboxdata").propertyId - 1 // Subtract 1 because array is 0-indexed but IDs start at 1
+        console.debug("property Id", pId);
+        return propertiesData.tableData[pId]
+      }
+    }))
+  })
+
+  window.Alpine = Alpine
+
+  Alpine.start()
 }
+
+

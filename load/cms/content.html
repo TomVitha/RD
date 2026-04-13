@@ -661,14 +661,16 @@
   </table>
 </template>
 
+<!-- TODO: Refactor from DIY mustache to Alpine.js -->
 <!-- PRICE TABLE ROW-->
 <template id="template-price-table-tr">
-  <tr>
-    <!-- * Name and Status in separate cells (columns) -- to use, price-table <template> and DataTabbles code would need to be updated -->
-    <!-- <td data-label="Stav"><span class="property-status {status} dot mr-2" aria-hidden="true" title="{status_text}">{status_text}</span></td> -->
-    <!-- <td data-label="Dům">{name}</td> -->
-    <!-- * Name with Status in one cell -- swapped using flexbox, to prevent status from interfering with sort -->
-    <td data-label="Dům" class="d-flex align-items-center flex-row-reverse justify-content-center">{name}<span class="property-status {status} dot mr-2" aria-hidden="true" title="{status_text}" data-tippy-content="{status_text}">{status_text}</span></td>
+  <tr x-data="priceTable">
+    <td data-label="Dům" data-sort="{name}" class="d-flex align-items-center justify-content-center">
+      <span class="property-status {status} dot mr-2" aria-hidden="true" title="{status_text}" data-tippy-content="{status_text}">
+        {status_text}
+      </span>
+      {name}
+    </td>
     <td data-label="Dispozice">{layout}</td>
     <td data-label="Příslušenství" data-icons="amenities"></td>
     <td data-label="Vnitřní užitná plocha">{area_int}</td>
@@ -693,33 +695,33 @@
 
 <!-- LAYOUT VIEWER DETAILS BOX -->
 <template id="lv-details-box">
-  <div class="lv-details-box" role="dialog">
+  <div class="lv-details-box" role="dialog" x-data="lvbox">
     <div class="lv-details-box__content">
       <div class="lv-details-box__header">
-        <span class="lv-details-box__name">Dům {name}</span>
-        <span class="property-status {status} filled mr-2" aria-hidden="true">{status_text}</span>
+        <span class="lv-details-box__name" x-text="'Dům ' + selectedProperty.name"></span>
+        <span class="property-status filled mr-2" :class="selectedProperty.status" aria-hidden="true" x-text="selectedProperty.status_text"></span>
         <!-- <button class="lv-details-box__close btn btn-icon btn-black btn-ghost">✕</button> -->
       </div>
       <div class="lv-details-box__body">
         <div class="lv-details-box__grid">
           <dl>
             <dt>Dispozice</dt>
-            <dd>{layout}</dd>
+            <dd x-text="selectedProperty.layout"></dd>
           </dl>
           <dl>
             <dt>Dokončení</dt>
-            <dd>{date_completion}</dd>
+            <dd x-text="selectedProperty.date_completion"></dd>
           </dl>
           <dl>
             <dt>Plocha</dt>
-            <dd>{area_int}</dd>
+            <dd x-text="selectedProperty.area_int"></dd>
           </dl>
           <dl>
             <dt>Externí plocha</dt>
-            <dd>{area_ext}</dd>
+            <dd x-text="selectedProperty.area_ext"></dd>
           </dl>
         </div>
-        <span class="lv-details-box__price">{price_total}</span>
+        <span class="lv-details-box__price" x-text="selectedProperty.price_total"></span>
       </div>
     </div>
   </div>
@@ -727,35 +729,36 @@
 
 <!-- Details dialog for mobile  -->
 <dialog id="lv-details-box-dialog">
-  <div class="lv-details-box">
+  <div class="lv-details-box" x-data="lvbox">
     <div class="lv-details-box__content">
       <form class="lv-details-box__header">
-        <span class="lv-details-box__name">Dům <span data-bind="selectedproperty.name"></span></span>
+        <span class="lv-details-box__name">Dům <span x-text="selectedProperty.name"></span></span>
         <button class="lv-details-box__close btn btn-icon btn-black btn-ghost" formmethod="dialog">✕</button>
       </form>
       <div class="lv-details-box__body">
         <div class="lv-details-box__grid">
           <dl>
             <dt>Dispozice</dt>
-            <dd data-bind="selectedproperty.layout"></dd>
+            <dd x-text="selectedProperty.layout"></dd>
           </dl>
           <dl>
             <dt>Dokončení</dt>
-            <dd data-bind="selectedproperty.date_completion"></dd>
+            <dd x-text="selectedProperty.date_completion"></dd>
           </dl>
           <dl>
             <dt>Plocha</dt>
-            <dd data-bind="selectedproperty.area_int"></dd>
+            <dd x-text="selectedProperty.area_int"></dd>
           </dl>
           <dl>
             <dt>Externí plocha</dt>
-            <dd data-bind="selectedproperty.area_ext"></dd>
+            <dd x-text="selectedProperty.area_ext"></dd>
           </dl>
         </div>
-        <span class="lv-details-box__price" data-bind="selectedproperty.price_total"></span>
+        <span class="lv-details-box__price" x-text="selectedProperty.price_total"></span>
         <div class="lv-details-box__btn-open">
           <a
-            data-bind-href="selectedproperty.card_url"
+            :href="selectedProperty.card_url"
+            target="_blank" rel="noopener"
             class="btn btn-sm btn-secondary btn-full">
             Otevřít
           </a>

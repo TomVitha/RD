@@ -2,10 +2,6 @@
 
 import DataTable from "https://esm.sh/datatables.net"
 
-// ? Refactor from two-way data binding - use reactive state management instead ?
-// DIY two-way data binding
-import * as databind from './data-binding.js'
-
 import { statusConfig, amenitiesConfig, specialEquipmentConfig } from './configs.js'
 
 // GLOBAL variable for locale
@@ -16,36 +12,25 @@ const sheetURL = 'https://docs.google.com/spreadsheets/d/18gH8L3iCXtZgrqsGiRmtyc
 /**
  * Fetch data from Google Sheets and parse it as JSON
  * 
- * @param {string} url URL of the Google Sheet
  * @returns {Promise<Object | null>} Parsed JSON data
  */
-export async function fetchSheetData(url) {
+export async function fetchSheetData() {
   try {
-    const response = await fetch(url);
+    const response = await fetch(sheetURL);
     const responseText = await response.text();
-
-    // Extract the JSON part from the response (Google's response has a prefix we need to remove)
+    /// Extract the JSON part from the response (Google's response has a prefix we need to remove)
     const data = JSON.parse(responseText.substring(responseText.indexOf('{'), responseText.lastIndexOf('}') + 1));
-
-    // Extract headers from column labels
+    // console.debug('Fetched RAW data: ', data);
+    /// Extract headers from column labels
     const headers = data.table.cols.map(col => col.label);
-
-    // TODO: Refactor/untangle?
-    // Extract and format rows
     const tableData = data.table.rows.map(row => {
       const obj = {};
       row.c.forEach((cell, index) => {
         let cellValue = cell ? cell.v : '';
-        // Check if the cell value is a date string
+        // Convert Google Sheets date string 'Date(yyyy,mm,dd)' to JS Date object
         if (typeof cellValue === 'string' && cellValue.startsWith('Date(') && cellValue.endsWith(')')) {
-          // TODO: Refactor
-          const dateStringParts = cellValue.substring(5, cellValue.length - 1).split(',');
-          if (dateStringParts.length === 3) {
-            const year = parseInt(dateStringParts[0], 10);
-            const month = parseInt(dateStringParts[1], 10);           // Month from Sheets (1-12)
-            const day = parseInt(dateStringParts[2], 10);
-            cellValue = new Date(year, month - 1, day);     // JavaScript months are 0-indexed (0-11), so subtract 1 from the month
-          }
+          const dateParts = cellValue.substring(5, cellValue.length - 1).split(',');
+          cellValue = new Date(...dateParts);
         }
         obj[headers[index]] = cellValue;
       });
@@ -64,90 +49,14 @@ export async function fetchSheetData(url) {
  * @param {Array} properties
  */
 export function amendPropertiesData(properties) {
-
-  // Amend each property
   properties.forEach(property => {
-    // New property: status_text - Human-readable text of Status
+    /// New property: status_text - Human-readable text of Status
     property.status_text = statusConfig[property.status]?.[locale] ?? statusConfig.unknown[locale];
-    // New property: card_url - URL to property card (PDF)
+    /// New property: card_url - URL to property card (PDF)
     property.card_url = `https://www.central-group.cz/storage/CG/194-RD/soubory/karty-domu/194-RD-${property.name}.pdf`;
   });
-
-  console.debug('Amended data:', properties);
-}
-
-// TODO: Deprecate
-/**
- * Primitive DYI Templating
- * (Imitating template syntax in Vue.js, Mustache.js, Handlebars.js etc.)
- * 
- * @param {string} html 
- * @param {object} object 
- * @returns 
- */
-function mustacheReplace(html, object) {
-  Object.entries(object).forEach(([key, value]) => {
-    const regex = new RegExp(`{\\s*${key}\\s*}`, 'g');
-    html = html.replace(regex, value);
-  });
-  return html;
-}
-
-/**
- * Creates a table row for each property
- * Replaces template variables in the row and creates icons for amenities and special equipment
- * 
- * @param {object} data 
- * @param {boolean} displaySold 
- */
-export function populatePriceTableWithData(data, displaySold = false) {
-
-  const properties = formatData(JSON.parse(JSON.stringify(data)), locale);
-  const table = document.querySelector('#template-price-table').content.cloneNode(true).querySelector('table');
-  const tableBody = table.querySelector('tbody');
-  const tableContainer = document.querySelector('#price-table-container')
-
-  // Row for each property
-  properties.forEach(property => {
-
-    // ! Sold properties are not displayed
-    if (!displaySold && property['status'] === 'sold')
-      return;
-
-    const row = document.querySelector('#template-price-table-tr').content.cloneNode(true).querySelector('tr');
-
-
-    // Creates and displays icons for amenities (instead of text)
-    property.amenities.forEach(am => {
-      if (property.amenities.includes(am)) {
-        const icon = document.createElement('i');
-        icon.className = amenitiesConfig[am].icon;
-        icon.setAttribute('title', amenitiesConfig[am].tooltip[locale]);
-        icon.setAttribute('data-tippy-content', amenitiesConfig[am].tooltip[locale]);
-        row.querySelector('[data-icons="amenities"]').appendChild(icon);
-      }
-    });
-
-
-    // Creates and displays icons for special equipment (instead of text)
-    property.special_equipment.forEach(eq => {
-      if (property.special_equipment.includes(eq)) {
-        const img = document.createElement('img');
-        img.setAttribute('src', `https://www.central-group.cz/storage/CG/194-RD/img/icons/${specialEquipmentConfig[eq].filename}.svg`);
-        img.setAttribute('height', '12');
-        img.setAttribute('title', specialEquipmentConfig[eq].tooltip[locale]);
-        img.setAttribute('data-tippy-content', specialEquipmentConfig[eq].tooltip[locale]);
-        img.classList.add('price-table__icon');
-        row.querySelector('[data-icons="special_equipment"]').appendChild(img);
-      }
-    });
-
-    row.innerHTML = mustacheReplace(row.innerHTML, property)  // Replace template variables
-    tableBody.appendChild(row)                                // Append row to table body
-  });
-
-  // Append table to container (while replacing any existing content)
-  tableContainer.replaceChildren(table);
+  // console.debug('Amended data:', properties);
+  return properties
 }
 
 /**
@@ -157,7 +66,7 @@ export function populatePriceTableWithData(data, displaySold = false) {
  * @param {*} locale 
  * @returns {Object} properties
  */
-function formatData(properties, locale) {
+export function formatData(properties, locale) {
   properties.forEach(property => {
 
     // * Multiple options into array
@@ -186,28 +95,11 @@ function formatData(properties, locale) {
       property.price_total = statusConfig.show[locale]
     }
 
-
-    // * Completion date => [long month] [year] 
-    if (property.date_completion) {
-      // Convert to ISO string if possible, then create new Date from it
-      let dateObj;
-      if (typeof property.date_completion === 'object' && property.date_completion instanceof Date) {
-        dateObj = property.date_completion;
-      } else if (typeof property.date_completion === 'string' || typeof property.date_completion === 'number') {
-        // Try to convert to Date via ISO string
-        try {
-          dateObj = new Date(property.date_completion);
-        } catch (e) {
-          dateObj = null;
-        }
-      }
-      if (dateObj && !isNaN(dateObj)) {
-        property.date_completion = dateObj.toLocaleDateString(locale, {
-          month: 'long',
-          year: 'numeric',
-        });
-      }
-    }
+    // * Completion date => [long month] [year]
+    property.date_completion = new Date(property.date_completion).toLocaleDateString(locale, {
+      month: 'long',
+      year: 'numeric',
+    });
 
     // * Other - suffix with units
     property.area_int += ' m²';
@@ -218,6 +110,78 @@ function formatData(properties, locale) {
   return properties
 }
 
+// TODO: Deprecate
+/**
+ * Primitive DYI Templating
+ * (Imitating template syntax in Vue.js, Mustache.js, Handlebars.js etc.)
+ * 
+ * @param {string} html 
+ * @param {object} object 
+ * @returns 
+ */
+function mustacheReplace(html, object) {
+  Object.entries(object).forEach(([key, value]) => {
+    const regex = new RegExp(`{\\s*${key}\\s*}`, 'g');
+    html = html.replace(regex, value);
+  });
+  return html;
+}
+
+/**
+ * Creates a table row for each property
+ * Replaces template variables in the row and creates icons for amenities and special equipment
+ * 
+ * @param {object} data 
+ * @param {boolean} displaySold 
+ */
+export function populatePriceTableWithData(data, displaySold = false) {
+
+  const properties = formatData(structuredClone(data), locale);   // Passing a deep copy to prevent modifying original data
+  const table = document.querySelector('#template-price-table').content.cloneNode(true).querySelector('table');
+  const tableBody = table.querySelector('tbody');
+  const tableContainer = document.querySelector('#price-table-container')
+
+  console.warn("Populating price table with data:", properties);
+
+  // Row for each property
+  properties.forEach(property => {
+
+    // ! Sold properties are not displayed
+    if (!displaySold && property['status'] === 'sold') return;
+
+    const row = document.querySelector('#template-price-table-tr').content.cloneNode(true).querySelector('tr');
+
+    // Creates and displays icons for amenities (instead of text)
+    property.amenities.forEach(am => {
+      if (property.amenities.includes(am)) {
+        const icon = document.createElement('i');
+        icon.className = amenitiesConfig[am].icon;
+        icon.setAttribute('title', amenitiesConfig[am].tooltip[locale]);
+        icon.setAttribute('data-tippy-content', amenitiesConfig[am].tooltip[locale]);
+        row.querySelector('[data-icons="amenities"]').appendChild(icon);
+      }
+    });
+
+    // Creates and displays icons for special equipment (instead of text)
+    property.special_equipment.forEach(eq => {
+      if (property.special_equipment.includes(eq)) {
+        const img = document.createElement('img');
+        img.setAttribute('src', `https://www.central-group.cz/storage/CG/194-RD/img/icons/${specialEquipmentConfig[eq].filename}.svg`);
+        img.setAttribute('height', '12');
+        img.setAttribute('title', specialEquipmentConfig[eq].tooltip[locale]);
+        img.setAttribute('data-tippy-content', specialEquipmentConfig[eq].tooltip[locale]);
+        img.classList.add('price-table__icon');
+        row.querySelector('[data-icons="special_equipment"]').appendChild(img);
+      }
+    });
+
+    row.innerHTML = mustacheReplace(row.innerHTML, property)  // Replace template variables
+    tableBody.appendChild(row)                                // Append row to table body
+  });
+
+  // Append table to container (while replacing any existing content)
+  tableContainer.replaceChildren(table);
+}
 
 
 /**
@@ -226,9 +190,7 @@ function formatData(properties, locale) {
  * 
  * @param {Object} data - Properties data
  */
-async function LV(data) {
-
-  const propertiesDataFormatted = formatData(structuredClone(data), locale);   // Passing a deep copy
+export async function LV(data) {
 
   // Assign status class to paths
   data.forEach((property) => {
@@ -236,16 +198,13 @@ async function LV(data) {
   })
 
   let box = null;
-  let matchingProperty = null;
 
   // Create box from <template>, fill with data, and append
   /**
    * @param {object} property
    */
-  function createBox(property) {
+  function createBox() {
     box = document.querySelector("#lv-details-box").content.cloneNode(true).querySelector(".lv-details-box");
-    box.setAttribute('id', `lv-details-box-${property.id}`);
-    box.innerHTML = mustacheReplace(box.innerHTML, property);
     box.style.position = "fixed";
     box.style.zIndex = 10;
     document.querySelector('.layout-viewer-wrapper').appendChild(box);
@@ -267,13 +226,7 @@ async function LV(data) {
 
       // Mouse enter (create box)
       path.addEventListener("mouseenter", (e) => {
-        const matchingProperty = propertiesDataFormatted.find(
-          (property) => `rd-path-${property.id}` === path.getAttribute('id')
-        );
-        if (!matchingProperty) {
-          return;
-        }
-        box = createBox(matchingProperty);
+        box = createBox();
       });
 
       // Mouse move (reposition box)
@@ -296,20 +249,7 @@ async function LV(data) {
   else {
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
       path.addEventListener("click", (event) => {
-
-        /// Prevent opening link on click
-        event.preventDefault();
-
-        /// Get matching property (according to ID)
-        matchingProperty = propertiesDataFormatted.find(
-          (property) => `rd-path-${property.id}` === path.getAttribute('id')
-        );
-
-        if (!matchingProperty)
-          return;
-
-        // Bind elements
-        databind.state.selectedproperty = matchingProperty;
+        event.preventDefault(); // Prevent opening link on click
         document.querySelector("#lv-details-box-dialog").showModal();
       });
     });
@@ -317,13 +257,12 @@ async function LV(data) {
 }
 
 
-
 /**
  * Initializes DataTables on the Price Table
  * 
  * @see {@link https://datatables.net/}
  */
-function setupDataTables() {
+export function setupDataTables() {
 
   // Helper function to remove HTML tags (and replace non-breaking space with regular space)
   function stripHTMLTags(string) {
@@ -371,7 +310,6 @@ function setupDataTables() {
 }
 
 
-
 /**
  * Initializes
  * 
@@ -396,3 +334,4 @@ export async function initDb(loc = 'cs-CZ') {
   setupDataTables()
   LV(propertiesData.tableData)
 }
+
