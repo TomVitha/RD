@@ -1,5 +1,6 @@
 /* Tippy */
-@import url('https://unpkg.com/tippy.js@6.3.7/dist/tippy.css'); /* We need to import manually, because for some reason it does not get injected automatically as it should */
+@import url('https://unpkg.com/tippy.js@6.3.7/dist/tippy.css');
+/* We need to import manually, because for some reason it does not get injected automatically as it should */
 @import url('https://unpkg.com/tippy.js@6.3.7/animations/shift-away.css');
 
 :root {
@@ -698,13 +699,6 @@ a.btn:hover {
   overflow: visible;
   text-align: center;
   width: var(--btn-icon-size);
-}
-
-/* Contact form fix */
-.cnt-frm-submit[data-v-13bb746e] {
-  font-size: inherit;
-  --btn-theme: var(--color-yellow, #ffed00);
-  --btn-theme-complementary: var(--color-blue, #20234c);
 }
 
 /* BTN (end) */
@@ -1422,7 +1416,7 @@ section section {
   justify-content: center;
   text-align: center;
   color: var(--tl-dot-color);
-  fill:  var(--tl-dot-color);
+  fill: var(--tl-dot-color);
   user-select: none;
   /* WIP */
   font-size: 22px;
@@ -1431,6 +1425,7 @@ section section {
 .timeline__step.now {
   --tl-dot-color: violet;
 }
+
 .timeline__step.now .timeline__icon {
   --tl-dot-size: 16px;
   margin-inline: 14px 10px;
@@ -1438,7 +1433,7 @@ section section {
 }
 
 .timeline__step.now,
-.timeline__step.now ~.timeline__step {
+.timeline__step.now ~ .timeline__step {
   --tl-dot-color: var(--color-primary);
   --tl-line-color: var(--color-primary);
 }
@@ -1492,7 +1487,7 @@ section section {
     translate: 50% 0%;
   }
 
-  .timeline__step.now +.timeline__step::before {
+  .timeline__step.now + .timeline__step::before {
     content: "";
     translate: 0% 0%;
     width: 50%;
@@ -2174,7 +2169,7 @@ img[data-fancybox] {
 }
 
 /* ? Theme for Tippy */
-.tippy-box[data-theme ~='tippy-main-theme'] {
+.tippy-box[data-theme ~ ='tippy-main-theme'] {
   text-align: center;
   /* background-color: #7281a3; */
   /* color: white; */
@@ -2247,17 +2242,16 @@ header.head {
   }
 
   .head-bottom .mm-menu-bottom li:hover {
-    background-color: var(--header-bg-sec-hover);
+    background-color: var(--cg-header-bg-sec-hover);
   }
 
   .mm-main-item:hover .mm-main-item-link {
-    color: inherit;
-    margin: 0;
-    padding: 10px 15px;
+    /* color: inherit; */
+    /* margin: 0; */
   }
 
   .mm-main-item-link:hover {
-    color: inherit
+    /* color: inherit */
   }
 
   .mm-main-item-link {
@@ -2275,8 +2269,12 @@ header.head {
 
     .mm-product-link,
     .mm-submenu-item-link {
-      color: var(--cg-header-text-color);
+      /* color: var(--cg-header-text-color); */
     }
+  }
+
+  .mm-product-link:hover {
+    background-color: var(--color-secondary);
   }
 }
 
@@ -2292,4 +2290,21 @@ header.head {
 .v--modal-overlay .v--modal-box {
   max-width: 90dvw;
   max-height: 90dvh;
+}
+
+.cnt-frm-header[data-v-13bb746e] {
+  color: var(--color-primary);
+  background-color: var(--color-secondary);
+}
+
+/* .cnt-frm-submit[data-v-13bb746e] {
+  font-size: inherit;
+  --btn-theme: var(--color-yellow, #ffed00);
+  --btn-theme-complementary: var(--color-blue, #20234c);
+} */
+
+.cnt-frm-submit[data-v-13bb746e] {
+  font-size: inherit;
+  --btn-theme: var(--color-secondary);
+  --btn-theme-complementary: var(--color-primary);
 }
