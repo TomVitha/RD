@@ -60,7 +60,7 @@ export function amendPropertiesData(properties) {
 }
 
 /**
- * Formats raw data into human-readable like: Adding currency symbols, units
+ * Formats raw data into human-readable
  * 
  * @param {*} properties 
  * @param {*} locale 
@@ -110,7 +110,7 @@ export function formatData(properties, locale) {
   return properties
 }
 
-// TODO: Deprecate
+// TODO: Deprecate in favor of Alpine
 /**
  * Primitive DYI Templating
  * (Imitating template syntax in Vue.js, Mustache.js, Handlebars.js etc.)
@@ -175,7 +175,7 @@ export function populatePriceTableWithData(data, displaySold = false) {
       }
     });
 
-    row.innerHTML = mustacheReplace(row.innerHTML, property)  // Replace template variables
+    row.innerHTML = mustacheReplace(row.innerHTML, property)  // Replaces template variables
     tableBody.appendChild(row)                                // Append row to table body
   });
 
@@ -185,12 +185,12 @@ export function populatePriceTableWithData(data, displaySold = false) {
 
 
 /**
- * Layout Viewer
- * Handles displaying details box. On desktop: 
+ * Assigns status class to map paths. 
+ * Handles displaying details box for desktop and mobile.
  * 
  * @param {Object} data - Properties data
  */
-export async function LV(data) {
+export function LayoutViewer(data) {
 
   // Assign status class to paths
   data.forEach((property) => {
@@ -199,7 +199,7 @@ export async function LV(data) {
 
   let box = null;
 
-  // Create box from <template>, fill with data, and append
+  // Create box from <template> and append
   /**
    * @param {object} property
    */
@@ -220,9 +220,9 @@ export async function LV(data) {
     return box;
   }
 
-  // * MOUSE POINTERS -- Box shows while hovering over a path
-  if (window.matchMedia("(pointer: fine)").matches) {
-    document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
+  document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
+    // * MOUSE POINTERS -- Box shows while hovering over a path
+    if (window.matchMedia("(pointer: fine)").matches) {
 
       // Mouse enter (create box)
       path.addEventListener("mouseenter", (e) => {
@@ -241,20 +241,17 @@ export async function LV(data) {
       path.addEventListener("mouseleave", () => {
         box = removeBox(box);
       });
-
-    })
-
-  }
-  // * TOUCH SCREENS -- Box as <dialog>
-  else {
-    document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
+    }
+    // * TOUCH SCREENS -- Box as <dialog>
+    else {
       path.addEventListener("click", (event) => {
         event.preventDefault(); // Prevent opening link on click
         document.querySelector("#lv-details-box-dialog").showModal();
       });
-    });
-  }
+    }
+  });
 }
+
 
 
 /**
@@ -310,9 +307,8 @@ export function setupDataTables() {
 }
 
 
+// TODO: Either refactor or Deprecate -- currently UNUSED
 /**
- * Initializes
- * 
  * @param {string} loc - Locale 'cs-CZ' or 'en-US' (defaults to 'cs-CZ')
  */
 export async function initDb(loc = 'cs-CZ') {
@@ -332,6 +328,6 @@ export async function initDb(loc = 'cs-CZ') {
   amendPropertiesData(propertiesData.tableData);
   populatePriceTableWithData(propertiesData.tableData, false);
   setupDataTables()
-  LV(propertiesData.tableData)
+  LayoutViewer(propertiesData.tableData)
 }
 

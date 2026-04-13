@@ -7,7 +7,7 @@ import {
   amendPropertiesData,
   populatePriceTableWithData,
   setupDataTables,
-  LV,
+  LayoutViewer,
   formatData
 } from './rd-db.js';
 
@@ -103,27 +103,34 @@ export async function init(loc) {
     })
 
     amendPropertiesData(propertiesData.tableData);
-    console.log("propertiesData", propertiesData);
     populatePriceTableWithData(propertiesData.tableData, false);
     setupDataTables()
-    LV(propertiesData.tableData)
+    LayoutViewer(propertiesData.tableData)
     propertiesData.tableData = formatData(propertiesData.tableData, Alpine.store("locale").code)
 
-
-    Alpine.data("priceTable", () => ({
-      properties: propertiesData.tableData,
-    }))
+    // store properties data in Alpine store for global access, separated by headers and tableData
+    Alpine.store("properties", {
+      headers: propertiesData.headers,
+      tableData: propertiesData.tableData
+    })
 
     Alpine.store("lvboxdata", {
       propertyId: 1
     })
 
+    Alpine.data("lvbox", () => ({
+      get selectedProperty() {
+        const pId = Alpine.store("lvboxdata").propertyId - 1 // Subtract 1 because array is 0-indexed but IDs start at 1
+        return Alpine.store("properties").tableData[pId]
+      }
+    }))
+
     document.querySelectorAll('.layout-viewer-map path[id^="rd-path-"]').forEach((path) => {
+
       // * MOUSE POINTERS -- Box shows while hovering over a path
       if (window.matchMedia("(pointer: fine)").matches) {
-        path.addEventListener("mouseenter", (e) => {
+        path.addEventListener("mouseenter", (event) => {
           const pId = parseInt(path.id.replace("rd-path-", ""), 10) // 1-indexed ID of
-          console.log("path id", pId);
           Alpine.store("lvboxdata").propertyId = pId
         });
       }
@@ -131,19 +138,10 @@ export async function init(loc) {
       else {
         path.addEventListener("click", (event) => {
           const pId = parseInt(path.id.replace("rd-path-", ""), 10) // 1-indexed ID of property
-          console.log("path id", pId);
           Alpine.store("lvboxdata").propertyId = pId
         });
       }
     })
-
-    Alpine.data("lvbox", () => ({
-      get selectedProperty() {
-        const pId = Alpine.store("lvboxdata").propertyId - 1 // Subtract 1 because array is 0-indexed but IDs start at 1
-        console.debug("property Id", pId);
-        return propertiesData.tableData[pId]
-      }
-    }))
   })
 
   window.Alpine = Alpine

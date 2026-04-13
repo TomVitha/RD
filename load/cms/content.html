@@ -664,7 +664,7 @@
 <!-- TODO: Refactor from DIY mustache to Alpine.js -->
 <!-- PRICE TABLE ROW-->
 <template id="template-price-table-tr">
-  <tr x-data="priceTable">
+  <tr>
     <td data-label="Dům" data-sort="{name}" class="d-flex align-items-center justify-content-center">
       <span class="property-status {status} dot mr-2" aria-hidden="true" title="{status_text}" data-tippy-content="{status_text}">
         {status_text}
@@ -733,7 +733,7 @@
     <div class="lv-details-box__content">
       <form class="lv-details-box__header">
         <span class="lv-details-box__name">Dům <span x-text="selectedProperty.name"></span></span>
-        <button class="lv-details-box__close btn btn-icon btn-black btn-ghost" formmethod="dialog">✕</button>
+        <button class="lv-details-box__close btn btn-icon btn-black btn-ghost" formmethod="dialog" type="button">✕</button>
       </form>
       <div class="lv-details-box__body">
         <div class="lv-details-box__grid">
