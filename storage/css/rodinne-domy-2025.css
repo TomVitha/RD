@@ -2271,11 +2271,11 @@ header.head {
     .mm-submenu-item-link {
       /* color: var(--cg-header-text-color); */
     }
+    .mm-product-link:hover {
+      background-color: var(--color-secondary);
+    }
   }
 
-  .mm-product-link:hover {
-    background-color: var(--color-secondary);
-  }
 }
 
 /* Contact form fix */
