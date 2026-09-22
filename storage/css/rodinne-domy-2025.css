@@ -2580,3 +2580,182 @@ header.head {
 #price-table tbody tr:has(td:first-child .property-status.show) td:last-child .btn {
   display: none;
 }
+
+
+/* ==========================================================================
+   # BROW
+   Malý akcentový pruh nad nadpisy
+   ========================================================================== */
+.brow {
+  display: block;
+  width: 40px;
+  height: 4px;
+  background-color: #e7cf9c;
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   # NOVÉ VARIANTY NADPISŮ
+   Doplňkové třídy k původním h1-h6, kde má návrh odlišné písmo/váhu.
+   ========================================================================== */
+
+/* * Větší dvouřádkový nadpis (karty ukázkových domů) * */
+.heading-showcase {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: #2e2e2e;
+  margin: 0 0 0.75rem 0;
+}
+
+.heading-showcase a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.heading-showcase__line--light {
+  display: block;
+  font-weight: 400;
+}
+
+@media (min-width: 992px) {
+  .heading-showcase {
+    font-size: 2.25rem;
+    line-height: 50px;
+  }
+}
+
+/* * Kompaktní nadpis (např. kontaktní pruh) * */
+.heading-compact {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #3b3b3b;
+  margin: 0;
+}
+
+.heading-compact a {
+  color: inherit;
+}
+
+.heading-compact__light {
+  font-weight: 400;
+}
+
+
+/* ==========================================================================
+  Výběr ukázkových domů
+   ========================================================================== */
+.showcase-homes__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+@media (min-width: 992px) {
+  .showcase-homes__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.showcase-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.showcase-card__media {
+  aspect-ratio: 645 / 362;
+}
+
+.showcase-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.showcase-card__body {
+  flex: 1 1 auto;
+  background-color: #fcfaf6;
+  padding: 30px 25px;
+}
+
+@media (min-width: 768px) {
+  .showcase-card__body {
+    padding: 40px 50px;
+  }
+}
+
+.showcase-card__body .brow {
+  margin-bottom: 12px;
+}
+
+.showcase-card__body p {
+  margin: 0;
+  color: #2e2e2e;
+}
+
+/* * Kontaktní pruh UB (adresa, otevírací doba) * */
+.showcase-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  background-color: #fcfaf6;
+  border-radius: 5px;
+  padding: 30px 25px;
+  margin-top: 30px;
+}
+
+@media (min-width: 992px) {
+  .showcase-contact {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 30px;
+    column-gap: 114px;
+    padding: 40px 60px;
+    margin-top: 32px;
+  }
+}
+
+.showcase-contact__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.showcase-contact__item--heading {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.showcase-contact__item--heading .brow {
+  margin: 0;
+}
+
+.showcase-contact__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #e7cf9c;
+  color: #3b3b3b;
+  font-size: 15px;
+}
+
+.showcase-contact__item p {
+  margin: 0;
+}
