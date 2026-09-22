@@ -1335,13 +1335,13 @@ section section {
 
   /* Image containers break out * */
   .two-col.img-text > *:nth-child(odd) {
-    grid-column: span 2 / content-middle;
+    grid-column: span 7 / content-middle;
     align-self: start;
     padding-inline: 0 12px;
   }
 
   .two-col.text-img > *:nth-child(even) {
-    grid-column: content-middle / span 2;
+    grid-column: content-middle / span 7;
     align-self: start;
     padding-inline: 12px 0;
   }
@@ -2369,7 +2369,8 @@ img[data-fancybox] {
 }
 
 /* ? Theme for Tippy */
-.tippy-box[data-theme ~ ='tippy-main-theme'] {
+/* ! POZOR: Nesmí být mezera v '~='  */
+.tippy-box[data-theme ~='tippy-main-theme'] {
   text-align: center;
   /* background-color: #7281a3; */
   /* color: white; */
