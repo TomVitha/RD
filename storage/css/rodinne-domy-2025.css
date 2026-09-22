@@ -65,7 +65,8 @@
       /* 12-columns layout end */
       minmax(0, var(--breakout-half)) 
       [breakout-end] 
-      auto [full-width-end];
+      auto 
+      [full-width-end];
 
   /* * Property availability status * */
   --status-neutral-color: #7b7b7b;
@@ -1289,6 +1290,10 @@ section section {
   width: 100%;
   object-fit: cover;
   object-position: center center;
+}
+
+.two-col.heading-text {
+  row-gap: 0;
 }
 
 .two-col.heading-text > :nth-child(odd) {
