@@ -1299,16 +1299,18 @@ section section {
 .two-col.heading-text > :nth-child(odd) {
   grid-column: content-start / span 5;
   align-self: start;
+  padding-inline: var(--container-padding);
 }
 
 .two-col.heading-text > :nth-child(even) {
   grid-column: span 7 / content-end;
+  padding-inline: var(--container-padding);
 }
 
 /* * Two column layout * */
 @media (min-width: 992px) {
   .two-col {
-    --two-col-gap: 10%;
+    --two-col-gap: 110px;
     display: grid;
     grid-template-columns: var(--supergrid);
     row-gap: 1rem;
@@ -1317,13 +1319,13 @@ section section {
 
   /* First (left) div */
   .two-col > :nth-child(odd) {
-    padding-right: calc(var(--two-col-gap) / 2);
+    padding-right: var(--two-col-gap);
     grid-column: span 6 / content-middle;
   }
 
   /* Second (right) div */
   .two-col > :nth-child(even) {
-    padding-left: calc(var(--two-col-gap) / 2);
+    padding-left: var(--two-col-gap);
     grid-column: content-middle / span 6;
   }
 
@@ -1331,13 +1333,13 @@ section section {
   .two-col.img-text > :nth-child(odd) {
     grid-column: span 7 / content-middle;
     align-self: start;
-    padding-left: 0;
+    padding-inline: 0 12px;
   }
 
   .two-col.text-img > :nth-child(even) {
     grid-column: content-middle / span 7;
     align-self: start;
-    padding-right: 0;
+    padding-inline: 12px 0;
   }
 }
 
