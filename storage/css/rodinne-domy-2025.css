@@ -2583,8 +2583,7 @@ header.head {
 
 
 /* ==========================================================================
-   # BROW
-   Malý akcentový pruh nad nadpisy
+   # BROW pruh nad nadpisy
    ========================================================================== */
 .brow {
   display: block;
@@ -2596,11 +2595,10 @@ header.head {
 
 
 /* ==========================================================================
-   # NOVÉ VARIANTY NADPISŮ
-   Doplňkové třídy k původním h1-h6, kde má návrh odlišné písmo/váhu.
+   # NOVÉ VARIANTY NADPISŮ 
    ========================================================================== */
 
-/* * Větší dvouřádkový nadpis (karty ukázkových domů) * */
+/* * Větší dvouřádkový nadpis (např. karty ukázkových domů) * */
 .heading-showcase {
   font-family: "Exo 2", sans-serif;
   font-weight: 600;
@@ -2628,7 +2626,7 @@ header.head {
   }
 }
 
-/* * Kompaktní nadpis (např. kontaktní pruh) * */
+/* * Kompaktní nadpis (např. kontaktní pruh s adresou/termínem) * */
 .heading-compact {
   font-family: "Exo 2", sans-serif;
   font-weight: 600;
@@ -2649,7 +2647,7 @@ header.head {
 
 
 /* ==========================================================================
-  Výběr ukázkových domů
+   Výběr ukázkových domů
    ========================================================================== */
 .showcase-homes__grid {
   display: grid;
@@ -2702,7 +2700,7 @@ header.head {
   color: #2e2e2e;
 }
 
-/* * Kontaktní pruh UB (adresa, otevírací doba) * */
+/* * Kontaktní pruh (adresa, termín, otevírací doba) * */
 .showcase-contact {
   display: flex;
   flex-direction: column;
@@ -2758,4 +2756,54 @@ header.head {
 
 .showcase-contact__item p {
   margin: 0;
+}
+
+
+/* ==========================================================================
+  karty "Typy domů"
+   ========================================================================== */
+
+/* * Tlumenější varianta textu karty * */
+.showcase-card__body p.showcase-card__text--muted {
+  color: var(--color-body-text);
+}
+
+/* * Řádek ikon se specifikacemi * */
+.showcase-specs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-top: 16px;
+}
+
+.showcase-specs__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.showcase-specs__item i {
+  flex-shrink: 0;
+  width: 18px;
+  text-align: center;
+  font-size: 16px;
+  color: var(--color-secondary);
+}
+
+.showcase-specs__item span {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.showcase-card__body .btn-list {
+  margin-top: 20px;
+}
+
+
+.btn-radius-sm {
+  --btn-border-radius: 5px;
 }
