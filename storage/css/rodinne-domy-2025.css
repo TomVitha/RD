@@ -1293,6 +1293,7 @@ section section {
 
 .two-col.heading-text > :nth-child(odd) {
   grid-column: content-start / span 5;
+  align-self: start;
 }
 
 .two-col.heading-text > :nth-child(even) {
@@ -2355,7 +2356,7 @@ img[data-fancybox] {
 }
 
 /* ? Theme for Tippy */
-.tippy-box[data-theme ~ ='tippy-main-theme'] {
+.tippy-box[data-theme ~='tippy-main-theme'] {
   text-align: center;
   /* background-color: #7281a3; */
   /* color: white; */
