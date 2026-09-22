@@ -493,7 +493,7 @@ hr[data-text]::before {
   /* Note: Default color theme is body color */
   --btn-theme: var(--color-body-text);
   --btn-theme-complementary: var(--color-body-text-complimentary);
-  --btn-border-radius: 0.0em;
+  --btn-border-radius: 5px;
   --btn-background: var(--btn-theme, transparent);
   --btn-background-hover: var(--btn-background);
   --btn-icon-size: 1.15em;
@@ -506,13 +506,13 @@ hr[data-text]::before {
   border: none;
   color: var(--btn-theme-complementary);
   display: inline-flex;
-  font-size: 0.875rem;
-  font-weight: 550;
+  font-size: 1.125rem;
+  font-weight: 600;
   gap: 0 0.5em;
   isolation: isolate;
   justify-content: center;
   line-height: 1.0;
-  min-height: 2.7em;
+  min-height: 3.25rem;
   overflow: hidden;
   padding: 0.6em 1.25em;
   position: relative;
@@ -557,11 +557,13 @@ a.btn:hover {
 /* * Small * */
 .btn-sm {
   font-size: 0.875rem;
+  min-height: 2.375rem;
 }
 
 /* * Large * */
 .btn-lg {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  min-height: 3.75rem;
 }
 
 /* * Sharp corners * */
