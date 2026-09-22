@@ -50,6 +50,7 @@
   --container-l: 1920px;
   --content-half: calc(var(--container-m) / 2);
   --breakout-half: calc((var(--container-l) - var(--container-m)) / 2);
+  --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end];
   --two-col-gap: 5rem;
   --supergrid: 
       [full-width-start] 
@@ -760,12 +761,12 @@ select.btn option.preface:disabled {
   }
 
   select.btn::picker(select) {
-    appearance: base-select;
-    border: 1px solid #ddd;
-    border-radius: 0.5em;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
-    transition-behavior: allow-discrete;
-  }
+     appearance: base-select;
+     border: 1px solid #ddd;
+     border-radius: 0.5em;
+     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+     transition-behavior: allow-discrete;
+    }
 
   select.btn::picker-icon {
     font-size: 0.75em;
@@ -773,8 +774,8 @@ select.btn option.preface:disabled {
 }
 
 [data-dropdown-links] option {
-  cursor: pointer;
-  font-weight: 400;
+    cursor: pointer;
+    font-weight: 400;
 }
 
 /* BTN (end) */
@@ -1333,14 +1334,14 @@ section section {
   }
 
   /* Image containers break out * */
-  .two-col.img-text > :nth-child(odd) {
-    grid-column: span 7 / content-middle;
+  .two-col.img-text > *:nth-child(odd) {
+    grid-column: span 2 / content-middle;
     align-self: start;
     padding-inline: 0 12px;
   }
 
-  .two-col.text-img > :nth-child(even) {
-    grid-column: content-middle / span 7;
+  .two-col.text-img > *:nth-child(even) {
+    grid-column: content-middle / span 2;
     align-self: start;
     padding-inline: 12px 0;
   }
@@ -1349,22 +1350,24 @@ section section {
 /* NOTE: Leftovers from before refactoring (class .breakout) */
 /* ? Maybe implement */
 /* * Breakout on both sides */
-/* .two-col.breakout>:nth-child(odd) {
+/* .two-col.breakout>*:nth-child(odd) {
   grid-column: span 2 / content-middle;
 }
 
-.two-col.breakout>:nth-child(even) {
+.two-col.breakout>*:nth-child(even) {
   grid-column: content-middle / span 2;
 } */
 
 
 /* WIP */
 :is(.two-col.breakout-full>*, .two-col>.breakout-full):nth-child(odd) {
-  grid-column: span 7 / content-middle;
+  grid-column: span 2 / content-middle;
+  /* background-color: red; */
 }
 
 :is(.two-col.breakout-full>*, .two-col>.breakout-full):nth-child(even) {
-  grid-column: content-middle / span 7;
+  grid-column: content-middle / span 2;
+  /* background-color: cyan; */
 }
 
 /* TWO-COL (end) */
@@ -1391,7 +1394,7 @@ section section {
   max-width: 195px;
 
   /* flex: 0 1 350px; */
-  flex: 0 1 225px;
+    flex: 0 1 225px;
   max-width: unset;
 }
 
@@ -1802,19 +1805,19 @@ table.price-table > thead > tr > :is(th, td) {
 }
 
 .tooltip-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 15px;
-  height: 15px;
-  background-color: #3b3b3b;
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: bold;
-  border-radius: 50%;
-  cursor: help;
-  user-select: none;
-  line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    background-color: #3b3b3b;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: help;
+    user-select: none;
+    line-height: 1;
 }
 
 .tooltip-content {
@@ -1857,9 +1860,9 @@ table.price-table > thead > tr > :is(th, td) {
 }
 
 .tooltip-content ul {
-  margin: 12px 0 10px 18px;
-  padding: 0;
-  list-style: disc;
+    margin: 12px 0 10px 18px;
+    padding: 0;
+    list-style: disc;
 }
 
 .tooltip-content li {
@@ -1876,7 +1879,7 @@ table.price-table > thead > tr > :is(th, td) {
 
 /* fixed visibility from dataTables*/
 table.dataTable thead > tr > th.dt-orderable-asc, table.dataTable thead > tr > th.dt-orderable-desc, table.dataTable thead > tr > td.dt-orderable-asc, table.dataTable thead > tr > td.dt-orderable-desc {
-  z-index: 99;
+    z-index: 99;
 }
 
 /* # STATUS */
@@ -2366,7 +2369,7 @@ img[data-fancybox] {
 }
 
 /* ? Theme for Tippy */
-.tippy-box[data-theme ~='tippy-main-theme'] {
+.tippy-box[data-theme ~ ='tippy-main-theme'] {
   text-align: center;
   /* background-color: #7281a3; */
   /* color: white; */
@@ -2584,23 +2587,18 @@ header.head {
   border-radius: 50%;
   backdrop-filter: blur(4px);
   transition: background 0.2s;
-  border: 0;
+	border: 0;
 }
 
 .urd-swiper .swiper-button-prev:hover,
 .urd-swiper .swiper-button-next:hover {
   background: rgba(0, 0, 0, 0.5);
-  border: 0;
+	border: 0;
 }
 
 
-.urd-swiper .swiper-button-prev {
-  left: 12px;
-}
-
-.urd-swiper .swiper-button-next {
-  right: 12px;
-}
+.urd-swiper .swiper-button-prev { left: 12px; }
+.urd-swiper .swiper-button-next { right: 12px; }
 
 
 .urd-swiper .swiper-button-disabled {
@@ -2609,7 +2607,7 @@ header.head {
 }
 
 .swiper-button-prev, .swiper-container-rtl .swiper-button-next {
-  background-image: none;
+    background-image: none;
 }
 
 /* HACK - skrýt tlačítko karet Otevřít pro ukázkové domy */
@@ -2879,7 +2877,7 @@ header.head {
 .subsection-column.subsection-column--panel .sub-benefits {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
 }
 
 .subsection-column.subsection-column--panel .sub-benefits li {
@@ -2913,4 +2911,64 @@ header.head {
 
 .subsection-container {
     gap: 1.875rem;
+}
+
+/* * Highlights - show more / show less toggle * */
+.highlight[hidden] {
+  display: none;
+}
+
+/* Once JS removes [hidden], these items are collapsed via a 0fr grid row
+   (clipped to zero height, invisible) and expand to 1fr on .is-expanded.
+   All 3 items use the exact same rule, so they animate identically
+   regardless of what icon/content they contain - no per-item height
+   measuring, no jank. */
+.highlight[data-highlight-extra] {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.highlight[data-highlight-extra].is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .highlight[data-highlight-extra] {
+    transition: grid-template-rows 300ms ease, opacity 300ms ease;
+  }
+}
+
+.highlight__collapse-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Icon is nested one level deeper for these 3 items (inside .highlight__collapse-inner
+   instead of directly inside .highlight), so it needs its own copy of the icon
+   sizing rule above (.highlight > :is(...)) to match. */
+.highlight__collapse-inner > :is([class*="fa-"], img, svg) {
+  margin-bottom: 10px;
+  font-size: 36px;
+  height: 36px;
+  color: var(--hl-icon-color);
+  user-select: none;
+}
+
+.highlights__toggle {
+  margin-top: 30px;
+}
+
+@media (max-width: 767.98px) {
+  .highlights__toggle {
+    margin-top: 20px;
+  }
+
+  .highlights__toggle .btn {
+    width: 100%;
+  }
 }
