@@ -2832,3 +2832,74 @@ header.head {
 .btn-radius-sm {
   --btn-border-radius: 5px;
 }
+
+
+/* ==========================================================================
+   # SUBSECTION PANEL (Ceník - Ceny rodinných domů / Financování / Nadstandardy)
+   Redesign stávajících .subsection-column boxů
+   ========================================================================== */
+.subsection-column.subsection-column--panel {
+  background-color: #fcfaf6;
+  border-radius: 5px;
+  padding: 24px 20px;
+}
+
+@media (min-width: 768px) {
+  .subsection-column.subsection-column--panel {
+    padding: 40px 50px;
+  }
+}
+
+.subsection-column.subsection-column--panel .brow {
+  margin-bottom: 8px;
+}
+
+/* * Vyšší specificita, aby přebilo stávající HACK pravidlo pro .subsection-column h2 * */
+.subsection-column.subsection-column > h2.heading-compact {
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.subsection-column.subsection-column--panel p,
+.subsection-column.subsection-column--panel .sub-benefits li {
+  color: var(--color-body-text);
+}
+
+.subsection-column.subsection-column--panel .sub-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.subsection-column.subsection-column--panel .sub-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.subsection-column.subsection-column--panel .sub-benefits li::before {
+  content: "\f00c";
+  font-family: "Font Awesome 6 Pro";
+  font-weight: 900;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #e7cf9c;
+  color: #000;
+  font-size: 10px;
+}
+
+.subsection-column:not(:last-child)::after {
+  display: none;
+}
+
+.subsection-container {
+    gap: 1.875rem;
+}
