@@ -129,4 +129,11 @@ export const specialEquipmentConfig = {
       "en-US": "Price includes wiring for external blinds for some windows."
     }
   },
+  "fve": {
+    filename: "fve",
+    tooltip: {
+      "cs-CZ": "V ceně je fotovoltaika včetně baterie.",
+      "en-US": "The price includes the solar power system, including the battery."
+    }
+  },
 }

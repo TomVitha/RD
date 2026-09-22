@@ -26,6 +26,7 @@ export async function fetchSheetData(url) {
 
     // Extract the JSON part from the response (Google's response has a prefix we need to remove)
     const data = JSON.parse(responseText.substring(responseText.indexOf('{'), responseText.lastIndexOf('}') + 1));
+    console.debug("Raw fetched data:", data)
 
     // Extract headers from column labels
     const headers = data.table.cols.map(col => col.label);
@@ -388,7 +389,7 @@ export async function initDb(loc = 'cs-CZ') {
     console.error('Failed to fetch or parse data.');
     return
   }
-  console.debug('Fetched RAW data: ', propertiesData.tableData);
+  // console.debug('Fetched RAW data: ', propertiesData.tableData);
 
   // * Initialize the rest
   amendPropertiesData(propertiesData.tableData);
