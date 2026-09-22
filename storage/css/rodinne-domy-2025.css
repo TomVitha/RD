@@ -915,7 +915,7 @@ p > a, .link {
   display: block;
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .6)), linear-gradient(180deg, rgba(0, 0, 0, .4), transparent);
+  background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, .7)), linear-gradient(180deg, rgba(0, 0, 0, .45), transparent);
   pointer-events: none;
 }
 
@@ -2654,8 +2654,6 @@ header.head {
   letter-spacing: -0.01em;
   color: #2e2e2e;
   margin: 0 0 0.75rem 0;
-
-  color: violet !important;
 }
 
 .heading-showcase a {
