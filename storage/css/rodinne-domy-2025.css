@@ -3030,7 +3030,6 @@ header.head {
 
 /* ==========================================================================
    # SUBSECTION PANEL (Ceník - Ceny rodinných domů / Financování / Nadstandardy)
-   Redesign stávajících .subsection-column boxů
    ========================================================================== */
 .subsection-column.subsection-column--panel {
   background-color: #fcfaf6;
@@ -3105,9 +3104,7 @@ header.head {
 
 /* Once JS removes [hidden], these items are collapsed via a 0fr grid row
    (clipped to zero height, invisible) and expand to 1fr on .is-expanded.
-   All 3 items use the exact same rule, so they animate identically
-   regardless of what icon/content they contain - no per-item height
-   measuring, no jank. */
+   All 3 items use the exact same rule */
 .highlight[data-highlight-extra] {
   display: grid;
   grid-template-rows: 0fr;
