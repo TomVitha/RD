@@ -52,6 +52,22 @@
   --breakout-half: calc((var(--container-l) - var(--container-m)) / 2);
   --supergrid: [full-width-start] auto [breakout-start] minmax(0, var(--breakout-half)) [content-start] min(50%, var(--content-half)) [content-middle] min(50%, var(--content-half)) [content-end] minmax(0, var(--breakout-half)) [breakout-end] auto [full-width-end];
   --two-col-gap: 5rem;
+  --supergrid: 
+      [full-width-start] 
+      auto 
+      [breakout-start] 
+      minmax(0, var(--breakout-half)) 
+      /* 12-columns layout start */
+      [content-start] 
+      repeat(6, minmax(0, calc(min(50%, var(--content-half)) / 6)))
+      [content-middle] 
+      repeat(6, minmax(0, calc(min(50%, var(--content-half)) / 6)))
+      [content-end] 
+      /* 12-columns layout end */
+      minmax(0, var(--breakout-half)) 
+      [breakout-end] 
+      auto 
+      [full-width-end];
 
   /* * Property availability status * */
   --status-neutral-color: #7b7b7b;
@@ -1277,10 +1293,25 @@ section section {
   object-position: center center;
 }
 
+.two-col.heading-text {
+  row-gap: 0;
+}
+
+.two-col.heading-text > :nth-child(odd) {
+  grid-column: content-start / span 5;
+  align-self: start;
+  padding-inline: var(--container-padding);
+}
+
+.two-col.heading-text > :nth-child(even) {
+  grid-column: span 7 / content-end;
+  padding-inline: var(--container-padding);
+}
+
 /* * Two column layout * */
 @media (min-width: 992px) {
   .two-col {
-    --two-col-gap: 10%;
+    --two-col-gap: 110px;
     display: grid;
     grid-template-columns: var(--supergrid);
     row-gap: 1rem;
@@ -1288,28 +1319,28 @@ section section {
   }
 
   /* First (left) div */
-  .two-col > *:nth-child(odd) {
-    padding-right: calc(var(--two-col-gap) / 2);
-    grid-column: span 1 / content-middle;
+  .two-col > :nth-child(odd) {
+    padding-right: var(--two-col-gap);
+    grid-column: span 6 / content-middle;
   }
 
   /* Second (right) div */
-  .two-col > *:nth-child(even) {
-    padding-left: calc(var(--two-col-gap) / 2);
-    grid-column: content-middle / span 1;
+  .two-col > :nth-child(even) {
+    padding-left: var(--two-col-gap);
+    grid-column: content-middle / span 6;
   }
 
   /* Image containers break out * */
   .two-col.img-text > *:nth-child(odd) {
     grid-column: span 2 / content-middle;
     align-self: start;
-    padding-left: 0;
+    padding-inline: 0 12px;
   }
 
   .two-col.text-img > *:nth-child(even) {
     grid-column: content-middle / span 2;
     align-self: start;
-    padding-right: 0;
+    padding-inline: 12px 0;
   }
 }
 
