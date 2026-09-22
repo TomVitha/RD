@@ -35,7 +35,7 @@
 
 <div id="page-nav" class="page-nav bg--frost">
   <nav id="page-nav__desktop" class="page-nav__desktop container">
-    <a href="#cenik" class="btn btn-transparent btn-sharp">Ceník a přehled domů</a>
+    <a href="#cenik" class="btn btn-transparent btn-sharp" style="background-color: var(--color-secondary);">Ceník a přehled domů</a>
     <a href="#o-projektu" class="btn btn-transparent btn-sharp">O projektu</a>
     <a href="#lokalita" class="btn btn-transparent btn-sharp">Lokalita</a>
     <a href="#standard" class="btn btn-transparent btn-sharp">Standard provedení</a>
@@ -680,7 +680,7 @@
             <div class="hotspots__point"></div>
             <div class="hotspots__textbox">Závěsné WC a&nbsp;bidet</div>
           </div>
-          <div class="hotspots__item" tabindex="0" style="left: 37%; top: 94%;">
+          <div class="hotspots__item" tabindex="0" style="left: 28%; top: 94%;">
             <div class="hotspots__point"></div>
             <div class="hotspots__textbox top">Podlahové vytápění v&nbsp;koupelnách</div>
           </div>
@@ -698,10 +698,18 @@
             </g>
           </svg>
         </div>
-        <div class="hotspots__switches">
-          <button class="btn btn-sm btn-full btn-secondary" data-hotspots-target="hotspots-content-1">Obývací pokoj</button>
-          <button class="btn btn-sm btn-full btn-white" data-hotspots-target="hotspots-content-2">Koupelna</button>
-        </div>
+      </div>
+      <div class="hotspots__switches">
+        <button type="button" class="btn btn-pill btn-secondary" data-hotspots-target="hotspots-content-1">
+          <i class="fa-light fa-couch" aria-hidden="true"></i>
+          <span>Obývací pokoj</span>
+          <i class="fa-light fa-chevron-right" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-pill btn-white" data-hotspots-target="hotspots-content-2">
+          <i class="fa-light fa-bath" aria-hidden="true"></i>
+          <span>Koupelna</span>
+          <i class="fa-light fa-chevron-right" aria-hidden="true"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -914,22 +922,96 @@
 <section id="galerie">
   <div class="container">
     <h2><a href="#galerie">Galerie</a></h2>
-    <div class="btn-list my-4">
-      <!-- TODO: Implement Carousel => Temp disabled -->
-       <!-- <button class="btn btn-gray-dark btn-outline btn-inline" onclick="$('#gallery-1').toggleClass('gallery--grid')">Přepnout zobrazení</button> -->
-    </div>
-    <div class="gallery gallery--grid" id="gallery-1">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p1_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p1_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p2_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p2_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p0_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p0_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p6_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p6_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p3_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p3_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p4_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p4_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p8_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p8_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p5_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p5_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-      <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p7_1600.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/RD-Pitkovice-p7_3000.jpg" data-fancybox="gallery" alt="" loading="lazy">
-    </div>
   </div>
+
+  <div class="gallery-carousel" id="gallery-1">
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide gallery-carousel__slide">
+          <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-01.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-01.jpg" data-fancybox="gallery" alt="" loading="lazy">
+        </div>
+        <div class="swiper-slide gallery-carousel__slide">
+          <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-02.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-02.jpg" data-fancybox="gallery" alt="" loading="lazy">
+        </div>
+        <div class="swiper-slide gallery-carousel__slide">
+          <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-03.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-03.jpg" data-fancybox="gallery" alt="" loading="lazy">
+        </div>
+        <div class="swiper-slide gallery-carousel__slide">
+          <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-04.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-04.jpg" data-fancybox="gallery" alt="" loading="lazy">
+        </div>
+        <div class="swiper-slide gallery-carousel__slide">
+          <img src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-05.jpg" data-src="https://www.central-group.cz/storage/CG/194-RD/img/vizualizace/gallery/rd-pitkovice-05.jpg" data-fancybox="gallery" alt="" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <button type="button" class="gallery-carousel__nav swiper-button-prev" aria-label="Předchozí snímek"></button>
+    <button type="button" class="gallery-carousel__nav swiper-button-next" aria-label="Následující snímek"></button>
+  </div>
+
+  <script>
+    (function () {
+      var carousel = document.getElementById('gallery-1');
+      if (!carousel || carousel.dataset.galleryCarouselInit) return;
+      carousel.dataset.galleryCarouselInit = "1";
+
+      function loadStyle(href) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+      }
+
+      function loadScript(src) {
+        return new Promise(function (resolve, reject) {
+          var script = document.createElement('script');
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = function () {
+            reject(new Error('Nepodařilo se načíst: ' + src));
+          };
+          document.head.appendChild(script);
+        });
+      }
+
+      function initCarousel() {
+        new Swiper(carousel.querySelector('.swiper'), {
+          loop: true,
+          centeredSlides: true,
+          grabCursor: true,
+          spaceBetween: 16,
+          slidesPerView: 1.35,
+          keyboard: { enabled: true },
+          navigation: {
+            prevEl: carousel.querySelector('.swiper-button-prev'),
+            nextEl: carousel.querySelector('.swiper-button-next'),
+          },
+          a11y: {
+            prevSlideMessage: 'Předchozí snímek',
+            nextSlideMessage: 'Následující snímek',
+          },
+          breakpoints: {
+            576: { slidesPerView: 1.6 },
+            768: { slidesPerView: 1.9 },
+            992: { slidesPerView: 2.2 },
+            1200: { slidesPerView: 2.4 },
+            1600: { slidesPerView: 2.6 },
+          },
+        });
+      }
+
+      loadStyle('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css');
+
+      if (typeof Swiper !== 'undefined') {
+        initCarousel();
+      } else {
+        loadScript('https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js')
+          .then(initCarousel)
+          .catch(function (error) {
+            console.error('[gallery-carousel]', error);
+          });
+      }
+    })();
+  </script>
 </section>
 
 
@@ -938,6 +1020,7 @@
     <div id="map"></div>
   </article>
 </section>
+
 
 <!-- PRICE TABLE -->
 <template id="template-price-table">
