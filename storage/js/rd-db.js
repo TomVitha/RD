@@ -6,7 +6,7 @@ import DataTable from "https://esm.sh/datatables.net"
 // DIY two-way data binding
 import * as databind from './data-binding.js'
 
-import { statusConfig, amenitiesConfig, specialEquipmentConfig } from './configs.js'
+import { statusConfig, amenitiesConfig, specialEquipmentConfig, dateCompletionPastConfig } from './configs.js'
 
 // GLOBAL variable for locale
 let locale = 'cs-CZ'
@@ -203,10 +203,21 @@ function formatData(properties, locale) {
         }
       }
       if (dateObj && !isNaN(dateObj)) {
-        property.date_completion = dateObj.toLocaleDateString(locale, {
-          month: 'long',
-          year: 'numeric',
-        });
+        // Compare by calendar day (not by exact instant), using local "today"
+        // and the UTC date parts of dateObj (ISO date-only strings parse as UTC midnight)
+        const now = new Date();
+        const todayIso = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+        const dateCompletionIso = dateObj.getUTCFullYear() + '-' + String(dateObj.getUTCMonth() + 1).padStart(2, '0') + '-' + String(dateObj.getUTCDate()).padStart(2, '0');
+
+        if (dateCompletionIso < todayIso) {
+          // Completion date already in the past => show "DOKONČENO" / "COMPLETED" instead
+          property.date_completion = dateCompletionPastConfig[locale] ?? dateCompletionPastConfig['cs-CZ'];
+        } else {
+          property.date_completion = dateObj.toLocaleDateString(locale, {
+            month: 'long',
+            year: 'numeric',
+          });
+        }
       }
     }
 

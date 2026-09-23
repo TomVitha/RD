@@ -22,6 +22,12 @@ export const statusConfig = {
   },
 };
 
+// * Text místo data dokončení, když je datum starší než aktuální
+export const dateCompletionPastConfig = {
+  "cs-CZ": "DOKONČENO",
+  "en-US": "COMPLETED"
+};
+
 // * Příslušenství
 export const amenitiesConfig = {
   "B": {
