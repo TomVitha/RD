@@ -1429,6 +1429,33 @@ section section {
   user-select: none;
 }
 
+/* * Mobil - highlights ve dvou sloupcích místo jednoho, aby sekce nebyla příliš vysoká * */
+@media (max-width: 767.98px) {
+  .highlights {
+    gap: 20px 12px;
+  }
+
+  .highlight {
+    flex: 0 1 calc(50% - 6px);
+  }
+
+  .highlight > :is([class*="fa-"], img, svg),
+  .highlight__collapse-inner > :is([class*="fa-"], img, svg) {
+    margin-bottom: 6px;
+    font-size: 28px;
+    height: 28px;
+  }
+
+  .highlight em {
+    font-size: 1rem;
+  }
+
+  .highlight span {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+}
+
 
 /* DEPRECATED (possibly) */
 .strip {
