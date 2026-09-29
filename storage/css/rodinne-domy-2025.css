@@ -1170,8 +1170,6 @@ a.hero__jump,
 
   .page-nav {
     --page-nav-height: 42px;
-    /* ? maybe hide on mobile ? */
-    display: none;
   }
 
   .page-nav__mobile {
@@ -1776,6 +1774,56 @@ section section {
   scrollbar-color: var(--color-secondary) transparent;
   scrollbar-width: thin;
   margin-block: 24px;
+}
+
+/* * Nápověda pro horizontální scroll ceníkové tabulky (šipka + fade na pravém okraji) * */
+.price-table-outer {
+  position: relative;
+}
+
+.price-table-scroll-hint {
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  right: 0;
+  width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  pointer-events: none;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9) 65%);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.price-table-outer.can-scroll-right .price-table-scroll-hint {
+  opacity: 1;
+}
+
+.price-table-scroll-hint i {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+  color: #000;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .price-table-scroll-hint i {
+    animation: price-table-scroll-hint-nudge 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes price-table-scroll-hint-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-4px); }
 }
 
 .price-table {

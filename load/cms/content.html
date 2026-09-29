@@ -309,11 +309,51 @@
       </div>
     </div> -->
     <!-- * PRICE TABLE -->
-    <div class="price-table-wrapper" id="price-table-container">
-      <!-- Here will be inserted price table, created from template, and filled by fetched data from Sheet -->
-      <!-- Fallback content, if table fails to load: -->
-      <span>Ceník je momentálně nedostupný. Načtěte stránku znovu, nebo to zkuste později.</span>
+    <div class="price-table-outer">
+      <div class="price-table-wrapper" id="price-table-container">
+        <!-- Here will be inserted price table, created from template, and filled by fetched data from Sheet -->
+        <!-- Fallback content, if table fails to load: -->
+        <span>Ceník je momentálně nedostupný. Načtěte stránku znovu, nebo to zkuste později.</span>
+      </div>
+      <div class="price-table-scroll-hint" aria-hidden="true">
+        <i class="fa-light fa-chevron-right"></i>
+      </div>
     </div>
+    <script>
+      (function () {
+        var outer = document.querySelector('.price-table-outer');
+        var container = document.getElementById('price-table-container');
+        if (!outer || !container || outer.dataset.scrollHintInit) return;
+        outer.dataset.scrollHintInit = "1";
+
+        function currentScrollEl() {
+          return container.querySelector('.dt-layout-table') || container;
+        }
+
+        function evaluate(el) {
+          if (!el) return;
+          var canScroll = (el.scrollWidth - el.clientWidth - el.scrollLeft) > 2;
+          outer.classList.toggle('can-scroll-right', canScroll);
+        }
+
+        // Naslouchá scrollu na jakémkoliv potomku (DataTables tabulku později obalí vlastním scroll kontejnerem)
+        container.addEventListener('scroll', function (e) {
+          evaluate(e.target);
+        }, { capture: true });
+
+        // Přepočet při každé změně obsahu (načtení dat, inicializace DataTables, řazení, filtrování)
+        var observer = new MutationObserver(function () {
+          evaluate(currentScrollEl());
+        });
+        observer.observe(container, { childList: true, subtree: true });
+
+        window.addEventListener('resize', function () {
+          evaluate(currentScrollEl());
+        });
+
+        evaluate(currentScrollEl());
+      })();
+    </script>
   </div>
   <div class="subsection-container container mt-5">
     <div class="subsection-column subsection-column--panel">
