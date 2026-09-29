@@ -78,7 +78,7 @@
   --status-under-offer-color-lt: #fffdf8;
   --status-sold-color: #993333;
   --status-sold-color-lt: #fffbfb;
-  /* TODO: Barvy pro ukÃ¡zkÃ¡Ä? */
+  /* TODO: Barvy pro ukázkáè? */
 
 
   /* * Accessibility * */
@@ -2429,7 +2429,7 @@ img[data-fancybox] {
 }
 
 /* ? Theme for Tippy */
-/* ! POZOR: NesmÃ­ bÃ½t mezera v '~='  */
+/* ! POZOR: Nesmí bıt mezera v '~='  */
 .tippy-box[data-theme ~='tippy-main-theme'] {
   text-align: center;
   /* background-color: #7281a3; */
@@ -2766,7 +2766,7 @@ header.head {
   .gallery-carousel .swiper-button-next { right: 8px; }
 }
 
-/* HACK - skrÃ½t tlaÄÃ­tko karet OtevÅ™Ã­t pro ukÃ¡zkovÃ© domy */
+/* HACK - skrıt tlaèítko karet Otevøít pro ukázkové domy */
 #price-table tbody tr:has(td:first-child .property-status.show) td:last-child .btn {
   display: none;
 }
@@ -2783,13 +2783,13 @@ header.head {
   flex-shrink: 0;
 }
 
-/* * JednotnÃ¡ mezera brow * */
+/* * Jednotná mezera brow * */
 .brow:has(+ h2),
 .brow:has(+ h3) {
   margin-bottom: 12px;
 }
 
-/* * VycentrovÃ¡nÃ­ brow ve vystÅ™edÄ›nÃ½ch blocÃ­ch * */
+/* * Vycentrování brow ve vystøedìnıch blocích * */
 .text-center .brow,
 .text-md-center .brow {
   margin-inline: auto;
@@ -2797,10 +2797,10 @@ header.head {
 
 
 /* ==========================================================================
-   # NOVÃ‰ VARIANTY NADPISÅ® 
+   # NOVÉ VARIANTY NADPISÙ 
    ========================================================================== */
 
-/* * VÄ›tÅ¡Ã­ dvouÅ™Ã¡dkovÃ½ nadpis (napÅ™. karty ukÃ¡zkovÃ½ch domÅ¯) * */
+/* * Vìtší dvouøádkovı nadpis (napø. karty ukázkovıch domù) * */
 .heading-showcase {
   font-family: "Exo 2", sans-serif;
   font-weight: 600;
@@ -2823,7 +2823,7 @@ header.head {
   }
 }
 
-/* * KompaktnÃ­ nadpis (napÅ™. kontaktnÃ­ pruh s adresou/termÃ­nem) * */
+/* * Kompaktní nadpis (napø. kontaktní pruh s adresou/termínem) * */
 .heading-compact {
   font-family: "Exo 2", sans-serif;
   font-weight: 600;
@@ -2844,7 +2844,7 @@ header.head {
 
 
 /* ==========================================================================
-   VÃ½bÄ›r ukÃ¡zkovÃ½ch domÅ¯
+   Vıbìr ukázkovıch domù
    ========================================================================== */
 .showcase-homes__grid {
   display: grid;
@@ -2897,7 +2897,7 @@ header.head {
   color: #2e2e2e;
 }
 
-/* * KontaktnÃ­ pruh (adresa, termÃ­n, otevÃ­racÃ­ doba) * */
+/* * Kontaktní pruh (adresa, termín, otevírací doba) * */
 .showcase-contact {
   display: flex;
   flex-direction: column;
@@ -2956,7 +2956,7 @@ header.head {
 }
 
 
-/** "UkÃ¡zkovÃ© domy" banner - pouÅ¾Ã­vÃ¡ .showcase-contact box **/
+/** "Ukázkové domy" banner - pouívá .showcase-contact box **/
 .showcase-contact--banner {
   position: relative;
   isolation: isolate;
@@ -2991,15 +2991,15 @@ header.head {
 
 
 /* ==========================================================================
-  karty "Typy domÅ¯"
+  karty "Typy domù"
    ========================================================================== */
 
-/* * TlumenÄ›jÅ¡Ã­ varianta textu karty * */
+/* * Tlumenìjší varianta textu karty * */
 .showcase-card__body p.showcase-card__text--muted {
   color: var(--color-body-text);
 }
 
-/* * Å˜Ã¡dek ikon se specifikacemi * */
+/* * Øádek ikon se specifikacemi * */
 .showcase-specs {
   display: flex;
   flex-wrap: wrap;
@@ -3041,8 +3041,8 @@ header.head {
 
 
 /* ==========================================================================
-   # SUBSECTION PANEL (CenÃ­k - Ceny rodinnÃ½ch domÅ¯ / FinancovÃ¡nÃ­ / Nadstandardy)
-   Redesign stÃ¡vajÃ­cÃ­ch .subsection-column boxÅ¯
+   # SUBSECTION PANEL (Ceník - Ceny rodinnıch domù / Financování / Nadstandardy)
+   Redesign stávajících .subsection-column boxù
    ========================================================================== */
 .subsection-column.subsection-column--panel {
   background-color: #fcfaf6;
@@ -3060,7 +3060,7 @@ header.head {
   margin-bottom: 20px;
 }
 
-/* * VyÅ¡Å¡Ã­ specificita, aby pÅ™ebilo stÃ¡vajÃ­cÃ­ HACK pravidlo pro .subsection-column h2 * */
+/* * Vyšší specificita, aby pøebilo stávající HACK pravidlo pro .subsection-column h2 * */
 .subsection-column.subsection-column > h2.heading-compact {
   font-weight: 600;
   margin-bottom: 24px;
@@ -3102,7 +3102,7 @@ header.head {
   font-size: 10px;
 }
 
-/* * VnoÅ™enÃ© podpoloÅ¾ky u .sub-benefits * */
+/* * Vnoøené podpoloky u .sub-benefits * */
 .subsection-column.subsection-column--panel .sub-benefits li:has(.sub-benefits__nested) {
   flex-wrap: wrap;
   row-gap: 8px;
