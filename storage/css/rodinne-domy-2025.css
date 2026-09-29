@@ -1149,6 +1149,13 @@ a.hero__jump,
   padding: 0;
 }
 
+/* * Bez tohoto by <button> (na rozdíl od <a>) v grid řádku nešel zmenšit
+   na výšku sourozence - prohlížeče dávají form prvkům automatické min-height
+   podle jejich obsahu, i s align-items: stretch * */
+.page-nav__mobile > * {
+  min-height: 0;
+}
+
 .page-nav .btn {
   /*color: var(--gray-dark);*/
   color: var(--cg-header-bg-prim);
