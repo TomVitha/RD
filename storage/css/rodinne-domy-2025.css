@@ -2460,7 +2460,10 @@ dialog .lv-details-box {
 
 .hotspots__switches {
   position: absolute;
-  left: 50%;
+  /* 496px = polovina min-width .hotspots__content (992px). Na mobilu je .hotspots
+     užší než scrollovatelný obrázek uvnitř, takže "50%" by vystředilo přepínač
+     jen na viditelnou část - teď se drží na středu celého obrázku */
+  left: max(50%, 496px);
   bottom: 50px;
   translate: -50% 0;
   display: flex;
@@ -2470,6 +2473,14 @@ dialog .lv-details-box {
   background: rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(25px);
   z-index: 1;
+}
+
+/* V tomto režimu .hotspots__content ztrácí min-width:992px (viz výše) a odpovídá
+   šířce viewportu bez scrollování, takže běžné vystředění na 50 % je opět správně */
+@media (orientation: landscape) and (max-width: 991.98px) {
+  .hotspots__switches {
+    left: 50%;
+  }
 }
 
 .hotspots__switches .btn {
