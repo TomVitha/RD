@@ -238,7 +238,7 @@
   })();
 </script>
 
-
+<!--
 <section id="ukazkove-domy-banner">
   <div class="container">
     <div class="showcase-contact showcase-contact--banner">
@@ -251,7 +251,7 @@
     </div>
   </div>
 </section>
-
+-->
 
 
 <section id="cenik">
@@ -319,41 +319,8 @@
         <i class="fa-light fa-chevron-right"></i>
       </div>
     </div>
-    <script>
-      (function () {
-        var outer = document.querySelector('.price-table-outer');
-        var container = document.getElementById('price-table-container');
-        if (!outer || !container || outer.dataset.scrollHintInit) return;
-        outer.dataset.scrollHintInit = "1";
 
-        function currentScrollEl() {
-          return container.querySelector('.dt-layout-table') || container;
-        }
 
-        function evaluate(el) {
-          if (!el) return;
-          var canScroll = (el.scrollWidth - el.clientWidth - el.scrollLeft) > 2;
-          outer.classList.toggle('can-scroll-right', canScroll);
-        }
-
-        // Naslouchá scrollu na jakémkoliv potomku (DataTables tabulku později obalí vlastním scroll kontejnerem)
-        container.addEventListener('scroll', function (e) {
-          evaluate(e.target);
-        }, { capture: true });
-
-        // Přepočet při každé změně obsahu (načtení dat, inicializace DataTables, řazení, filtrování)
-        var observer = new MutationObserver(function () {
-          evaluate(currentScrollEl());
-        });
-        observer.observe(container, { childList: true, subtree: true });
-
-        window.addEventListener('resize', function () {
-          evaluate(currentScrollEl());
-        });
-
-        evaluate(currentScrollEl());
-      })();
-    </script>
   </div>
   <div class="subsection-container container mt-5">
     <div class="subsection-column subsection-column--panel">
@@ -371,7 +338,6 @@
         <!--li>Záloha jen 10 % ceny a zbytek k termínu dokončení</li-->
         <li>Vyřízení zvýhodněné hypotéky zdarma, na míru a&nbsp;na klíč</li>
 				<!--li>PROGRAM Sleva 4&nbsp;% při zrychlené platbě</li-->
-	      <!--li>Individuální financování</li-->
         <li>Standardní financování
           <ul class="sub-benefits__nested">
             <li><strong>100.000 Kč</strong> do 7 dnů od podpisu smlouvy</li>
@@ -379,12 +345,18 @@
             <li><strong>10&nbsp;%</strong> k termínu finálního dokončení</li>
           </ul>
         </li>
-        <!--li>Individuální financování</li-->
         <li>Úvěrové financování
           <ul class="sub-benefits__nested">
             <li><strong>100.000 Kč</strong> do 7 dnů od podpisu smlouvy</li>
             <li><strong>min. do 10&nbsp;%</strong> ceny do 30 dnů od podpisu smlouvy</li>
-            <li><strong>zbývající část</strong> ceny z hypotéky do 60 dnů od finálního dokončení</li>
+            <li><strong>zbývající část</strong> ceny z hypotéky do 60 dnů od podpisu smlouvy</li>
+          </ul>
+        </li>
+        <li>Individuální financování
+          <ul class="sub-benefits__nested">
+            <li><strong>100.000 Kč</strong> do 7 dnů od podpisu smlouvy</li>
+            <li><strong>min. do 10&nbsp;%</strong> ceny do 30 dnů od podpisu smlouvy</li>
+            <li><strong>zbývající část</strong> ceny k termínu finálního dokončení</li>
           </ul>
         </li>
         <!--li>Věrnostní a&nbsp;množstevní slevy</li-->
@@ -896,6 +868,25 @@
         </p>
       </div>
 
+      <div class="showcase-contact">
+        <div class="showcase-contact__item showcase-contact__item--heading">
+          <span class="brow" aria-hidden="true"></span>
+          <p class="heading-compact">Přijďte se podívat na naše<br>ukázkové byty a rodinné domy.</p>
+        </div>
+        <div class="showcase-contact__item">
+          <span class="showcase-contact__icon" aria-hidden="true"><i class="fa-regular fa-location-dot"></i></span>
+          <p class="heading-compact"><a href="https://www.google.com/maps/search/Mech%C3%A1%C4%8Dkov%C3%A1,+104+00+Praha+10/">Mecháčková,<br>104&nbsp;00 Praha&nbsp;10</a></p>
+        </div>
+        <div class="showcase-contact__item">
+          <span class="showcase-contact__icon" aria-hidden="true"><i class="fa-regular fa-calendar"></i></span>
+          <p class="heading-compact">11.&nbsp;9. — 28.&nbsp;11. 2026<br><span class="heading-compact__light">pátek–sobota</span></p>
+        </div>
+        <div class="showcase-contact__item">
+          <span class="showcase-contact__icon" aria-hidden="true"><i class="fa-regular fa-clock"></i></span>
+          <p class="heading-compact">10:00–18:00</p>
+        </div>
+      </div>
+
     <div class="showcase-homes__grid">
 
       <article class="showcase-card">
@@ -926,24 +917,6 @@
 
     </div>
 
-    <div class="showcase-contact">
-      <div class="showcase-contact__item showcase-contact__item--heading">
-        <span class="brow" aria-hidden="true"></span>
-        <p class="heading-compact">Přijďte se podívat na naše<br>ukázkové byty a rodinné domy.</p>
-      </div>
-      <div class="showcase-contact__item">
-        <span class="showcase-contact__icon" aria-hidden="true"><i class="fa-regular fa-location-dot"></i></span>
-        <p class="heading-compact"><a href="https://www.google.com/maps/search/Mech%C3%A1%C4%8Dkov%C3%A1,+104+00+Praha+10/">Mecháčková,<br>104&nbsp;00 Praha&nbsp;10</a></p>
-      </div>
-      <div class="showcase-contact__item">
-        <span class="showcase-contact__icon" aria-hidden="true"><i class="fa-regular fa-calendar"></i></span>
-        <p class="heading-compact">11.&nbsp;9. — 28.&nbsp;11. 2026<br><span class="heading-compact__light">pátek–sobota</span></p>
-      </div>
-      <div class="showcase-contact__item">
-        <span class="showcase-contact__icon" aria-hidden="true"><i class="fa-regular fa-clock"></i></span>
-        <p class="heading-compact">10:00–18:00</p>
-      </div>
-    </div>
   </div>
 </section>
 
