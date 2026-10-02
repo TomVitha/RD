@@ -2294,6 +2294,13 @@ dialog .lv-details-box {
 .hotspots {
   --hotspots-textbox-trans-dur: 250ms;
   position: relative;
+}
+
+/* Scrollovatelná obálka obrázku (dřív overflow-x:auto bylo přímo na .hotspots, což
+   ale zároveň scrollovalo i .hotspots__controls a .hotspots__switches, protože byly
+   jeho potomky. Teď scrolluje jen tahle vrstva, ovládací prvky jsou mimo ni a drží
+   svoji pozici - viz .hotspots__bottom-bar níže. */
+.hotspots__scroll {
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--color-secondary) transparent;
@@ -2451,39 +2458,34 @@ dialog .lv-details-box {
 }
 
 
-.hotspots__controls {
-  color: white;
+/* Obaluje .hotspots__controls (nápověda pro swipe) a .hotspots__switches (přepínač
+   místnosti) a drží je společně vlevo dole nad obrázkem - mimo .hotspots__scroll,
+   takže při horizontálním scrollu obrázku zůstávají na místě a jen obrázek s hotspoty
+   se posouvá pod nimi. */
+.hotspots__bottom-bar {
   position: absolute;
   left: 20px;
   bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 1;
+}
+
+.hotspots__controls {
+  color: white;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .hotspots__switches {
-  position: absolute;
-  /* 496px = polovina min-width .hotspots__content (992px). Na mobilu je .hotspots
-     užší než scrollovatelný obrázek uvnitř, takže "50%" by vystředilo přepínač
-     jen na viditelnou část - teď se drží na středu celého obrázku */
-  left: max(50%, 496px);
-  bottom: 50px;
-  translate: -50% 0;
   display: flex;
   gap: 0.5rem;
   padding: 10px;
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(25px);
-  z-index: 1;
-}
-
-/* V tomto režimu .hotspots__content ztrácí min-width:992px (viz výše) a odpovídá
-   šířce viewportu bez scrollování, takže běžné vystředění na 50 % je opět správně */
-@media (orientation: landscape) and (max-width: 991.98px) {
-  .hotspots__switches {
-    left: 50%;
-  }
 }
 
 .hotspots__switches .btn {
