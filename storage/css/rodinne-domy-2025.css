@@ -3286,6 +3286,17 @@ header.head {
   }
 }
 
+/* This one item is "extra" (collapsed-by-default, revealed by the toggle button) only on
+   desktop. On mobile (2-per-row layout) it should be in the default-visible set instead,
+   regardless of the toggle button's state - higher selector specificity than both the
+   collapsed default and .is-expanded ensures it wins at this breakpoint either way. */
+@media (max-width: 767.98px) {
+  .highlight[data-highlight-extra][data-highlight-mobile-default] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
 .highlight__collapse-inner {
   display: flex;
   flex-direction: column;
