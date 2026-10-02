@@ -315,10 +315,95 @@
         <!-- Fallback content, if table fails to load: -->
         <span>Ceník je momentálně nedostupný. Načtěte stránku znovu, nebo to zkuste později.</span>
       </div>
-      <div class="price-table-scroll-hint" aria-hidden="true">
-        <i class="fa-light fa-chevron-right"></i>
+      <div class="price-table-scroll-hint">
+        <i class="fa-light fa-chevron-right" role="button" tabindex="0" aria-label="Posunout tabulku doprava"></i>
       </div>
     </div>
+
+    <!-- Self-contained scroll-hint script for the price table (horizontal scroll indicator + click-to-scroll
+         arrow). Kept independent of rd-main.js/init() on purpose: that whole init chain is gated on an
+         `await initDb(...)` Google Sheets fetch, and if that fails or is blocked (e.g. on a local dev server),
+         everything after it in that file silently never runs. This runs the moment jQuery's $(...).load()
+         evaluates it, regardless of that. -->
+    <script>
+      (function () {
+        var outer = document.querySelector('.price-table-outer');
+        var container = document.getElementById('price-table-container');
+        if (!outer || !container || outer.dataset.scrollHintInit) return;
+        outer.dataset.scrollHintInit = "1";
+
+        function currentScrollEl() {
+          return container.querySelector('.dt-layout-table') || container;
+        }
+
+        function headerCells() {
+          var table = container.querySelector('table.price-table');
+          var row = table && table.querySelector('thead tr');
+          return row ? Array.prototype.slice.call(row.children) : [];
+        }
+
+        function evaluate(el) {
+          if (!el) return;
+          var canScroll = (el.scrollWidth - el.clientWidth - el.scrollLeft) > 2;
+          outer.classList.toggle('can-scroll-right', canScroll);
+        }
+
+        // Naslouchá scrollu na jakémkoliv potomku (DataTables tabulku později obalí vlastním scroll kontejnerem)
+        container.addEventListener('scroll', function (e) {
+          evaluate(e.target);
+        }, { capture: true });
+
+        // Přepočet při každé změně obsahu (načtení dat, inicializace DataTables, řazení, filtrování)
+        var observer = new MutationObserver(function () {
+          evaluate(currentScrollEl());
+        });
+        observer.observe(container, { childList: true, subtree: true });
+
+        window.addEventListener('resize', function () {
+          evaluate(currentScrollEl());
+        });
+
+        // Klik na šipku posune tabulku doprava o cca 3 sloupce, nebo o tolik sloupců,
+        // kolik je jich aktuálně vidět (pokud je jich v okně méně než 3).
+        function scrollByColumns() {
+          var el = currentScrollEl();
+          var cells = headerCells();
+
+          if (!cells.length) {
+            el.scrollBy({ left: el.clientWidth * 0.75, behavior: 'smooth' });
+            return;
+          }
+
+          var containerRect = el.getBoundingClientRect();
+          var visibleCount = 0;
+          cells.forEach(function (cell) {
+            var r = cell.getBoundingClientRect();
+            var visibleWidth = Math.min(r.right, containerRect.right) - Math.max(r.left, containerRect.left);
+            if (visibleWidth > r.width * 0.5) visibleCount++;
+          });
+
+          var stepCount = Math.max(1, Math.min(3, visibleCount));
+          var avgColumnWidth = cells.reduce(function (sum, c) {
+            return sum + c.getBoundingClientRect().width;
+          }, 0) / cells.length;
+
+          el.scrollBy({ left: avgColumnWidth * stepCount, behavior: 'smooth' });
+        }
+
+        var hintIcon = outer.querySelector('.price-table-scroll-hint i');
+        if (hintIcon) {
+          hintIcon.addEventListener('click', scrollByColumns);
+          hintIcon.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              scrollByColumns();
+            }
+          });
+        }
+
+        evaluate(currentScrollEl());
+      })();
+    </script>
 
 
   </div>
