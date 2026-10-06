@@ -1312,6 +1312,24 @@ section section {
   }
 }
 
+/* * Výjimka pro sekci "Vzorkovna" - na mobilu/single-column je obrázek nahoře, text
+   (nadpis, odstavec, tlačítko) pod ním. Na desktopu (≥992px) zůstává beze změny
+   text vlevo / obrázek vpravo, protože tam layout řeší grid, ne flex-direction. * */
+@media (max-width: 991.98px) {
+  #vzorkovna .two-col.text-img {
+    flex-direction: column-reverse;
+  }
+}
+
+/* * Výjimka pro sekci "Standard provedení" (#standard) - stejný princip jako u
+   #vzorkovna: na mobilu/single-column je obrázek nahoře, text pod ním, na desktopu
+   beze změny (text vlevo / obrázek vpravo). * */
+@media (max-width: 991.98px) {
+  #standard .two-col.text-img {
+    flex-direction: column-reverse;
+  }
+}
+
 
 .two-col > div {
   padding-inline: var(--container-padding);
@@ -2895,9 +2913,17 @@ header.head {
 }
 
 /* * Vycentrov�n� brow ve vyst�ed�n�ch bloc�ch * */
-.text-center .brow,
-.text-md-center .brow {
+.text-center .brow {
   margin-inline: auto;
+}
+
+/* .text-md-center sama text zarovnává na střed až od 768px (viz výše) - brow uvnitř
+   ní musí tenhle breakpoint respektovat taky, jinak by byl na mobilu vycentrovaný
+   nad nadpisem zarovnaným doleva. */
+@media (min-width: 768px) {
+  .text-md-center .brow {
+    margin-inline: auto;
+  }
 }
 
 
@@ -3020,9 +3046,28 @@ header.head {
     align-items: center;
     flex-wrap: wrap;
     row-gap: 30px;
-    column-gap: 105px;
+    column-gap: 60px;
     padding: 40px 60px;
     margin-top: 32px;
+  }
+}
+
+/* * Obaluje adresu/termín/otevírací dobu - jen tahle skupina se na mobilu
+   zarovnává pod sebe a na desktopu řadí vedle sebe jako karty, nezávisle na
+   nadpisu .showcase-contact__item--heading vedle ní * */
+.showcase-contact__items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .showcase-contact__items {
+    flex-direction: row;
+    gap: 20px;
+    flex: 1 1 auto;
+    width: auto;
   }
 }
 
@@ -3043,17 +3088,39 @@ header.head {
   margin: 0;
 }
 
+/* * Adresa/termín/otevírací doba jako bílé karty se stínem (ikona nahoře,
+   krátký text pod ní, vše na střed) * */
+.showcase-contact__items .showcase-contact__item {
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  padding: 24px 20px;
+}
+
+/* Velikost textu uvnitř karet: 1rem na mobilu, 1.125rem od 992px (místo
+   výchozích 1.25rem u .heading-compact). Nadpisu vedle karet se to netýká. */
+.showcase-contact__items .showcase-contact__item .heading-compact {
+  font-size: 1rem;
+}
+
+@media (min-width: 992px) {
+  .showcase-contact__items .showcase-contact__item .heading-compact {
+    font-size: 1.125rem;
+  }
+}
+
 .showcase-contact__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 5px;
-  background-color: #e7cf9c;
-  color: #3b3b3b;
-  font-size: 15px;
+  color: #e7cf9c;
+  font-size: 32px;
+  line-height: 1;
 }
 
 .showcase-contact__item p {
